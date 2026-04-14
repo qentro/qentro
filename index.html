@@ -3,738 +3,303 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qentro — Private Network</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <title>Qentro | Private Access</title>
   <style>
-    :root {
-      --bg: #050505;
-      --panel: rgba(255,255,255,0.05);
-      --line: rgba(255,255,255,0.11);
-      --text: #f7f3ea;
-      --muted: rgba(247,243,234,0.68);
-      --gold: #d8c39a;
-      --gold-soft: rgba(216,195,154,0.12);
-      --shadow: 0 24px 80px rgba(0,0,0,0.45);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    * {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 15% 20%, rgba(216,195,154,0.09), transparent 26%),
-        radial-gradient(circle at 80% 15%, rgba(255,255,255,0.05), transparent 18%),
-        radial-gradient(circle at 50% 85%, rgba(216,195,154,0.07), transparent 24%),
-        var(--bg);
-      overflow-x: hidden;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
     }
 
-    .grid, .glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .grid {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(circle at center, black, transparent 78%);
-      opacity: 0.45;
-    }
-
-    .glow {
-      background: radial-gradient(300px circle at var(--x, 50%) var(--y, 20%), rgba(216,195,154,0.12), transparent 45%);
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 1;
+    body {
       min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 20%),
+        linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
     }
 
-    .shell {
-      max-width: 1240px;
-      margin: 0 auto;
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
     }
 
-    .nav {
+    .hero, .panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .hero {
+      padding: 64px 56px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0 30px;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 680px;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      letter-spacing: 0.22em;
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(216,195,154,0.35);
-      color: var(--gold);
-      background: rgba(255,255,255,0.02);
-      box-shadow: inset 0 0 18px rgba(216,195,154,0.08);
-      font-weight: 700;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 22px;
-      color: var(--muted);
+      gap: 10px;
+      margin-bottom: 28px;
       font-size: 14px;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .btn, .btn-ghost {
-      border-radius: 999px;
-      padding: 14px 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      border: 1px solid var(--line);
-      text-decoration: none;
-      transition: .25s ease;
-      font-weight: 600;
-    }
-
-    .btn {
-      background: linear-gradient(180deg, rgba(250,246,238,1), rgba(216,195,154,0.95));
-      color: #111;
-      box-shadow: 0 14px 36px rgba(216,195,154,0.16);
-    }
-
-    .btn-ghost {
-      color: var(--text);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .btn:hover, .btn-ghost:hover { transform: translateY(-1px); }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 24px;
-      align-items: stretch;
-      min-height: calc(100vh - 110px);
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 34px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-
-    .hero-left {
-      padding: 40px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-left::after {
-      content: "";
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      right: -160px;
-      top: -140px;
-      background: radial-gradient(circle, rgba(216,195,154,0.16), transparent 60%);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.1em;
+      letter-spacing: 2px;
       text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
+    .brand-dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 16px rgba(216,195,154,0.7);
+      background: #fff;
+      box-shadow: 0 0 18px rgba(255,255,255,0.65);
     }
 
     h1 {
-      margin: 24px 0 18px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(58px, 9vw, 104px);
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      max-width: 780px;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      max-width: 720px;
+      margin-bottom: 22px;
     }
 
-    h1 span {
-      color: var(--gold);
-      font-style: italic;
-    }
-
-    .lead {
-      max-width: 620px;
-      color: var(--muted);
+    .subtitle {
       font-size: 18px;
-      line-height: 1.85;
-      margin-bottom: 30px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.78);
+      max-width: 650px;
+      margin-bottom: 36px;
     }
 
-    .hero-actions {
+    .highlight {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .mini-info {
       display: flex;
-      gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 30px;
+      gap: 12px;
+      margin-top: 8px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+    .chip {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
     }
 
-    .stat {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
+    .panel {
+      padding: 34px;
+      min-height: 680px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .stat small {
+    .panel-top h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .panel-top p {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      padding: 20px 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      transition: 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+    }
+
+    .btn strong {
       display: block;
-      color: rgba(247,243,234,0.42);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 20px;
-      font-size: 11px;
+      font-size: 18px;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
     }
 
-    .stat strong {
-      font-size: 30px;
-      display: block;
-      margin-bottom: 8px;
+    .btn span {
+      font-size: 14px;
+      color: rgba(255,255,255,0.68);
     }
 
-    .stat p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
+    .arrow {
+      font-size: 22px;
+      opacity: 0.85;
+    }
+
+    .panel-bottom {
+      margin-top: 32px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.58);
+      font-size: 14px;
       line-height: 1.7;
     }
 
-    .hero-right {
-      display: grid;
-      gap: 18px;
-    }
-
-    .preview {
-      padding: 24px;
-      min-height: 420px;
-    }
-
-    .preview-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      gap: 12px;
-    }
-
-    .mini-label {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .badge {
-      color: var(--gold);
-      border: 1px solid rgba(216,195,154,0.2);
-      background: rgba(216,195,154,0.08);
-      border-radius: 999px;
-      padding: 8px 11px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .app-shell {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(5,5,5,0.6);
-      padding: 16px;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .dots { display: flex; gap: 8px; }
-    .dots span {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-    }
-
-    .search {
-      flex: 1;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.03);
-      padding: 10px 12px;
-      color: rgba(247,243,234,0.42);
+    .footer-note {
+      margin-top: 14px;
+      color: rgba(255,255,255,0.45);
       font-size: 13px;
     }
 
-    .app-grid {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      gap: 14px;
-    }
-
-    .side, .main {
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      padding: 14px;
-    }
-
-    .menu-item, .feed-item {
-      border-radius: 14px;
-      padding: 12px;
-      border: 1px solid rgba(255,255,255,0.05);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .menu-item + .menu-item, .feed-item + .feed-item { margin-top: 10px; }
-    .menu-item.active { border-color: rgba(216,195,154,0.22); background: rgba(216,195,154,0.08); }
-
-    .menu-item strong, .feed-item strong { display: block; margin-bottom: 5px; }
-    .menu-item span, .feed-item span { color: var(--muted); font-size: 12px; line-height: 1.6; }
-
-    .feed-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .pill {
-      border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 11px;
-      border: 1px solid rgba(216,195,154,0.2);
-      background: rgba(216,195,154,0.08);
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .subcards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .mini-card {
-      padding: 24px;
-      min-height: 200px;
-    }
-
-    .mini-card h3 {
-      margin: 16px 0 10px;
-      font-size: 24px;
-    }
-
-    .mini-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .section {
-      margin-top: 26px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .feature {
-      padding: 24px;
-      min-height: 220px;
-    }
-
-    .feature .icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(216,195,154,0.18);
-      background: rgba(216,195,154,0.08);
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .feature h3 {
-      margin: 0 0 10px;
-      font-size: 20px;
-    }
-
-    .feature p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.76);
-      backdrop-filter: blur(16px);
-      z-index: 30;
-      padding: 20px;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-card {
-      width: min(560px, 100%);
-      border-radius: 30px;
-      padding: 28px;
-      background: linear-gradient(180deg, rgba(18,18,18,0.98), rgba(8,8,8,1));
-      border: 1px solid rgba(216,195,154,0.16);
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-
-    .close {
-      position: absolute;
-      right: 18px;
-      top: 18px;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    .modal-card h2 {
-      margin: 16px 0 10px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 44px;
-      line-height: 0.95;
-    }
-
-    .modal-card p {
-      color: var(--muted);
-      line-height: 1.8;
-      margin: 0 0 20px;
-    }
-
-    .form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-
-    .field label {
-      font-size: 11px;
-      color: rgba(247,243,234,0.42);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-
-    .field input, .field textarea {
-      width: 100%;
-      padding: 14px 15px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      outline: none;
-    }
-
-    .field textarea { min-height: 110px; resize: vertical; }
-
-    .status {
-      display: none;
-      margin-top: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(216,195,154,0.08);
-      color: var(--gold);
-      border: 1px solid rgba(216,195,154,0.15);
-      font-size: 14px;
-    }
-
-    .status.show { display: block; }
-
-    @media (max-width: 1100px) {
-      .hero, .section, .subcards, .app-grid, .stats {
+    @media (max-width: 980px) {
+      .container {
         grid-template-columns: 1fr;
+      }
+
+      .hero, .panel {
+        min-height: auto;
+      }
+
+      .hero {
+        padding: 42px 28px;
+      }
+
+      .panel {
+        padding: 28px;
+      }
+
+      h1 {
+        font-size: 46px;
       }
     }
 
-    @media (max-width: 760px) {
-      .nav { flex-direction: column; gap: 16px; align-items: flex-start; }
-      .nav-links { flex-wrap: wrap; gap: 14px; }
-      .hero-left, .preview, .mini-card, .feature, .modal-card { padding: 22px; }
-      h1 { font-size: 62px; }
-      .lead { font-size: 16px; }
+    @media (max-width: 560px) {
+      body {
+        padding: 16px;
+      }
+
+      .hero, .panel {
+        border-radius: 22px;
+      }
+
+      .btn {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="grid"></div>
-  <div class="glow"></div>
+  <div class="container">
+    <section class="hero">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>Qentro Private Network</span>
+      </div>
 
-  <div class="wrap">
-    <div class="shell">
-      <nav class="nav">
-        <div class="brand">
-          <div class="brand-mark">Q</div>
-          <div>Qentro</div>
-        </div>
-        <div class="nav-links">
-          <a href="#model">Model</a>
-          <a href="#inside">Inside</a>
-          <a href="#apply">Access</a>
-        </div>
-      </nav>
+      <h1>Not everyone gets in.</h1>
 
-      <section class="hero">
-        <div class="card hero-left">
-          <div class="eyebrow"><span class="dot"></span> Private network for high-value operators</div>
-          <h1>Access to <span>people</span> who turn introductions into deals.</h1>
-          <p class="lead">
-            Qentro is a curated network for founders, operators, agency owners, investors, and commercial builders looking for partnerships, strategic introductions, and connections that convert into revenue.
-          </p>
+      <p class="subtitle">
+        Qentro is a <span class="highlight">private network</span> built for selected members.
+        Access is not public. Every request is reviewed carefully.
+        Approved applicants and referred guests may receive a private entry path.
+      </p>
 
-          <div class="hero-actions">
-            <button class="btn" onclick="openModal()">Request Access</button>
-            <a class="btn-ghost" href="#inside">Preview Product</a>
-          </div>
+      <div class="mini-info">
+        <div class="chip">Private Access</div>
+        <div class="chip">Manual Review</div>
+        <div class="chip">Referral Priority</div>
+        <div class="chip">Members Only</div>
+      </div>
+    </section>
 
-          <div class="stats" id="model">
-            <div class="stat">
-              <small>Network Logic</small>
-              <strong>Filtered</strong>
-              <p>Applications are reviewed. Visibility can be limited. Not every member gets the same access.</p>
+    <aside class="panel">
+      <div class="panel-top">
+        <h2>Choose your entry</h2>
+        <p>
+          If you were referred, start with your referral access.  
+          If you want to be considered, submit an application.  
+          Existing members can enter directly from the member login.
+        </p>
+
+        <div class="button-group">
+          <a class="btn" href="referans.html">
+            <div>
+              <strong>Referanslı Giriş</strong>
+              <span>Referral-based access for invited users</span>
             </div>
-            <div class="stat">
-              <small>Connection Style</small>
-              <strong>Intent</strong>
-              <p>Members connect through purpose: partnership, capital, project, growth, or distribution.</p>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="btn" href="basvuru.html">
+            <div>
+              <strong>Giriş İçin Başvuru Yap</strong>
+              <span>Apply for review and wait for approval</span>
             </div>
-            <div class="stat">
-              <small>End Goal</small>
-              <strong>Revenue</strong>
-              <p>The point is not activity. The point is introductions that create commercial outcomes.</p>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="btn" href="uyegiris.html">
+            <div>
+              <strong>Üyelerin Giriş Yapması</strong>
+              <span>Member login for approved accounts</span>
             </div>
-          </div>
+            <div class="arrow">→</div>
+          </a>
         </div>
+      </div>
 
-        <div class="hero-right" id="inside">
-          <div class="card preview">
-            <div class="preview-top">
-              <div>
-                <div class="mini-label">Member dashboard preview</div>
-                <strong>Inside Qentro</strong>
-              </div>
-              <div class="badge">Elite preview</div>
-            </div>
-
-            <div class="app-shell">
-              <div class="toolbar">
-                <div class="dots"><span></span><span></span><span></span></div>
-                <div class="search">Search members, opportunities, sectors, operators…</div>
-              </div>
-
-              <div class="app-grid">
-                <div class="side">
-                  <div class="menu-item active">
-                    <strong>Suggested Matches</strong>
-                    <span>3 curated intros this week</span>
-                  </div>
-                  <div class="menu-item">
-                    <strong>Opportunity Board</strong>
-                    <span>Partnerships, deals, capital</span>
-                  </div>
-                  <div class="menu-item">
-                    <strong>Intent Connect</strong>
-                    <span>No vague networking</span>
-                  </div>
-                  <div class="menu-item">
-                    <strong>Deal Tracking</strong>
-                    <span>Introductions → outcomes</span>
-                  </div>
-                </div>
-
-                <div class="main">
-                  <div class="feed-head">
-                    <div>
-                      <strong>High-match opportunities</strong>
-                      <div style="color: var(--muted); font-size: 13px; margin-top: 4px;">Matched to your profile and commercial upside.</div>
-                    </div>
-                    <div class="pill">87 Match</div>
-                  </div>
-
-                  <div class="feed-item">
-                    <strong>Seeking operating partner for performance-led e-commerce rollout</strong>
-                    <span>Operator-led growth • revenue share + upside • immediate execution need</span>
-                  </div>
-                  <div class="feed-item">
-                    <strong>Agency founder looking for regional distribution partner</strong>
-                    <span>Premium offer • strategic leverage • high-intent commercial fit</span>
-                  </div>
-                  <div class="feed-item">
-                    <strong>Warm capital intro request for profitable B2B SaaS</strong>
-                    <span>Private capital access • founder-quality signal • no public noise</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="subcards">
-            <div class="card mini-card">
-              <div class="eyebrow"><span class="dot"></span> Intent-based</div>
-              <h3>No empty networking.</h3>
-              <p>Every introduction starts with a reason and expected upside. That keeps the room sharp and commercially useful.</p>
-            </div>
-            <div class="card mini-card">
-              <div class="eyebrow"><span class="dot"></span> Curated weekly</div>
-              <h3>Selected over volume.</h3>
-              <p>Instead of endless feeds, members receive better matches, better visibility, and better opportunity flow.</p>
-            </div>
-          </div>
+      <div class="panel-bottom">
+        Access is limited and reviewed manually.  
+        Approval is not guaranteed.  
+        Private invitations and member credentials are required for full entry.
+        <div class="footer-note">
+          Qentro © 2026 — Private, selective, invitation-aware.
         </div>
-      </section>
-
-      <section class="section">
-        <div class="card feature">
-          <div class="icon">01</div>
-          <h3>Curated membership</h3>
-          <p>Qentro is built around controlled access. Better filters create better members, better intros, and better trust.</p>
-        </div>
-        <div class="card feature">
-          <div class="icon">02</div>
-          <h3>Business-first connections</h3>
-          <p>Partnership, growth, capital, distribution, acquisition, operator search. Every connect request carries intent.</p>
-        </div>
-        <div class="card feature" id="apply">
-          <div class="icon">03</div>
-          <h3>Commercial upside</h3>
-          <p>The platform is designed for outcomes: clients, partnerships, warm investor access, deals, and long-term leverage.</p>
-        </div>
-      </section>
-    </div>
+      </div>
+    </aside>
   </div>
-
-  <div class="modal" id="modal">
-    <div class="modal-card">
-      <button class="close" onclick="closeModal()">✕</button>
-      <div class="eyebrow"><span class="dot"></span> Application review</div>
-      <h2>Request access</h2>
-      <p>Submit your profile and intent. In the live product, this will connect to your backend and review flow.</p>
-
-      <form class="form" onsubmit="submitForm(event)">
-        <div class="field">
-          <label>Full name</label>
-          <input type="text" placeholder="Your full name" required>
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" placeholder="name@company.com" required>
-        </div>
-        <div class="field">
-          <label>What do you want from Qentro?</label>
-          <textarea placeholder="Partnerships, clients, operators, growth, capital…" required></textarea>
-        </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 6px;">
-          <button class="btn" type="submit">Submit Application</button>
-          <button class="btn-ghost" type="button" onclick="closeModal()">Close</button>
-        </div>
-        <div class="status" id="status">Application captured. Next step: connect this form to Supabase.</div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const modal = document.getElementById('modal');
-    const status = document.getElementById('status');
-
-    function openModal() {
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function submitForm(e) {
-      e.preventDefault();
-      status.classList.add('show');
-      e.target.reset();
-    }
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      document.documentElement.style.setProperty('--x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--y', `${e.clientY}px`);
-    });
-  </script>
 </body>
 </html>
