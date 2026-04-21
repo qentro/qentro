@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Private Access</title>
@@ -140,7 +139,6 @@
       justify-content: space-between;
       align-items: center;
       transition: 0.22s ease;
-      cursor: pointer;
     }
 
     .btn:hover {
@@ -153,7 +151,6 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      text-align: left;
     }
 
     .btn-text strong {
@@ -219,7 +216,7 @@
 
       <p class="lead">
         Qentro is a private network built for selected members. Access is not public.
-        Every request is reviewed carefully. Approved applicants and referred guests
+        Every request is reviewed carefully. Referred guests and approved applicants
         may receive a private entry path.
       </p>
 
@@ -235,41 +232,42 @@
       <div>
         <h2>Choose your entry</h2>
         <p class="top-text">
-          If you were referred, start with your referral access. If you want to be considered,
-          submit an application. Existing members can enter directly from the member login.
+          If you were referred, continue with referral access. If you do not have a referral,
+          you may submit a detailed application for review. Existing members can enter from
+          the member login.
         </p>
 
         <div class="button-group">
-          <button class="btn" id="ref-btn" type="button">
+          <a class="btn" href="referans.html">
             <div class="btn-text">
               <strong>Referanslı Giriş</strong>
-              <span>Referral-based access for invited users</span>
+              <span>Referral-based entry for invited users</span>
             </div>
             <div class="arrow">›</div>
-          </button>
+          </a>
 
-          <button class="btn" id="apply-btn" type="button">
+          <a class="btn" href="basvuru.html">
             <div class="btn-text">
-              <strong>Giriş İçin Başvuru Yap</strong>
-              <span>Apply for review and wait for approval</span>
+              <strong>Başvuru Yap</strong>
+              <span>Detailed application for non-referred guests</span>
             </div>
             <div class="arrow">›</div>
-          </button>
+          </a>
 
-          <button class="btn" id="member-btn" type="button">
+          <a class="btn" href="uyegiris.html">
             <div class="btn-text">
-              <strong>Üyelerin Giriş Yapması</strong>
-              <span>Member login for approved accounts</span>
+              <strong>Üye Girişi</strong>
+              <span>Login for approved members</span>
             </div>
             <div class="arrow">›</div>
-          </button>
+          </a>
         </div>
       </div>
 
       <div class="panel-bottom">
         Access is limited and reviewed manually.<br />
         Approval is not guaranteed.<br />
-        Private invitations and member credentials are required for full entry.
+        Private invitations and verified member credentials are required for full entry.
 
         <div class="footer-note">
           Qentro © 2026 — Private, selective, invitation-aware.
@@ -277,55 +275,5 @@
       </div>
     </aside>
   </div>
-
-  <script>
-    const { createClient } = supabase;
-    const client = createClient(
-      "https://phepgsayyzfeydrwjnvr.supabase.co",
-      "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
-    );
-
-    async function signUpFlow() {
-      const email = prompt("Email gir:");
-      if (!email) return;
-
-      const password = prompt("Şifre gir:");
-      if (!password) return;
-
-      const { error } = await client.auth.signUp({
-        email,
-        password
-      });
-
-      if (error) {
-        alert("Hata: " + error.message);
-      } else {
-        alert("Kayıt başarılı. Mail onayı gerekiyorsa mailini kontrol et.");
-      }
-    }
-
-    async function signInFlow() {
-      const email = prompt("Email gir:");
-      if (!email) return;
-
-      const password = prompt("Şifre gir:");
-      if (!password) return;
-
-      const { error } = await client.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) {
-        alert("Giriş hatası: " + error.message);
-      } else {
-        alert("Giriş başarılı!");
-      }
-    }
-
-    document.getElementById("ref-btn").addEventListener("click", signUpFlow);
-    document.getElementById("apply-btn").addEventListener("click", signUpFlow);
-    document.getElementById("member-btn").addEventListener("click", signInFlow);
-  </script>
 </body>
 </html>
