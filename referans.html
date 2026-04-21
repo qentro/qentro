@@ -1,1 +1,79 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qentro | Üye Girişi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
+      color: #fff; display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .card {
+      width: 100%; max-width: 620px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 28px; padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    h1 { font-size: 36px; margin-bottom: 12px; }
+    p { color: rgba(255,255,255,0.72); line-height: 1.65; margin-bottom: 24px; }
+    .field { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 8px; font-size: 14px; color: rgba(255,255,255,0.82); }
+    input {
+      width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06); color: #fff; outline: none;
+    }
+    button, a.btn {
+      width: 100%; display: inline-flex; justify-content: center; align-items: center;
+      padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; cursor: pointer; margin-top: 8px;
+    }
+    .back { margin-top: 14px; }
+    #msg { margin-top: 16px; color: rgba(255,255,255,0.82); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Üye Girişi</h1>
+    <p>Onaylı üyeler email ve şifre ile giriş yapabilir.</p>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" />
+    </div>
+
+    <div class="field">
+      <label for="password">Şifre</label>
+      <input id="password" type="password" />
+    </div>
+
+    <button id="loginBtn" type="button">Giriş Yap</button>
+    <a class="btn back" href="index.html">Ana Sayfaya Dön</a>
+    <div id="msg"></div>
+  </div>
+
+  <script>
+    const { createClient } = supabase;
+    const client = createClient(
+      "https://phepgsayyzfeydrwjnvr.supabase.co",
+      "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
+    );
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const { error } = await client.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        document.getElementById("msg").textContent = "Giriş hatası: " + error.message;
+      } else {
+        document.getElementById("msg").textContent = "Giriş başarılı.";
+      }
+    });
+  </script>
+</body>
+</html>
