@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Private Access</title>
@@ -279,7 +279,8 @@
   </div>
 
   <script>
-    const supabase = window.supabase.createClient(
+    const { createClient } = supabase;
+    const client = createClient(
       "https://phepgsayyzfeydrwjnvr.supabase.co",
       "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
     );
@@ -291,7 +292,7 @@
       const password = prompt("Şifre gir:");
       if (!password) return;
 
-      const { error } = await supabase.auth.signUp({
+      const { error } = await client.auth.signUp({
         email,
         password
       });
@@ -299,7 +300,7 @@
       if (error) {
         alert("Hata: " + error.message);
       } else {
-        alert("Kayıt başarılı. Email onayı gerekiyorsa mailini kontrol et.");
+        alert("Kayıt başarılı. Mail onayı gerekiyorsa mailini kontrol et.");
       }
     }
 
@@ -310,7 +311,7 @@
       const password = prompt("Şifre gir:");
       if (!password) return;
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await client.auth.signInWithPassword({
         email,
         password
       });
