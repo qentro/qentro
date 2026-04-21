@@ -297,9 +297,38 @@
         Private invitations and member credentials are required for full entry.
         <div class="footer-note">
           Qentro © 2026 — Private, selective, invitation-aware.
-        </div>
-      </div>
-    </aside>
-  </div>
+</div>
+</div>
+</aside>
+</div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://phepgsayyzfeydrwjnvr.supabase.co",
+  "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
+);
+
+// TEST LOGIN
+document.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const email = prompt("Email gir:");
+    const password = prompt("Şifre gir:");
+
+    if (!email || !password) return;
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+
+    if (error) {
+      alert("Hata: " + error.message);
+    } else {
+      alert("Kayıt başarılı!");
+    }
+  });
+});
+</script>
+
 </body>
 </html>
