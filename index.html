@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Private Access</title>
+
   <style>
     * {
       margin: 0;
@@ -31,249 +32,107 @@
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 28px;
-      align-items: stretch;
     }
 
     .hero, .panel {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-    }
-
-    .hero {
-      padding: 56px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 680px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.72);
-      margin-bottom: 28px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: #fff;
-      box-shadow: 0 0 20px rgba(255,255,255,0.8);
+      padding: 40px;
     }
 
     h1 {
-      font-size: clamp(48px, 7vw, 86px);
-      line-height: 0.95;
-      letter-spacing: -0.05em;
-      margin-bottom: 26px;
-      max-width: 560px;
+      font-size: 56px;
+      margin-bottom: 20px;
     }
 
     .lead {
-      max-width: 560px;
-      color: rgba(255,255,255,0.78);
-      font-size: 18px;
-      line-height: 1.65;
-      margin-bottom: 34px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .tag {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: rgba(255,255,255,0.86);
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-size: 15px;
-    }
-
-    .panel {
-      padding: 34px;
-      min-height: 680px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
     }
 
     .panel h2 {
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-
-    .panel p.top-text {
-      color: rgba(255,255,255,0.72);
-      line-height: 1.65;
-      margin-bottom: 28px;
-      font-size: 16px;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      margin-bottom: 20px;
     }
 
     .btn {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 22px;
-      padding: 22px 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.22s ease;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-decoration: none;
+      color: white;
+      transition: 0.2s;
     }
 
     .btn:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.12);
     }
 
-    .btn-text {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .btn strong {
+      display: block;
+      font-size: 16px;
     }
 
-    .btn-text strong {
-      font-size: 17px;
-      font-weight: 700;
-    }
-
-    .btn-text span {
-      font-size: 14px;
-      color: rgba(255,255,255,0.66);
-      line-height: 1.45;
+    .btn span {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
     }
 
     .arrow {
-      font-size: 28px;
-      color: rgba(255,255,255,0.85);
-      margin-left: 18px;
-    }
-
-    .panel-bottom {
-      margin-top: 32px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.58);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .footer-note {
-      margin-top: 14px;
-      color: rgba(255,255,255,0.42);
-      font-size: 13px;
-    }
-
-    @media (max-width: 980px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-
-      .hero, .panel {
-        min-height: auto;
-      }
-
-      .hero {
-        padding: 34px 28px;
-      }
-
-      .panel {
-        padding: 26px 20px;
-      }
+      font-size: 22px;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <section class="hero">
-      <div class="eyebrow">
-        <span class="dot"></span>
-        <span>QENTRO PRIVATE NETWORK</span>
-      </div>
 
+    <div class="hero">
       <h1>Not everyone gets in.</h1>
-
       <p class="lead">
-        Qentro is a private network built for selected members. Access is not public.
-        Every request is reviewed carefully. Referred guests and approved applicants
-        may receive a private entry path.
+        Qentro is a private network.  
+        Only selected users are accepted.
       </p>
+    </div>
 
-      <div class="tags">
-        <span class="tag">Private Access</span>
-        <span class="tag">Manual Review</span>
-        <span class="tag">Referral Priority</span>
-        <span class="tag">Members Only</span>
-      </div>
-    </section>
+    <div class="panel">
+      <h2>Giriş Seçenekleri</h2>
 
-    <aside class="panel">
-      <div>
-        <h2>Choose your entry</h2>
-        <p class="top-text">
-          If you were referred, continue with referral access. If you do not have a referral,
-          you may submit a detailed application for review. Existing members can enter from
-          the member login.
-        </p>
-
-        <div class="button-group">
-          <a class="btn" href="referans.html">
-            <div class="btn-text">
-              <strong>Referanslı Giriş</strong>
-              <span>Referral-based entry for invited users</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
-
-          <a class="btn" href="basvuru.html">
-            <div class="btn-text">
-              <strong>Başvuru Yap</strong>
-              <span>Detailed application for non-referred guests</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
-
-          <a class="btn" href="uyegiris.html">
-            <div class="btn-text">
-              <strong>Üye Girişi</strong>
-              <span>Login for approved members</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
+      <!-- ÜYE GİRİŞİ -->
+      <a class="btn" href="uyegiris.html">
+        <div>
+          <strong>Üye Girişi</strong>
+          <span>Onaylı üyeler için giriş</span>
         </div>
-      </div>
+        <div class="arrow">›</div>
+      </a>
 
-      <div class="panel-bottom">
-        Access is limited and reviewed manually.<br />
-        Approval is not guaranteed.<br />
-        Private invitations and verified member credentials are required for full entry.
-
-        <div class="footer-note">
-          Qentro © 2026 — Private, selective, invitation-aware.
+      <!-- REFERANSLI -->
+      <a class="btn" href="referans.html">
+        <div>
+          <strong>Referanslı Üyelik Başvurusu Yap</strong>
+          <span>Referansı olan kullanıcılar için öncelikli başvuru</span>
         </div>
-      </div>
-    </aside>
+        <div class="arrow">›</div>
+      </a>
+
+      <!-- NORMAL BAŞVURU -->
+      <a class="btn" href="basvuru.html">
+        <div>
+          <strong>Üyelik Başvurusu Yap</strong>
+          <span>Referansı olmayan kullanıcılar için başvuru</span>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+
+    </div>
+
   </div>
 </body>
 </html>
