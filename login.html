@@ -28,38 +28,44 @@ body {
   padding: 22px;
 }
 
-.language-bar {
+.q-language-bar {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto 18px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.lang-btn {
+.q-lang-btn {
   width: auto !important;
-  min-width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
   display: inline-flex !important;
+  flex: 0 0 auto !important;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.78);
-  padding: 9px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 12px;
+  padding: 9px 12px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.16) !important;
+  background: rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.78) !important;
+  font-size: 12px !important;
+  font-weight: 700;
   letter-spacing: 0.05em;
-  transition: 0.2s ease;
-  flex: 0 0 auto !important;
+  line-height: 1 !important;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.lang-btn.active,
-.lang-btn:hover {
-  background: #fff;
-  color: #000;
+.q-lang-btn.active,
+.q-lang-btn:hover {
+  background: #fff !important;
+  color: #000 !important;
 }
 
 .login-wrap {
@@ -146,14 +152,14 @@ input {
     padding: 15px;
   }
 
-  .language-bar {
+  .q-language-bar {
     justify-content: center;
     margin-bottom: 14px;
   }
 
-  .lang-btn {
-    padding: 8px 10px;
-    font-size: 11px;
+  .q-lang-btn {
+    padding: 8px 10px !important;
+    font-size: 11px !important;
   }
 
   .login-wrap {
@@ -176,20 +182,20 @@ input {
 
 <body>
 
-<div class="language-bar">
-  <button class="lang-btn active" data-lang="en">EN</button>
-  <button class="lang-btn" data-lang="ar">AR</button>
-  <button class="lang-btn" data-lang="bn">BN</button>
-  <button class="lang-btn" data-lang="zh">中文</button>
-  <button class="lang-btn" data-lang="fr">FR</button>
-  <button class="lang-btn" data-lang="de">DE</button>
-  <button class="lang-btn" data-lang="hi">HI</button>
-  <button class="lang-btn" data-lang="it">IT</button>
-  <button class="lang-btn" data-lang="ja">JA</button>
-  <button class="lang-btn" data-lang="fa">FA</button>
-  <button class="lang-btn" data-lang="ru">RU</button>
-  <button class="lang-btn" data-lang="es">ES</button>
-  <button class="lang-btn" data-lang="tr">TR</button>
+<div class="q-language-bar">
+  <button type="button" class="q-lang-btn active" data-lang="en">EN</button>
+  <button type="button" class="q-lang-btn" data-lang="ar">AR</button>
+  <button type="button" class="q-lang-btn" data-lang="bn">BN</button>
+  <button type="button" class="q-lang-btn" data-lang="zh">中文</button>
+  <button type="button" class="q-lang-btn" data-lang="fr">FR</button>
+  <button type="button" class="q-lang-btn" data-lang="de">DE</button>
+  <button type="button" class="q-lang-btn" data-lang="hi">HI</button>
+  <button type="button" class="q-lang-btn" data-lang="it">IT</button>
+  <button type="button" class="q-lang-btn" data-lang="ja">JA</button>
+  <button type="button" class="q-lang-btn" data-lang="fa">FA</button>
+  <button type="button" class="q-lang-btn" data-lang="ru">RU</button>
+  <button type="button" class="q-lang-btn" data-lang="es">ES</button>
+  <button type="button" class="q-lang-btn" data-lang="tr">TR</button>
 </div>
 
 <main class="login-wrap">
@@ -272,14 +278,14 @@ function setLang(code) {
   document.getElementById("forgotBtn").textContent = t.forgotBtn;
   document.getElementById("homeBtn").textContent = t.homeBtn;
 
-  document.querySelectorAll(".lang-btn").forEach(button => {
+  document.querySelectorAll(".q-lang-btn").forEach(button => {
     button.classList.toggle("active", button.dataset.lang === code);
   });
 
   localStorage.setItem("qentroLang", code);
 }
 
-document.querySelectorAll(".lang-btn").forEach(button => {
+document.querySelectorAll(".q-lang-btn").forEach(button => {
   button.addEventListener("click", function () {
     setLang(this.dataset.lang);
   });
