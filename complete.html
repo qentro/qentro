@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Qentro - Hesap Tamamla</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  background: #000;
+  color: #fff;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.box {
+  width: 400px;
+}
+input, textarea, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+}
+button {
+  background: #fff;
+  color: #000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Hesabı Tamamla</h2>
+
+  <input id="pass" type="password" placeholder="Şifre">
+  <input id="pass2" type="password" placeholder="Şifre tekrar">
+  <input id="phone" placeholder="Telefon">
+  <input id="job" placeholder="Meslek">
+  <input id="country" placeholder="Ülke">
+  <input id="city" placeholder="Şehir">
+
+  <textarea id="why" placeholder="Neden katılmak istiyorsun?"></textarea>
+  <textarea id="about" placeholder="Kendinden bahset"></textarea>
+
+  <button onclick="register()">Hesabı Oluştur</button>
+</div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
+
+async function register() {
+
+  const email = localStorage.getItem("q_email");
+  const name = localStorage.getItem("q_name");
+
+  const pass = document.getElementById("pass").value;
+  const pass2 = document.getElementById("pass2").value;
+
+  if (pass !== pass2) {
+    alert("Şifreler aynı değil!");
+    return;
+  }
+
+  // kullanıcı oluştur
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: pass
+  });
+
+  if (error) {
+    alert("Hata: " + error.message);
+    return;
+  }
+
+  // profil kaydet
+  await supabase.from("users").insert([{
+    name: name,
+    email: email,
+    phone: document.getElementById("phone").value,
+    job: document.getElementById("job").value,
+    country: document.getElementById("country").value,
+    city: document.getElementById("city").value,
+    why: document.getElementById("why").value,
+    about: document.getElementById("about").value
+  }]);
+
+  alert("Hesap oluşturuldu! Mailini kontrol et.");
+}
+</script>
+
+</body>
+</html>
