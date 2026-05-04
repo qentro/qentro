@@ -1,190 +1,127 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qentro | Referanslı Erişim</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qentro | Referanslı Erişim</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    }
+<style>
+body {
+  margin:0;
+  background: radial-gradient(circle at center, #0d0d0d, #000);
+  color:#fff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, rgba(212, 175, 55, 0.16), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 30%),
-        linear-gradient(135deg, #020202, #090909 45%, #151515);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+.card {
+  width:420px;
+  padding:30px;
+  border-radius:20px;
+  background: rgba(20,20,20,0.6);
+  backdrop-filter: blur(20px);
+  border:1px solid rgba(255,255,255,0.08);
+}
 
-    .box {
-      width: 100%;
-      max-width: 460px;
-      padding: 38px 34px;
-      border-radius: 30px;
-      background: rgba(12, 12, 12, 0.88);
-      border: 1px solid rgba(212, 175, 55, 0.32);
-      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(18px);
-    }
+h2 {
+  margin-bottom:8px;
+}
 
-    .brand {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: 8px;
-      color: #f5d77b;
-      margin-bottom: 12px;
-    }
+.sub {
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:20px;
+}
 
-    h2 {
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
+input {
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  color:#fff;
+  background: linear-gradient(90deg,#2a2a2a,#1c1c1c);
+}
 
-    .subtitle {
-      text-align: center;
-      color: #b8b8b8;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
+button {
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
 
-    input {
-      width: 100%;
-      padding: 15px 16px;
-      margin-bottom: 14px;
-      border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.055);
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-    }
+.primary {
+  background: linear-gradient(90deg,#3a3a3a,#1f1f1f);
+  color:#fff;
+}
 
-    input::placeholder {
-      color: #8f8f8f;
-    }
+.secondary {
+  background:#111;
+  color:#888;
+}
 
-    input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.13);
-    }
-
-    button {
-      width: 100%;
-      padding: 16px;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 700;
-      margin-top: 8px;
-    }
-
-    .primary {
-      background: linear-gradient(135deg, #f5d77b, #b88a2b);
-      color: #050505;
-      box-shadow: 0 14px 35px rgba(212, 175, 55, 0.22);
-    }
-
-    .secondary {
-      background: rgba(255,255,255,0.07);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .primary:hover,
-    .secondary:hover {
-      filter: brightness(1.08);
-    }
-
-    .note {
-      margin-top: 20px;
-      color: #8e8e8e;
-      font-size: 12px;
-      text-align: center;
-      line-height: 1.5;
-    }
-  </style>
+.primary:hover {
+  opacity:0.9;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
-    <div class="brand">QENTRO</div>
+<div class="card">
+  <h2>Referanslı Erişim</h2>
+  <div class="sub">Onaylı kullanıcılar erişebilir</div>
 
-    <h2>Referanslı Erişim</h2>
+  <input id="name" placeholder="Ad Soyad">
+  <input id="email" placeholder="Email">
+  <input id="ref" placeholder="Referans Olan Kişi">
+  <input id="code" placeholder="Davet Kodu">
 
-    <div class="subtitle">
-      Qentro yalnızca onaylı ve davet kodu bulunan kişiler için açıktır.
-      Bilgilerinizi girerek erişiminizi doğrulayın.
-    </div>
+  <button class="primary" onclick="checkAccess()">Erişimi Doğrula</button>
+  <button class="secondary" onclick="goHome()">Ana Sayfa</button>
+</div>
 
-    <input id="name" placeholder="Ad Soyad">
-    <input id="email" type="email" placeholder="E-mail">
-    <input id="ref" placeholder="Size Referans Olan Kişinin Adı Soyadı">
-    <input id="code" placeholder="Davet Kodu">
+<script>
+const { createClient } = supabase;
 
-    <button class="primary" onclick="checkAccess()">Erişimi Doğrula</button>
-    <button class="secondary" onclick="goHome()">Ana Sayfa</button>
+const client = createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
 
-    <div class="note">
-      Davet kodu yalnızca onaylanmış başvurular için geçerlidir.
-    </div>
-  </div>
+async function checkAccess() {
+  const email = document.getElementById("email").value;
+  const code = document.getElementById("code").value;
 
-  <script>
-    const { createClient } = supabase;
+  const { data } = await client
+    .from("applications")
+    .select("*")
+    .eq("email", email)
+    .eq("invite_code", code)
+    .eq("status", "approved");
 
-    const client = createClient(
-      "https://wfkyriteptajmwkyzvub.supabase.co",
-      "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-    );
+  if (!data || data.length === 0) {
+    alert("Hatalı bilgi");
+    return;
+  }
 
-    async function checkAccess() {
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const code = document.getElementById("code").value.trim().toUpperCase();
+  localStorage.setItem("q_email", email);
+  window.location.href = "complete.html";
+}
 
-      if (!email || !code) {
-        alert("Lütfen e-mail ve davet kodunu girin.");
-        return;
-      }
-
-      const { data, error } = await client
-        .from("applications")
-        .select("*")
-        .eq("email", email)
-        .eq("invite_code", code)
-        .eq("status", "approved");
-
-      if (error || !data || data.length === 0) {
-        alert("Davet kodu veya e-mail hatalı.");
-        return;
-      }
-
-      localStorage.setItem("q_email", email);
-      localStorage.setItem("q_code", code);
-
-      window.location.href = "complete.html";
-    }
-
-    function goHome() {
-      window.location.href = "index.html";
-    }
-  </script>
+function goHome() {
+  window.location.href = "index.html";
+}
+</script>
 
 </body>
 </html>
