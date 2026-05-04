@@ -162,19 +162,21 @@ input {
 
 <div class="page">
 <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:18px;">
-  <span class="lang-btn" data-lang="en" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">EN</span>
-  <span class="lang-btn" data-lang="ar" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">AR</span>
-  <span class="lang-btn" data-lang="bn" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">BN</span>
-  <span class="lang-btn" data-lang="zh" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">中文</span>
-  <span class="lang-btn" data-lang="fr" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">FR</span>
-  <span class="lang-btn" data-lang="de" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">DE</span>
-  <span class="lang-btn" data-lang="hi" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">HI</span>
-  <span class="lang-btn" data-lang="it" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">IT</span>
-  <span class="lang-btn" data-lang="ja" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">JA</span>
-  <span class="lang-btn" data-lang="fa" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">FA</span>
-  <span class="lang-btn" data-lang="ru" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">RU</span>
-  <span class="lang-btn" data-lang="es" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">ES</span>
-  <span class="lang-btn" data-lang="tr" style="width:auto !important; min-width:42px; padding:9px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.78); cursor:pointer; font-size:12px; font-weight:700; text-align:center;">TR</span>
+
+  <span onclick="setLang('en')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">EN</span>
+  <span onclick="setLang('ar')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">AR</span>
+  <span onclick="setLang('bn')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">BN</span>
+  <span onclick="setLang('zh')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">中文</span>
+  <span onclick="setLang('fr')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">FR</span>
+  <span onclick="setLang('de')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">DE</span>
+  <span onclick="setLang('hi')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">HI</span>
+  <span onclick="setLang('it')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">IT</span>
+  <span onclick="setLang('ja')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">JA</span>
+  <span onclick="setLang('fa')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">FA</span>
+  <span onclick="setLang('ru')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">RU</span>
+  <span onclick="setLang('es')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">ES</span>
+  <span onclick="setLang('tr')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#fff;color:#000;font-size:12px;cursor:pointer;">TR</span>
+
 </div>
 
   <div class="card">
