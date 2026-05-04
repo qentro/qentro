@@ -10,19 +10,11 @@
     body {
       min-height: 100vh;
       background: linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      color: #fff; display: flex; align-items: center; justify-content: center; padding: 24px;
     }
     .card {
-      width: 100%;
-      max-width: 720px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 28px;
-      padding: 32px;
+      width: 100%; max-width: 720px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 28px; padding: 32px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.45);
     }
     h1 { font-size: 40px; margin-bottom: 12px; }
@@ -30,107 +22,86 @@
     .field { margin-bottom: 16px; }
     label { display: block; margin-bottom: 8px; font-size: 14px; }
     input, textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
+      width: 100%; padding: 14px 16px; border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      outline: none;
+      background: rgba(255,255,255,0.06); color: #fff;
     }
-    textarea { min-height: 120px; resize: vertical; }
-    button, a.btn {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.14);
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 8px;
+    textarea { min-height: 120px; }
+    button {
+      width: 100%; padding: 16px; border-radius: 16px;
+      background: rgba(255,255,255,0.08); color: #fff;
+      border: 1px solid rgba(255,255,255,0.14); cursor: pointer;
     }
-    button:hover, a.btn:hover { background: rgba(255,255,255,0.12); }
-    #msg { margin-top: 16px; color: rgba(255,255,255,0.9); font-size: 14px; }
+    #msg { margin-top: 16px; }
   </style>
 </head>
 
 <body>
   <div class="card">
     <h1>Üyelik Başvurusu Yap</h1>
-    <p>Referansın yoksa başvuru bırakabilirsin. Uygun görülen başvurular incelenir.</p>
+    <p>Referansın yoksa başvuru bırakabilirsin.</p>
 
     <div class="field">
-      <label for="full_name">Ad Soyad</label>
-      <input id="full_name" type="text" />
+      <label>Ad Soyad</label>
+      <input id="full_name">
     </div>
 
     <div class="field">
-      <label for="email">Email</label>
-      <input id="email" type="email" />
+      <label>Email</label>
+      <input id="email">
     </div>
 
     <div class="field">
-      <label for="instagram">Instagram</label>
-      <input id="instagram" type="text" />
+      <label>Sosyal Medya Hesapların</label>
+      <textarea id="socials" placeholder="Instagram:\nLinkedIn:\nX:\nFacebook:"></textarea>
     </div>
 
     <div class="field">
-      <label for="profession">Meslek</label>
-      <input id="profession" type="text" />
+      <label>Meslek / İş Alanı</label>
+      <input id="profession">
     </div>
 
     <div class="field">
-      <label for="why_join">Neden katılmak istiyorsun?</label>
+      <label>Neden katılmak istiyorsun?</label>
       <textarea id="why_join"></textarea>
     </div>
 
-    <button id="applyBtn" type="button">Başvuruyu Gönder</button>
-    <a class="btn" href="index.html">Ana Sayfaya Dön</a>
+    <button id="applyBtn">Başvuruyu Gönder</button>
     <div id="msg"></div>
   </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-  <script>
-    const supabaseClient = window.supabase.createClient(
-      "https://wfkyriteptajmwkyzvub.supabase.co",
-      "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-    );
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
 
-    const button = document.getElementById("applyBtn");
-    const msg = document.getElementById("msg");
+document.getElementById("applyBtn").addEventListener("click", async () => {
 
-    button.addEventListener("click", async function () {
-      msg.textContent = "Gönderiliyor...";
-      button.disabled = true;
+  const payload = {
+    full_name: document.getElementById("full_name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    socials: document.getElementById("socials").value.trim(),
+    profession: document.getElementById("profession").value.trim(),
+    why_join: document.getElementById("why_join").value.trim()
+  };
 
-      const payload = {
-        full_name: document.getElementById("full_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        instagram: document.getElementById("instagram").value.trim(),
-        profession: document.getElementById("profession").value.trim(),
-        why_join: document.getElementById("why_join").value.trim()
-      };
+  if (!payload.full_name || !payload.email || !payload.why_join) {
+    document.getElementById("msg").textContent = "Zorunlu alanları doldur.";
+    return;
+  }
 
-      if (!payload.full_name || !payload.email || !payload.why_join) {
-        msg.textContent = "Zorunlu alanları doldur.";
-        button.disabled = false;
-        return;
-      }
+  const { error } = await supabase.from("applications").insert([payload]);
 
-      const result = await supabaseClient.from("applications").insert([payload]);
+  if (error) {
+    document.getElementById("msg").textContent = "Hata: " + error.message;
+  } else {
+    document.getElementById("msg").textContent = "Başvurun gönderildi ✅";
+  }
+});
+</script>
 
-      if (result.error) {
-        msg.textContent = "Hata: " + result.error.message;
-        button.disabled = false;
-      } else {
-        msg.textContent = "Başvurun gönderildi ✅";
-      }
-    });
-  </script>
 </body>
 </html>
