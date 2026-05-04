@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Qentro | Member Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -27,42 +27,35 @@ body {
   padding: 24px;
 }
 
-.page {
-  width: 100%;
+.language-top {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 50;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   max-width: 520px;
 }
 
-.language-bar {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.lang-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  min-width: 42px;
-  padding: 9px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.78);
+.language-top span {
+  color: rgba(255,255,255,0.46);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  user-select: none;
+  transition: color .2s ease;
 }
 
-.lang-btn.active,
-.lang-btn:hover {
-  background: #fff;
-  color: #000;
+.language-top span:hover,
+.language-top span.active {
+  color: #fff;
+}
+
+.page {
+  width: 100%;
+  max-width: 520px;
 }
 
 .card {
@@ -138,6 +131,19 @@ input {
 @media (max-width: 560px) {
   body {
     padding: 16px;
+    align-items: flex-start;
+    padding-top: 76px;
+  }
+
+  .language-top {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  .language-top span {
+    font-size: 10px;
   }
 
   .card {
@@ -148,46 +154,38 @@ input {
   h1 {
     font-size: 34px;
   }
-
-  .lang-btn {
-    min-width: 38px;
-    font-size: 11px;
-    padding: 8px 10px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="page">
-<div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:18px;">
-
-  <span onclick="setLang('en')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">EN</span>
-  <span onclick="setLang('ar')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">AR</span>
-  <span onclick="setLang('bn')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">BN</span>
-  <span onclick="setLang('zh')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">中文</span>
-  <span onclick="setLang('fr')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">FR</span>
-  <span onclick="setLang('de')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">DE</span>
-  <span onclick="setLang('hi')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">HI</span>
-  <span onclick="setLang('it')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">IT</span>
-  <span onclick="setLang('ja')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">JA</span>
-  <span onclick="setLang('fa')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">FA</span>
-  <span onclick="setLang('ru')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">RU</span>
-  <span onclick="setLang('es')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#111;color:#fff;font-size:12px;cursor:pointer;">ES</span>
-  <span onclick="setLang('tr')" style="padding:8px 12px;border-radius:999px;border:1px solid #444;background:#fff;color:#000;font-size:12px;cursor:pointer;">TR</span>
-
+<div class="language-top">
+  <span data-lang="en">EN</span>
+  <span data-lang="ar">AR</span>
+  <span data-lang="bn">BN</span>
+  <span data-lang="zh">ZH</span>
+  <span data-lang="fr">FR</span>
+  <span data-lang="de">DE</span>
+  <span data-lang="hi">HI</span>
+  <span data-lang="it">IT</span>
+  <span data-lang="ja">JA</span>
+  <span data-lang="fa">FA</span>
+  <span data-lang="ru">RU</span>
+  <span data-lang="es">ES</span>
+  <span data-lang="tr">TR</span>
 </div>
 
+<div class="page">
   <div class="card">
     <h1 id="title">Member Login</h1>
     <p id="subtitle">Approved members can sign in with their email and password.</p>
 
     <label id="emailLabel">Email</label>
-    <input id="email" type="email" autocomplete="email">
+    <input id="email" type="email" autocomplete="email" />
 
     <label id="passwordLabel">Password</label>
-    <input id="pass" type="password" autocomplete="current-password">
+    <input id="pass" type="password" autocomplete="current-password" />
 
     <button id="loginBtn" class="action-btn" onclick="login()">Sign In</button>
     <button id="forgotBtn" class="action-btn secondary" onclick="forgotPassword()">Forgot Password</button>
@@ -250,22 +248,22 @@ function setLang(code) {
   document.documentElement.dir = t.dir;
   document.title = t.pageTitle;
 
-  document.getElementById("title").innerHTML = t.title;
-  document.getElementById("subtitle").innerHTML = t.subtitle;
-  document.getElementById("emailLabel").innerHTML = t.emailLabel;
-  document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
-  document.getElementById("loginBtn").innerHTML = t.loginBtn;
-  document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
-  document.getElementById("homeBtn").innerHTML = t.homeBtn;
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("subtitle").textContent = t.subtitle;
+  document.getElementById("emailLabel").textContent = t.emailLabel;
+  document.getElementById("passwordLabel").textContent = t.passwordLabel;
+  document.getElementById("loginBtn").textContent = t.loginBtn;
+  document.getElementById("forgotBtn").textContent = t.forgotBtn;
+  document.getElementById("homeBtn").textContent = t.homeBtn;
 
-  document.querySelectorAll(".lang-btn").forEach(item => {
+  document.querySelectorAll(".language-top span").forEach(item => {
     item.classList.toggle("active", item.dataset.lang === code);
   });
 
   localStorage.setItem("qentroLang", code);
 }
 
-document.querySelectorAll(".lang-btn").forEach(item => {
+document.querySelectorAll(".language-top span").forEach(item => {
   item.addEventListener("click", function () {
     setLang(this.dataset.lang);
   });
