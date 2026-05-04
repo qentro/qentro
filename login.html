@@ -6,21 +6,8 @@
 <title>Qentro | Member Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-.language-bar button,
-.language-bar .lang-btn {
-  width: auto !important;
-  min-width: 44px !important;
-  padding: 9px 12px !important;
-  margin: 0 !important;
-  border-radius: 999px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
 
-.card button {
-  width: 100% !important;
-}<style>
+<style>
 * {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
@@ -55,21 +42,21 @@ body {
 }
 
 .lang-btn {
-  width: auto;
-  min-width: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: auto;
+  min-width: 42px;
+  padding: 9px 12px;
+  border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.16);
   background: rgba(255,255,255,0.06);
   color: rgba(255,255,255,0.78);
-  padding: 9px 12px;
-  margin: 0;
-  border-radius: 999px;
   cursor: pointer;
   font-size: 12px;
   letter-spacing: 0.05em;
   font-weight: 700;
+  user-select: none;
 }
 
 .lang-btn.active,
@@ -163,6 +150,7 @@ input {
   }
 
   .lang-btn {
+    min-width: 38px;
     font-size: 11px;
     padding: 8px 10px;
   }
@@ -174,19 +162,19 @@ input {
 
 <div class="page">
   <div class="language-bar">
-    <button class="lang-btn" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="ar">AR</button>
-    <button class="lang-btn" data-lang="bn">BN</button>
-    <button class="lang-btn" data-lang="zh">中文</button>
-    <button class="lang-btn" data-lang="fr">FR</button>
-    <button class="lang-btn" data-lang="de">DE</button>
-    <button class="lang-btn" data-lang="hi">HI</button>
-    <button class="lang-btn" data-lang="it">IT</button>
-    <button class="lang-btn" data-lang="ja">JA</button>
-    <button class="lang-btn" data-lang="fa">FA</button>
-    <button class="lang-btn" data-lang="ru">RU</button>
-    <button class="lang-btn" data-lang="es">ES</button>
-    <button class="lang-btn" data-lang="tr">TR</button>
+    <span class="lang-btn" data-lang="en">EN</span>
+    <span class="lang-btn" data-lang="ar">AR</span>
+    <span class="lang-btn" data-lang="bn">BN</span>
+    <span class="lang-btn" data-lang="zh">中文</span>
+    <span class="lang-btn" data-lang="fr">FR</span>
+    <span class="lang-btn" data-lang="de">DE</span>
+    <span class="lang-btn" data-lang="hi">HI</span>
+    <span class="lang-btn" data-lang="it">IT</span>
+    <span class="lang-btn" data-lang="ja">JA</span>
+    <span class="lang-btn" data-lang="fa">FA</span>
+    <span class="lang-btn" data-lang="ru">RU</span>
+    <span class="lang-btn" data-lang="es">ES</span>
+    <span class="lang-btn" data-lang="tr">TR</span>
   </div>
 
   <div class="card">
@@ -247,193 +235,6 @@ const texts = {
     sending: "Şifre yenileme linki gönderiliyor...",
     error: "Hata: ",
     sent: "Şifre yenileme linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin."
-  },
-  es: {
-    lang: "es", dir: "ltr",
-    pageTitle: "Qentro | Acceso de Miembros",
-    title: "Acceso de miembros",
-    subtitle: "Los miembros aprobados pueden iniciar sesión con su email y contraseña.",
-    emailLabel: "Email",
-    passwordLabel: "Contraseña",
-    loginBtn: "Iniciar sesión",
-    forgotBtn: "Olvidé mi contraseña",
-    homeBtn: "Volver al inicio",
-    emptyAlert: "Por favor ingresa tu email y contraseña.",
-    loginError: "Error de acceso: ",
-    emailFirst: "Por favor escribe primero tu email.",
-    sending: "Enviando enlace de recuperación...",
-    error: "Error: ",
-    sent: "El enlace de recuperación fue enviado a tu email. Revisa tu bandeja de entrada."
-  },
-  fr: {
-    lang: "fr", dir: "ltr",
-    pageTitle: "Qentro | Connexion membre",
-    title: "Connexion membre",
-    subtitle: "Les membres approuvés peuvent se connecter avec leur email et mot de passe.",
-    emailLabel: "Email",
-    passwordLabel: "Mot de passe",
-    loginBtn: "Se connecter",
-    forgotBtn: "Mot de passe oublié",
-    homeBtn: "Retour à l’accueil",
-    emptyAlert: "Veuillez entrer votre email et votre mot de passe.",
-    loginError: "Erreur de connexion : ",
-    emailFirst: "Veuillez d’abord entrer votre email.",
-    sending: "Envoi du lien de réinitialisation...",
-    error: "Erreur : ",
-    sent: "Le lien de réinitialisation a été envoyé à votre email. Veuillez vérifier votre boîte de réception."
-  },
-  de: {
-    lang: "de", dir: "ltr",
-    pageTitle: "Qentro | Mitglieder-Login",
-    title: "Mitglieder-Login",
-    subtitle: "Genehmigte Mitglieder können sich mit E-Mail und Passwort anmelden.",
-    emailLabel: "Email",
-    passwordLabel: "Passwort",
-    loginBtn: "Anmelden",
-    forgotBtn: "Passwort vergessen",
-    homeBtn: "Zur Startseite",
-    emptyAlert: "Bitte gib deine E-Mail und dein Passwort ein.",
-    loginError: "Login-Fehler: ",
-    emailFirst: "Bitte gib zuerst deine E-Mail-Adresse ein.",
-    sending: "Passwort-Link wird gesendet...",
-    error: "Fehler: ",
-    sent: "Der Link zum Zurücksetzen des Passworts wurde an deine E-Mail gesendet."
-  },
-  it: {
-    lang: "it", dir: "ltr",
-    pageTitle: "Qentro | Accesso membri",
-    title: "Accesso membri",
-    subtitle: "I membri approvati possono accedere con email e password.",
-    emailLabel: "Email",
-    passwordLabel: "Password",
-    loginBtn: "Accedi",
-    forgotBtn: "Password dimenticata",
-    homeBtn: "Torna alla home",
-    emptyAlert: "Inserisci email e password.",
-    loginError: "Errore di accesso: ",
-    emailFirst: "Inserisci prima il tuo indirizzo email.",
-    sending: "Invio del link di recupero...",
-    error: "Errore: ",
-    sent: "Il link di recupero password è stato inviato alla tua email."
-  },
-  ru: {
-    lang: "ru", dir: "ltr",
-    pageTitle: "Qentro | Вход для участников",
-    title: "Вход для участников",
-    subtitle: "Одобренные участники могут войти с помощью email и пароля.",
-    emailLabel: "Email",
-    passwordLabel: "Пароль",
-    loginBtn: "Войти",
-    forgotBtn: "Забыли пароль",
-    homeBtn: "На главную",
-    emptyAlert: "Введите email и пароль.",
-    loginError: "Ошибка входа: ",
-    emailFirst: "Сначала введите ваш email.",
-    sending: "Отправка ссылки для сброса пароля...",
-    error: "Ошибка: ",
-    sent: "Ссылка для сброса пароля отправлена на ваш email."
-  },
-  zh: {
-    lang: "zh", dir: "ltr",
-    pageTitle: "Qentro | 会员登录",
-    title: "会员登录",
-    subtitle: "已批准的会员可以使用邮箱和密码登录。",
-    emailLabel: "邮箱",
-    passwordLabel: "密码",
-    loginBtn: "登录",
-    forgotBtn: "忘记密码",
-    homeBtn: "返回首页",
-    emptyAlert: "请输入邮箱和密码。",
-    loginError: "登录错误：",
-    emailFirst: "请先输入你的邮箱地址。",
-    sending: "正在发送密码重置链接...",
-    error: "错误：",
-    sent: "密码重置链接已发送到你的邮箱。请检查收件箱。"
-  },
-  ar: {
-    lang: "ar", dir: "rtl",
-    pageTitle: "Qentro | تسجيل دخول الأعضاء",
-    title: "تسجيل دخول الأعضاء",
-    subtitle: "يمكن للأعضاء المعتمدين تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور.",
-    emailLabel: "البريد الإلكتروني",
-    passwordLabel: "كلمة المرور",
-    loginBtn: "تسجيل الدخول",
-    forgotBtn: "نسيت كلمة المرور",
-    homeBtn: "العودة إلى الرئيسية",
-    emptyAlert: "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
-    loginError: "خطأ في تسجيل الدخول: ",
-    emailFirst: "يرجى إدخال البريد الإلكتروني أولاً.",
-    sending: "جارٍ إرسال رابط إعادة تعيين كلمة المرور...",
-    error: "خطأ: ",
-    sent: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني."
-  },
-  fa: {
-    lang: "fa", dir: "rtl",
-    pageTitle: "Qentro | ورود اعضا",
-    title: "ورود اعضا",
-    subtitle: "اعضای تأییدشده می‌توانند با ایمیل و رمز عبور وارد شوند.",
-    emailLabel: "ایمیل",
-    passwordLabel: "رمز عبور",
-    loginBtn: "ورود",
-    forgotBtn: "رمز عبور را فراموش کردم",
-    homeBtn: "بازگشت به صفحه اصلی",
-    emptyAlert: "لطفاً ایمیل و رمز عبور را وارد کنید.",
-    loginError: "خطای ورود: ",
-    emailFirst: "لطفاً ابتدا ایمیل خود را وارد کنید.",
-    sending: "در حال ارسال لینک بازیابی رمز عبور...",
-    error: "خطا: ",
-    sent: "لینک بازیابی رمز عبور به ایمیل شما ارسال شد."
-  },
-  hi: {
-    lang: "hi", dir: "ltr",
-    pageTitle: "Qentro | सदस्य लॉगिन",
-    title: "सदस्य लॉगिन",
-    subtitle: "स्वीकृत सदस्य ईमेल और पासवर्ड से लॉगिन कर सकते हैं।",
-    emailLabel: "Email",
-    passwordLabel: "पासवर्ड",
-    loginBtn: "लॉगिन करें",
-    forgotBtn: "पासवर्ड भूल गए",
-    homeBtn: "होम पर वापस जाएँ",
-    emptyAlert: "कृपया email और पासवर्ड दर्ज करें।",
-    loginError: "लॉगिन त्रुटि: ",
-    emailFirst: "कृपया पहले अपना email दर्ज करें।",
-    sending: "पासवर्ड रीसेट लिंक भेजा जा रहा है...",
-    error: "त्रुटि: ",
-    sent: "पासवर्ड रीसेट लिंक आपके email पर भेज दिया गया है।"
-  },
-  ja: {
-    lang: "ja", dir: "ltr",
-    pageTitle: "Qentro | メンバーログイン",
-    title: "メンバーログイン",
-    subtitle: "承認済みメンバーはメールアドレスとパスワードでログインできます。",
-    emailLabel: "メール",
-    passwordLabel: "パスワード",
-    loginBtn: "ログイン",
-    forgotBtn: "パスワードを忘れた",
-    homeBtn: "ホームに戻る",
-    emptyAlert: "メールとパスワードを入力してください。",
-    loginError: "ログインエラー: ",
-    emailFirst: "先にメールアドレスを入力してください。",
-    sending: "パスワード再設定リンクを送信中...",
-    error: "エラー: ",
-    sent: "パスワード再設定リンクをメールに送信しました。"
-  },
-  bn: {
-    lang: "bn", dir: "ltr",
-    pageTitle: "Qentro | সদস্য লগইন",
-    title: "সদস্য লগইন",
-    subtitle: "অনুমোদিত সদস্যরা email এবং password দিয়ে লগইন করতে পারেন।",
-    emailLabel: "Email",
-    passwordLabel: "Password",
-    loginBtn: "লগইন করুন",
-    forgotBtn: "Password ভুলে গেছেন",
-    homeBtn: "হোমে ফিরুন",
-    emptyAlert: "অনুগ্রহ করে email এবং password লিখুন।",
-    loginError: "লগইন ত্রুটি: ",
-    emailFirst: "অনুগ্রহ করে আগে আপনার email লিখুন।",
-    sending: "Password reset link পাঠানো হচ্ছে...",
-    error: "ত্রুটি: ",
-    sent: "Password reset link আপনার email-এ পাঠানো হয়েছে।"
   }
 };
 
@@ -455,15 +256,15 @@ function setLang(code) {
   document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
   document.getElementById("homeBtn").innerHTML = t.homeBtn;
 
-  document.querySelectorAll(".lang-btn").forEach(button => {
-    button.classList.toggle("active", button.dataset.lang === code);
+  document.querySelectorAll(".lang-btn").forEach(item => {
+    item.classList.toggle("active", item.dataset.lang === code);
   });
 
   localStorage.setItem("qentroLang", code);
 }
 
-document.querySelectorAll(".lang-btn").forEach(button => {
-  button.addEventListener("click", function () {
+document.querySelectorAll(".lang-btn").forEach(item => {
+  item.addEventListener("click", function () {
     setLang(this.dataset.lang);
   });
 });
