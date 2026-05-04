@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Qentro Dashboard</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
 <style>
 body {
   background: black;
@@ -24,9 +22,8 @@ button {
 
 <body>
 
-<h1 id="title">Qentro Private Area</h1>
-<p id="welcome">Yükleniyor...</p>
-
+<h1>Qentro Private Area</h1>
+<p id="welcome">Kontrol ediliyor...</p>
 <button onclick="logout()">Çıkış Yap</button>
 
 <script>
@@ -35,43 +32,43 @@ const supabase = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
-// Kullanıcı kontrol
-async function checkUser() {
-  const { data } = await supabase.auth.getUser();
+async function start() {
+  const userResult = await supabase.auth.getUser();
 
-  if (!data.user) {
+  if (!userResult.data || !userResult.data.user) {
     window.location.href = "login.html";
     return;
   }
 
-  loadUser(data.user.email);
-}
+  const email = userResult.data.user.email;
 
-// Kullanıcı bilgilerini çek
-async function loadUser(email) {
-
-  const { data: userData, error } = await supabase
+  const profileResult = await supabase
     .from("users")
     .select("*")
     .eq("email", email)
-    .single();
+    .maybeSingle();
 
-  if (userData) {
+  if (profileResult.error) {
     document.getElementById("welcome").innerText =
-      "Hoşgeldin, " + userData.name;
+      "Profil okunamadı: " + profileResult.error.message;
+    return;
+  }
+
+  if (profileResult.data && profileResult.data.name) {
+    document.getElementById("welcome").innerText =
+      "Hoşgeldin, " + profileResult.data.name;
   } else {
     document.getElementById("welcome").innerText =
-      "Hoşgeldin";
+      "Hoşgeldin. Profil bilgisi bulunamadı.";
   }
 }
 
-// Çıkış
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
 }
 
-checkUser();
+start();
 </script>
 
 </body>
