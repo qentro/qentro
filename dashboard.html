@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Qentro Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  background: black;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding-top: 100px;
+}
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Qentro Private Area</h1>
+<p>Hoşgeldin. Artık içeridesin.</p>
+
+<button onclick="logout()">Çıkış Yap</button>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
+
+async function checkUser() {
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    window.location.href = "login.html";
+  }
+}
+
+checkUser();
+
+async function logout() {
+  await supabase.auth.signOut();
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
