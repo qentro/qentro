@@ -6,59 +6,60 @@
   <title>Qentro | Üyelik Başvurusu</title>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
-      color: #fff; display: flex; align-items: center; justify-content: center; padding: 24px;
+      min-height:100vh; background:linear-gradient(135deg,#050505,#111);
+      color:white; display:flex; align-items:center; justify-content:center; padding:24px;
     }
     .card {
-      width: 100%; max-width: 720px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12); border-radius: 28px; padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      width:100%; max-width:720px; background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:32px;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
     }
-    h1 { font-size: 40px; margin-bottom: 12px; }
-    p { color: rgba(255,255,255,0.72); margin-bottom: 24px; }
-    .field { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 8px; font-size: 14px; }
+    h1 { font-size:40px; margin-bottom:12px; }
+    p { color:rgba(255,255,255,.72); margin-bottom:24px; }
+    .field { margin-bottom:16px; }
+    label { display:block; margin-bottom:8px; font-size:14px; }
     input, textarea {
-      width: 100%; padding: 14px 16px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06); color: #fff;
+      width:100%; padding:14px 16px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06); color:white; outline:none;
     }
-    textarea { min-height: 120px; }
-    button {
-      width: 100%; padding: 16px; border-radius: 16px;
-      background: rgba(255,255,255,0.08); color: #fff;
-      border: 1px solid rgba(255,255,255,0.14); cursor: pointer;
+    textarea { min-height:110px; resize:vertical; }
+    button, a {
+      width:100%; display:flex; justify-content:center; align-items:center;
+      padding:16px; border-radius:16px; margin-top:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.08); color:white;
+      text-decoration:none; cursor:pointer;
     }
-    #msg { margin-top: 16px; }
+    #msg { margin-top:16px; font-size:14px; color:rgba(255,255,255,.9); }
   </style>
 </head>
 
 <body>
   <div class="card">
     <h1>Üyelik Başvurusu Yap</h1>
-    <p>Referansın yoksa başvuru bırakabilirsin.</p>
+    <p>Referansın yoksa başvuru bırakabilirsin. Uygun görülen başvurular incelenir.</p>
 
     <div class="field">
       <label>Ad Soyad</label>
-      <input id="full_name">
+      <input id="full_name" type="text">
     </div>
 
     <div class="field">
       <label>Email</label>
-      <input id="email">
+      <input id="email" type="email">
     </div>
 
     <div class="field">
       <label>Sosyal Medya Hesapların</label>
-      <textarea id="socials" placeholder="Instagram:\nLinkedIn:\nX:\nFacebook:"></textarea>
+      <textarea id="socials" placeholder="Instagram:&#10;LinkedIn:&#10;X:&#10;Facebook:"></textarea>
     </div>
 
     <div class="field">
       <label>Meslek / İş Alanı</label>
-      <input id="profession">
+      <input id="profession" type="text">
     </div>
 
     <div class="field">
@@ -66,21 +67,21 @@
       <textarea id="why_join"></textarea>
     </div>
 
-    <button id="applyBtn">Başvuruyu Gönder</button>
+    <button id="applyBtn" type="button">Başvuruyu Gönder</button>
+    <a href="index.html">Ana Sayfaya Dön</a>
+
     <div id="msg"></div>
   </div>
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
 <script>
-const supabase = window.supabase.createClient(
-  "https://wfkyriteptajmwkyzvub.supabase.co",
-  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-);
+document.getElementById("applyBtn").onclick = async function () {
+  const msg = document.getElementById("msg");
+  const button = document.getElementById("applyBtn");
 
-document.getElementById("applyBtn").addEventListener("click", async () => {
+  msg.textContent = "Gönderiliyor...";
+  button.disabled = true;
 
-  const payload = {
+  const data = {
     full_name: document.getElementById("full_name").value.trim(),
     email: document.getElementById("email").value.trim(),
     socials: document.getElementById("socials").value.trim(),
@@ -88,19 +89,37 @@ document.getElementById("applyBtn").addEventListener("click", async () => {
     why_join: document.getElementById("why_join").value.trim()
   };
 
-  if (!payload.full_name || !payload.email || !payload.why_join) {
-    document.getElementById("msg").textContent = "Zorunlu alanları doldur.";
+  if (!data.full_name || !data.email || !data.why_join) {
+    msg.textContent = "Lütfen ad soyad, email ve neden katılmak istediğini doldur.";
+    button.disabled = false;
     return;
   }
 
-  const { error } = await supabase.from("applications").insert([payload]);
+  try {
+    const response = await fetch("https://wfkyriteptajmwkyzvub.supabase.co/rest/v1/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX",
+        "Authorization": "Bearer sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(data)
+    });
 
-  if (error) {
-    document.getElementById("msg").textContent = "Hata: " + error.message;
-  } else {
-    document.getElementById("msg").textContent = "Başvurun gönderildi ✅";
+    if (!response.ok) {
+      const errorText = await response.text();
+      msg.textContent = "Hata: " + errorText;
+      button.disabled = false;
+      return;
+    }
+
+    msg.textContent = "Başvurun gönderildi ✅";
+  } catch (error) {
+    msg.textContent = "Bağlantı hatası: " + error.message;
+    button.disabled = false;
   }
-});
+};
 </script>
 
 </body>
