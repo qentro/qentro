@@ -101,5 +101,39 @@
       }
     });
   </script>
-</body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
+
+document.querySelector("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  const data = {
+    application_type: "normal",
+    full_name: formData.get("full_name"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    city: formData.get("city"),
+    country: formData.get("country"),
+    referral_email: formData.get("referral_email"),
+    message: formData.get("message"),
+  };
+
+  const { error } = await supabase.from("applications").insert([data]);
+
+  if (error) {
+    alert("Hata: " + error.message);
+  } else {
+    alert("Başvurunuz alındı!");
+    e.target.reset();
+  }
+});
+</script>
+</body>
