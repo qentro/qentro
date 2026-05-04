@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qentro | Üyeliği Tamamla</title>
+<title>Qentro | Complete Membership</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
   display: flex;
   justify-content: center;
@@ -25,31 +27,63 @@ body {
   padding: 24px;
 }
 
+.page {
+  width: 100%;
+  max-width: 520px;
+}
+
+.language-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
 .card {
   width: 100%;
-  max-width: 460px;
   padding: 38px 34px;
   border-radius: 28px;
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   box-shadow: 0 35px 80px rgba(0,0,0,0.55);
 }
 
 h1 {
-  font-size: 34px;
+  font-size: 36px;
   margin: 0 0 10px;
+  letter-spacing: -0.04em;
 }
 
 p {
   margin: 0 0 24px;
-  color: #aaa;
-  font-size: 14px;
+  color: rgba(255,255,255,0.68);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
-  color: #d0d0d0;
+  color: rgba(255,255,255,0.82);
   font-size: 14px;
   font-weight: 600;
 }
@@ -59,7 +93,7 @@ input {
   padding: 15px 16px;
   margin-bottom: 16px;
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.11);
+  border: 1px solid rgba(255,255,255,0.12);
   background: linear-gradient(90deg, #2a2a2a, #202020);
   color: #fff;
   outline: none;
@@ -71,7 +105,7 @@ button {
   padding: 16px;
   margin-top: 8px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   background: linear-gradient(90deg, #333, #222);
   color: #fff;
   font-weight: 700;
@@ -86,29 +120,67 @@ button {
 button:hover {
   filter: brightness(1.12);
 }
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 30px 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Üyeliği Tamamla</h1>
-  <p>Onaylı davet kodunuzla hesabınızı oluşturun.</p>
+<div class="page">
+  <div class="language-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+  </div>
 
-  <label>Ad Soyad</label>
-  <input id="fullName">
+  <div class="card">
+    <h1 id="title">Complete Membership</h1>
+    <p id="subtitle">Create your account with your approved invitation code.</p>
 
-  <label>Email</label>
-  <input id="email" type="email">
+    <label id="fullNameLabel">Full Name</label>
+    <input id="fullName" type="text">
 
-  <label>Davet Kodu</label>
-  <input id="code">
+    <label id="emailLabel">Email</label>
+    <input id="email" type="email">
 
-  <label>Şifre Oluştur</label>
-  <input id="password" type="password">
+    <label id="codeLabel">Invitation Code</label>
+    <input id="code" type="text">
 
-  <button onclick="completeMembership()">Üyeliği Tamamla</button>
-  <button class="secondary" onclick="goLogin()">Giriş Sayfasına Dön</button>
+    <label id="passwordLabel">Create Password</label>
+    <input id="password" type="password">
+
+    <button id="completeBtn" onclick="completeMembership()">Complete Membership</button>
+    <button id="loginBtn" class="secondary" onclick="goLogin()">Back to Login</button>
+  </div>
 </div>
 
 <script>
@@ -116,6 +188,262 @@ const supabaseClient = window.supabase.createClient(
   "https://wfkyriteptajmwkyzvub.supabase.co",
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
+
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    pageTitle: "Qentro | Complete Membership",
+    title: "Complete Membership",
+    subtitle: "Create your account with your approved invitation code.",
+    fullNameLabel: "Full Name",
+    emailLabel: "Email",
+    codeLabel: "Invitation Code",
+    passwordLabel: "Create Password",
+    completeBtn: "Complete Membership",
+    loginBtn: "Back to Login",
+    required: "Please fill in all fields.",
+    shortPassword: "Password must be at least 6 characters.",
+    noApplication: "No approved application found.",
+    createError: "Membership could not be created: ",
+    success: "Membership completed. You can now sign in."
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    pageTitle: "Qentro | Üyeliği Tamamla",
+    title: "Üyeliği Tamamla",
+    subtitle: "Onaylı davet kodunuzla hesabınızı oluşturun.",
+    fullNameLabel: "Ad Soyad",
+    emailLabel: "Email",
+    codeLabel: "Davet Kodu",
+    passwordLabel: "Şifre Oluştur",
+    completeBtn: "Üyeliği Tamamla",
+    loginBtn: "Giriş Sayfasına Dön",
+    required: "Lütfen tüm alanları doldurun.",
+    shortPassword: "Şifre en az 6 karakter olmalı.",
+    noApplication: "Onaylı başvuru bulunamadı.",
+    createError: "Üyelik oluşturulamadı: ",
+    success: "Üyelik tamamlandı. Şimdi giriş yapabilirsiniz."
+  },
+  es: {
+    lang: "es", dir: "ltr",
+    pageTitle: "Qentro | Completar Membresía",
+    title: "Completar membresía",
+    subtitle: "Crea tu cuenta con tu código de invitación aprobado.",
+    fullNameLabel: "Nombre completo",
+    emailLabel: "Email",
+    codeLabel: "Código de invitación",
+    passwordLabel: "Crear contraseña",
+    completeBtn: "Completar membresía",
+    loginBtn: "Volver al acceso",
+    required: "Por favor completa todos los campos.",
+    shortPassword: "La contraseña debe tener al menos 6 caracteres.",
+    noApplication: "No se encontró una solicitud aprobada.",
+    createError: "No se pudo crear la membresía: ",
+    success: "Membresía completada. Ahora puedes iniciar sesión."
+  },
+  fr: {
+    lang: "fr", dir: "ltr",
+    pageTitle: "Qentro | Finaliser l’adhésion",
+    title: "Finaliser l’adhésion",
+    subtitle: "Créez votre compte avec votre code d’invitation approuvé.",
+    fullNameLabel: "Nom complet",
+    emailLabel: "Email",
+    codeLabel: "Code d’invitation",
+    passwordLabel: "Créer un mot de passe",
+    completeBtn: "Finaliser l’adhésion",
+    loginBtn: "Retour à la connexion",
+    required: "Veuillez remplir tous les champs.",
+    shortPassword: "Le mot de passe doit contenir au moins 6 caractères.",
+    noApplication: "Aucune demande approuvée trouvée.",
+    createError: "L’adhésion n’a pas pu être créée : ",
+    success: "Adhésion finalisée. Vous pouvez maintenant vous connecter."
+  },
+  de: {
+    lang: "de", dir: "ltr",
+    pageTitle: "Qentro | Mitgliedschaft abschließen",
+    title: "Mitgliedschaft abschließen",
+    subtitle: "Erstelle dein Konto mit deinem genehmigten Einladungscode.",
+    fullNameLabel: "Vollständiger Name",
+    emailLabel: "Email",
+    codeLabel: "Einladungscode",
+    passwordLabel: "Passwort erstellen",
+    completeBtn: "Mitgliedschaft abschließen",
+    loginBtn: "Zurück zum Login",
+    required: "Bitte fülle alle Felder aus.",
+    shortPassword: "Das Passwort muss mindestens 6 Zeichen lang sein.",
+    noApplication: "Keine genehmigte Bewerbung gefunden.",
+    createError: "Mitgliedschaft konnte nicht erstellt werden: ",
+    success: "Mitgliedschaft abgeschlossen. Du kannst dich jetzt anmelden."
+  },
+  it: {
+    lang: "it", dir: "ltr",
+    pageTitle: "Qentro | Completa iscrizione",
+    title: "Completa iscrizione",
+    subtitle: "Crea il tuo account con il codice di invito approvato.",
+    fullNameLabel: "Nome completo",
+    emailLabel: "Email",
+    codeLabel: "Codice di invito",
+    passwordLabel: "Crea password",
+    completeBtn: "Completa iscrizione",
+    loginBtn: "Torna al login",
+    required: "Compila tutti i campi.",
+    shortPassword: "La password deve contenere almeno 6 caratteri.",
+    noApplication: "Nessuna richiesta approvata trovata.",
+    createError: "Impossibile creare l’iscrizione: ",
+    success: "Iscrizione completata. Ora puoi accedere."
+  },
+  ru: {
+    lang: "ru", dir: "ltr",
+    pageTitle: "Qentro | Завершить членство",
+    title: "Завершить членство",
+    subtitle: "Создайте аккаунт с вашим одобренным кодом приглашения.",
+    fullNameLabel: "Полное имя",
+    emailLabel: "Email",
+    codeLabel: "Код приглашения",
+    passwordLabel: "Создать пароль",
+    completeBtn: "Завершить членство",
+    loginBtn: "Назад ко входу",
+    required: "Пожалуйста, заполните все поля.",
+    shortPassword: "Пароль должен содержать минимум 6 символов.",
+    noApplication: "Одобренная заявка не найдена.",
+    createError: "Не удалось создать членство: ",
+    success: "Членство завершено. Теперь вы можете войти."
+  },
+  zh: {
+    lang: "zh", dir: "ltr",
+    pageTitle: "Qentro | 完成会员注册",
+    title: "完成会员注册",
+    subtitle: "使用已批准的邀请码创建你的账户。",
+    fullNameLabel: "姓名",
+    emailLabel: "邮箱",
+    codeLabel: "邀请码",
+    passwordLabel: "创建密码",
+    completeBtn: "完成会员注册",
+    loginBtn: "返回登录",
+    required: "请填写所有字段。",
+    shortPassword: "密码至少需要 6 个字符。",
+    noApplication: "未找到已批准的申请。",
+    createError: "无法创建会员账户：",
+    success: "会员注册完成。现在你可以登录。"
+  },
+  ar: {
+    lang: "ar", dir: "rtl",
+    pageTitle: "Qentro | إكمال العضوية",
+    title: "إكمال العضوية",
+    subtitle: "أنشئ حسابك باستخدام رمز الدعوة المعتمد.",
+    fullNameLabel: "الاسم الكامل",
+    emailLabel: "البريد الإلكتروني",
+    codeLabel: "رمز الدعوة",
+    passwordLabel: "إنشاء كلمة مرور",
+    completeBtn: "إكمال العضوية",
+    loginBtn: "العودة إلى تسجيل الدخول",
+    required: "يرجى ملء جميع الحقول.",
+    shortPassword: "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+    noApplication: "لم يتم العثور على طلب معتمد.",
+    createError: "تعذر إنشاء العضوية: ",
+    success: "تم إكمال العضوية. يمكنك الآن تسجيل الدخول."
+  },
+  fa: {
+    lang: "fa", dir: "rtl",
+    pageTitle: "Qentro | تکمیل عضویت",
+    title: "تکمیل عضویت",
+    subtitle: "حساب خود را با کد دعوت تأییدشده ایجاد کنید.",
+    fullNameLabel: "نام و نام خانوادگی",
+    emailLabel: "ایمیل",
+    codeLabel: "کد دعوت",
+    passwordLabel: "ایجاد رمز عبور",
+    completeBtn: "تکمیل عضویت",
+    loginBtn: "بازگشت به ورود",
+    required: "لطفاً همه فیلدها را تکمیل کنید.",
+    shortPassword: "رمز عبور باید حداقل ۶ کاراکتر باشد.",
+    noApplication: "درخواست تأییدشده‌ای یافت نشد.",
+    createError: "عضویت ایجاد نشد: ",
+    success: "عضویت تکمیل شد. اکنون می‌توانید وارد شوید."
+  },
+  hi: {
+    lang: "hi", dir: "ltr",
+    pageTitle: "Qentro | सदस्यता पूरी करें",
+    title: "सदस्यता पूरी करें",
+    subtitle: "अपने स्वीकृत निमंत्रण कोड से अपना खाता बनाएँ।",
+    fullNameLabel: "पूरा नाम",
+    emailLabel: "Email",
+    codeLabel: "निमंत्रण कोड",
+    passwordLabel: "पासवर्ड बनाएँ",
+    completeBtn: "सदस्यता पूरी करें",
+    loginBtn: "लॉगिन पर वापस जाएँ",
+    required: "कृपया सभी फ़ील्ड भरें।",
+    shortPassword: "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+    noApplication: "कोई स्वीकृत आवेदन नहीं मिला।",
+    createError: "सदस्यता नहीं बनाई जा सकी: ",
+    success: "सदस्यता पूरी हुई। अब आप लॉगिन कर सकते हैं।"
+  },
+  ja: {
+    lang: "ja", dir: "ltr",
+    pageTitle: "Qentro | メンバーシップ完了",
+    title: "メンバーシップ完了",
+    subtitle: "承認済みの招待コードでアカウントを作成してください。",
+    fullNameLabel: "氏名",
+    emailLabel: "メール",
+    codeLabel: "招待コード",
+    passwordLabel: "パスワードを作成",
+    completeBtn: "メンバーシップを完了",
+    loginBtn: "ログインに戻る",
+    required: "すべての項目を入力してください。",
+    shortPassword: "パスワードは6文字以上である必要があります。",
+    noApplication: "承認済みの申請が見つかりません。",
+    createError: "メンバーシップを作成できませんでした: ",
+    success: "メンバーシップが完了しました。ログインできます。"
+  },
+  bn: {
+    lang: "bn", dir: "ltr",
+    pageTitle: "Qentro | সদস্যপদ সম্পন্ন করুন",
+    title: "সদস্যপদ সম্পন্ন করুন",
+    subtitle: "আপনার অনুমোদিত আমন্ত্রণ কোড দিয়ে অ্যাকাউন্ট তৈরি করুন।",
+    fullNameLabel: "পুরো নাম",
+    emailLabel: "Email",
+    codeLabel: "আমন্ত্রণ কোড",
+    passwordLabel: "Password তৈরি করুন",
+    completeBtn: "সদস্যপদ সম্পন্ন করুন",
+    loginBtn: "লগইনে ফিরে যান",
+    required: "অনুগ্রহ করে সব ঘর পূরণ করুন।",
+    shortPassword: "Password কমপক্ষে 6 অক্ষরের হতে হবে।",
+    noApplication: "কোনো অনুমোদিত আবেদন পাওয়া যায়নি।",
+    createError: "সদস্যপদ তৈরি করা যায়নি: ",
+    success: "সদস্যপদ সম্পন্ন হয়েছে। এখন আপনি লগইন করতে পারেন।"
+  }
+};
+
+let currentLang = localStorage.getItem("qentroLang") || "en";
+
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
+
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+
+  document.getElementById("title").innerHTML = t.title;
+  document.getElementById("subtitle").innerHTML = t.subtitle;
+  document.getElementById("fullNameLabel").innerHTML = t.fullNameLabel;
+  document.getElementById("emailLabel").innerHTML = t.emailLabel;
+  document.getElementById("codeLabel").innerHTML = t.codeLabel;
+  document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
+  document.getElementById("completeBtn").innerHTML = t.completeBtn;
+  document.getElementById("loginBtn").innerHTML = t.loginBtn;
+
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
+  });
+
+  localStorage.setItem("qentroLang", code);
+}
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
 
 window.onload = function() {
   const savedEmail = localStorage.getItem("q_email");
@@ -128,21 +456,25 @@ window.onload = function() {
   if (savedCode) {
     document.getElementById("code").value = savedCode;
   }
+
+  setLang(currentLang);
 };
 
 async function completeMembership() {
+  const t = texts[currentLang] || texts.en;
+
   const fullName = document.getElementById("fullName").value.trim();
   const email = document.getElementById("email").value.trim().toLowerCase();
   const code = document.getElementById("code").value.trim().toUpperCase();
   const password = document.getElementById("password").value;
 
   if (!fullName || !email || !code || !password) {
-    alert("Lütfen tüm alanları doldurun.");
+    alert(t.required);
     return;
   }
 
   if (password.length < 6) {
-    alert("Şifre en az 6 karakter olmalı.");
+    alert(t.shortPassword);
     return;
   }
 
@@ -155,11 +487,11 @@ async function completeMembership() {
     .single();
 
   if (appError || !application) {
-    alert("Onaylı başvuru bulunamadı.");
+    alert(t.noApplication);
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signUp({
+  const { error } = await supabaseClient.auth.signUp({
     email: email,
     password: password,
     options: {
@@ -171,7 +503,7 @@ async function completeMembership() {
   });
 
   if (error) {
-    alert("Üyelik oluşturulamadı: " + error.message);
+    alert(t.createError + error.message);
     return;
   }
 
@@ -180,7 +512,7 @@ async function completeMembership() {
     .update({ status: "completed" })
     .eq("id", application.id);
 
-  alert("Üyelik tamamlandı. Şimdi giriş yapabilirsiniz.");
+  alert(t.success);
   window.location.href = "login.html";
 }
 
