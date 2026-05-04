@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qentro | Şifre Yenile</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 38px 34px;
+  border-radius: 28px;
+  background: rgba(22,22,22,0.78);
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: 0 35px 80px rgba(0,0,0,0.55);
+}
+
+h1 {
+  font-size: 34px;
+  margin: 0 0 10px;
+}
+
+p {
+  margin: 0 0 24px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d0d0d0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 15px 16px;
+  margin-bottom: 16px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.11);
+  background: linear-gradient(90deg, #2a2a2a, #202020);
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(90deg, #333, #222);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Şifre Yenile</h1>
+  <p>Yeni şifrenizi oluşturun.</p>
+
+  <label>Yeni Şifre</label>
+  <input id="password" type="password">
+
+  <button onclick="updatePassword()">Şifreyi Güncelle</button>
+</div>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
+
+async function updatePassword() {
+  const password = document.getElementById("password").value;
+
+  if (!password || password.length < 6) {
+    alert("Şifre en az 6 karakter olmalı.");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: password
+  });
+
+  if (error) {
+    alert("Şifre güncellenemedi: " + error.message);
+    return;
+  }
+
+  alert("Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz.");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
