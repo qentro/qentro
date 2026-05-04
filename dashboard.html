@@ -62,15 +62,9 @@ body {
   width: 220px;
   border-radius: 12px;
   border: 1px solid #222;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.clickable:hover {
-  border-color: #555;
-  background: #181818;
+  text-decoration: none;
+  color: white;
+  display: block;
 }
 
 .card h3 {
@@ -81,6 +75,15 @@ body {
 .card p {
   color: #aaa;
   font-size: 14px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border-color: #555;
+  background: #181818;
 }
 </style>
 </head>
@@ -107,10 +110,10 @@ body {
       <p>Approved</p>
     </div>
 
-    <div class="card clickable" onclick="goNetwork()">
+    <a class="card clickable" href="network.html">
       <h3>Network</h3>
       <p>Private</p>
-    </div>
+    </a>
   </div>
 </div>
 
@@ -129,10 +132,6 @@ async function checkUser() {
 }
 
 checkUser();
-
-function goNetwork() {
-  window.location.href = "network.html";
-}
 
 async function logout() {
   await supabase.auth.signOut();
