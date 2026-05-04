@@ -14,7 +14,6 @@ body {
   margin: 0;
 }
 
-/* üst bar */
 .header {
   display: flex;
   justify-content: space-between;
@@ -35,7 +34,6 @@ body {
   border-radius: 6px;
 }
 
-/* ana alan */
 .container {
   text-align: center;
   padding-top: 120px;
@@ -51,7 +49,6 @@ body {
   margin-bottom: 40px;
 }
 
-/* kartlar */
 .cards {
   display: flex;
   justify-content: center;
@@ -65,6 +62,15 @@ body {
   width: 220px;
   border-radius: 12px;
   border: 1px solid #222;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border-color: #555;
+  background: #181818;
 }
 
 .card h3 {
@@ -101,7 +107,7 @@ body {
       <p>Approved</p>
     </div>
 
-    <div class="card">
+    <div class="card clickable" onclick="goNetwork()">
       <h3>Network</h3>
       <p>Private</p>
     </div>
@@ -114,7 +120,6 @@ const supabase = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
-// giriş kontrol
 async function checkUser() {
   const { data } = await supabase.auth.getUser();
 
@@ -125,7 +130,10 @@ async function checkUser() {
 
 checkUser();
 
-// çıkış
+function goNetwork() {
+  window.location.href = "network.html";
+}
+
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
