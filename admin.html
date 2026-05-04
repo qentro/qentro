@@ -1,6 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Qentro Admin</title>
+  <style>
+    body { background:#000; color:white; font-family:sans-serif; padding:30px; }
+    h1 { margin-bottom:20px; }
+    .card {
+      border:1px solid rgba(255,255,255,0.2);
+      padding:20px;
+      border-radius:15px;
+      margin-bottom:15px;
+      background:rgba(255,255,255,0.04);
+    }
+    small { color:rgba(255,255,255,0.7); }
+    button {
+      margin-top:10px;
+      margin-right:10px;
+      padding:8px 14px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+    }
+    .approve { background:green; color:white; }
+    .reject { background:red; color:white; }
+  </style>
+</head>
+<body>
+
+<h1>Qentro Başvurular</h1>
+<div id="list">Yükleniyor...</div>
+
 <script>
+const SUPABASE_URL = "https://wfkyriteptajmwkyzvub.supabase.co";
+const SUPABASE_KEY = "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX";
+
 function generateCode(len = 8) {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 0/O/1/I yok
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let code = "";
   for (let i = 0; i < len; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];
@@ -8,26 +44,95 @@ function generateCode(len = 8) {
   return code;
 }
 
+async function loadApplications() {
+  const res = await fetch(SUPABASE_URL + "/rest/v1/applications?select=*&order=created_at.desc", {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY
+    }
+  });
+
+  const data = await res.json();
+  const container = document.getElementById("list");
+  container.innerHTML = "";
+
+  if (!Array.isArray(data) || data.length === 0) {
+    container.innerHTML = "Henüz başvuru yok.";
+    return;
+  }
+
+  data.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <b>${item.full_name || "-"}</b><br>
+      Email: ${item.email || "-"}<br>
+      Telefon: ${item.phone || "-"}<br>
+      Şehir/Ülke: ${item.city || "-"} / ${item.country || "-"}<br>
+      Meslek: ${item.profession || "-"}<br><br>
+
+      <small>Status: ${item.status || "pending"}</small><br>
+      <small>Davet Kodu: ${item.invite_code || "-"}</small><br><br>
+
+      <b>Sosyal Medya</b><br>
+      ${item.socials || "-"}<br><br>
+
+      <b>Referans</b><br>
+      ${item.referral_name || "-"}<br>
+      ${item.referral_phone || "-"}<br>
+      ${item.referral_email || "-"}<br><br>
+
+      <b>Neden katılmak istiyor?</b><br>
+      ${item.why_join || "-"}<br><br>
+
+      <button class="approve" onclick="approve('${item.id}')">Onayla</button>
+      <button class="reject" onclick="rejectApp('${item.id}')">Reddet</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
 async function approve(id) {
   const code = generateCode(8);
 
-  await fetch(
-    "https://wfkyriteptajmwkyzvub.supabase.co/rest/v1/applications?id=eq." + id,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX",
-        "Authorization": "Bearer sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-      },
-      body: JSON.stringify({
-        status: "approved",
-        invite_code: code
-      })
-    }
-  );
+  await fetch(SUPABASE_URL + "/rest/v1/applications?id=eq." + id, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY
+    },
+    body: JSON.stringify({
+      status: "approved",
+      invite_code: code
+    })
+  });
 
   alert("Onaylandı. Davet kodu: " + code);
   loadApplications();
 }
+
+async function rejectApp(id) {
+  await fetch(SUPABASE_URL + "/rest/v1/applications?id=eq." + id, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY
+    },
+    body: JSON.stringify({
+      status: "rejected"
+    })
+  });
+
+  alert("Başvuru reddedildi.");
+  loadApplications();
+}
+
+loadApplications();
 </script>
+
+</body>
+</html>
