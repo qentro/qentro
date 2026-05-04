@@ -1,331 +1,427 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qentro | Member Login</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Qentro | Member Login</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
+}
 
-    html, body {
-      min-height: 100%;
-    }
+html, body {
+  min-height: 100%;
+}
 
-    body {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
-        radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
-        linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
-      color: #fff;
-      padding: 22px;
-    }
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
+  color: #fff;
+  padding: 22px;
+}
 
-    .language-bar {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto 18px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+.language-bar {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 
-    .lang-btn {
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.78);
-      padding: 9px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      transition: 0.2s ease;
-    }
+.language-bar span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 34px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  transition: 0.2s ease;
+}
 
-    .lang-btn.active,
-    .lang-btn:hover {
-      background: #fff;
-      color: #000;
-    }
+.language-bar span.active,
+.language-bar span:hover {
+  background: #fff;
+  color: #000;
+}
 
-    .container {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-      min-height: calc(100vh - 90px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  min-height: calc(100vh - 90px);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
 
-    .panel {
-      width: 100%;
-      max-width: 520px;
-      background: rgba(255,255,255,0.055);
-      border: 1px solid rgba(255,255,255,0.13);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-radius: 28px;
-      padding: 42px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
-    }
+.hero,
+.panel {
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.13);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 28px;
+  padding: 42px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+}
 
-    .panel h1 {
-      font-size: 38px;
-      margin-bottom: 12px;
-      letter-spacing: -0.04em;
-    }
+.hero {
+  min-height: 590px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .panel p {
-      color: rgba(255,255,255,0.72);
-      line-height: 1.65;
-      margin-bottom: 28px;
-      font-size: 16px;
-    }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 28px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: rgba(255,255,255,0.82);
-      font-size: 14px;
-      font-weight: 600;
-    }
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  flex: 0 0 auto;
+}
 
-    input {
-      width: 100%;
-      padding: 15px 16px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(90deg, #2a2a2a, #202020);
-      color: #fff;
-      outline: none;
-      font-size: 15px;
-    }
+.hero h1 {
+  font-size: clamp(48px, 7vw, 86px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  margin-bottom: 28px;
+  max-width: 680px;
+}
 
-    .login-button {
-      width: 100%;
-      padding: 16px;
-      margin-top: 8px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.13);
-      background: linear-gradient(90deg, #333, #222);
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 15px;
-    }
+.lead {
+  max-width: 610px;
+  color: rgba(255,255,255,0.78);
+  font-size: 18px;
+  line-height: 1.65;
+}
 
-    .secondary {
-      background: linear-gradient(90deg, #292929, #1b1b1b);
-      margin-top: 12px;
-    }
+.panel h2 {
+  font-size: 32px;
+  margin-bottom: 14px;
+  letter-spacing: -0.03em;
+}
 
-    .login-button:hover {
-      filter: brightness(1.12);
-    }
+.panel p {
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  font-size: 16px;
+}
 
-    #msg {
-      margin-top: 16px;
-      color: rgba(255,255,255,0.68);
-      font-size: 14px;
-      line-height: 1.5;
-    }
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255,255,255,0.82);
+  font-size: 14px;
+  font-weight: 600;
+}
 
-    @media (max-width: 560px) {
-      body {
-        padding: 15px;
-      }
+input {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.065);
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
 
-      .language-bar {
-        justify-content: center;
-        margin-bottom: 14px;
-      }
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
 
-      .lang-btn {
-        padding: 8px 10px;
-        font-size: 11px;
-      }
+.login-btn {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.065);
+  border: 1px solid rgba(255,255,255,0.13);
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: left;
+  transition: 0.2s ease;
+}
 
-      .panel {
-        padding: 28px;
-        border-radius: 22px;
-      }
+.login-btn:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
 
-      .panel h1 {
-        font-size: 34px;
-      }
-    }
-  </style>
+#msg {
+  margin-top: 16px;
+  color: rgba(255,255,255,0.68);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .container {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 15px;
+  }
+
+  .language-bar {
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .language-bar span {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .hero,
+  .panel {
+    padding: 28px;
+    border-radius: 22px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="language-bar">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="ar">AR</button>
-    <button class="lang-btn" data-lang="bn">BN</button>
-    <button class="lang-btn" data-lang="zh">中文</button>
-    <button class="lang-btn" data-lang="fr">FR</button>
-    <button class="lang-btn" data-lang="de">DE</button>
-    <button class="lang-btn" data-lang="hi">HI</button>
-    <button class="lang-btn" data-lang="it">IT</button>
-    <button class="lang-btn" data-lang="ja">JA</button>
-    <button class="lang-btn" data-lang="fa">FA</button>
-    <button class="lang-btn" data-lang="ru">RU</button>
-    <button class="lang-btn" data-lang="es">ES</button>
-    <button class="lang-btn" data-lang="tr">TR</button>
-  </div>
 
-  <main class="container">
-    <section class="panel">
-      <h1 id="title">Member Login</h1>
-      <p id="subtitle">Approved members can sign in with their email and password.</p>
+<div class="language-bar">
+  <span class="active" data-lang="en">EN</span>
+  <span data-lang="ar">AR</span>
+  <span data-lang="bn">BN</span>
+  <span data-lang="zh">中文</span>
+  <span data-lang="fr">FR</span>
+  <span data-lang="de">DE</span>
+  <span data-lang="hi">HI</span>
+  <span data-lang="it">IT</span>
+  <span data-lang="ja">JA</span>
+  <span data-lang="fa">FA</span>
+  <span data-lang="ru">RU</span>
+  <span data-lang="es">ES</span>
+  <span data-lang="tr">TR</span>
+</div>
 
-      <label id="emailLabel">Email</label>
-      <input id="email" type="email" autocomplete="email" />
+<main class="container">
+  <section class="hero">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span id="eyebrow">QENTRO MEMBER ACCESS</span>
+    </div>
 
-      <label id="passwordLabel">Password</label>
-      <input id="pass" type="password" autocomplete="current-password" />
+    <h1 id="headline">Private member entry.</h1>
 
-      <button id="loginBtn" class="login-button" onclick="login()">Sign In</button>
-      <button id="forgotBtn" class="login-button secondary" onclick="forgotPassword()">Forgot Password</button>
-      <button id="homeBtn" class="login-button secondary" onclick="goHome()">Back to Home</button>
+    <p class="lead" id="lead">
+      This area is reserved for approved Qentro members. Use your verified email and password to continue.
+    </p>
+  </section>
 
-      <div id="msg"></div>
-    </section>
-  </main>
+  <aside class="panel">
+    <h2 id="title">Member Login</h2>
+    <p id="subtitle">Approved members can sign in with their email and password.</p>
 
-  <script>
-    const supabaseClient = window.supabase.createClient(
-      "https://wfkyriteptajmwkyzvub.supabase.co",
-      "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-    );
+    <label id="emailLabel">Email</label>
+    <input id="email" type="email" autocomplete="email" />
 
-    const texts = {
-      en: {
-        lang: "en", dir: "ltr",
-        title: "Member Login",
-        subtitle: "Approved members can sign in with their email and password.",
-        emailLabel: "Email",
-        passwordLabel: "Password",
-        loginBtn: "Sign In",
-        forgotBtn: "Forgot Password",
-        homeBtn: "Back to Home",
-        emptyAlert: "Please enter your email and password.",
-        loginError: "Login error: ",
-        emailFirst: "Please enter your email address first.",
-        sending: "Sending password reset link...",
-        error: "Error: ",
-        sent: "Password reset link has been sent to your email address."
-      },
-      tr: {
-        lang: "tr", dir: "ltr",
-        title: "Üye Girişi",
-        subtitle: "Onaylı üyeler e-mail ve şifre ile giriş yapabilir.",
-        emailLabel: "Email",
-        passwordLabel: "Şifre",
-        loginBtn: "Giriş Yap",
-        forgotBtn: "Şifremi Unuttum",
-        homeBtn: "Ana Sayfaya Dön",
-        emptyAlert: "Lütfen email ve şifre girin.",
-        loginError: "Giriş hatası: ",
-        emailFirst: "Lütfen önce email adresinizi yazın.",
-        sending: "Şifre yenileme linki gönderiliyor...",
-        error: "Hata: ",
-        sent: "Şifre yenileme linki email adresinize gönderildi."
-      }
-    };
+    <label id="passwordLabel">Password</label>
+    <input id="pass" type="password" autocomplete="current-password" />
 
-    let currentLang = localStorage.getItem("qentroLang") || "en";
+    <div class="login-actions">
+      <button id="loginBtn" class="login-btn" onclick="login()">Sign In</button>
+      <button id="forgotBtn" class="login-btn" onclick="forgotPassword()">Forgot Password</button>
+      <button id="homeBtn" class="login-btn" onclick="goHome()">Back to Home</button>
+    </div>
 
-    function setLang(code) {
-      const t = texts[code] || texts.en;
-      currentLang = code;
+    <div id="msg"></div>
+  </aside>
+</main>
 
-      document.documentElement.lang = t.lang;
-      document.documentElement.dir = t.dir;
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
 
-      document.getElementById("title").innerHTML = t.title;
-      document.getElementById("subtitle").innerHTML = t.subtitle;
-      document.getElementById("emailLabel").innerHTML = t.emailLabel;
-      document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
-      document.getElementById("loginBtn").innerHTML = t.loginBtn;
-      document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
-      document.getElementById("homeBtn").innerHTML = t.homeBtn;
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    eyebrow: "QENTRO MEMBER ACCESS",
+    headline: "Private member entry.",
+    lead: "This area is reserved for approved Qentro members. Use your verified email and password to continue.",
+    title: "Member Login",
+    subtitle: "Approved members can sign in with their email and password.",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    loginBtn: "Sign In",
+    forgotBtn: "Forgot Password",
+    homeBtn: "Back to Home",
+    emptyAlert: "Please enter your email and password.",
+    loginError: "Login error: ",
+    emailFirst: "Please enter your email address first.",
+    sending: "Sending password reset link...",
+    error: "Error: ",
+    sent: "Password reset link has been sent to your email address."
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    eyebrow: "QENTRO ÜYE GİRİŞİ",
+    headline: "Özel üye girişi.",
+    lead: "Bu alan yalnızca onaylı Qentro üyeleri içindir. Devam etmek için doğrulanmış email ve şifrenizi kullanın.",
+    title: "Üye Girişi",
+    subtitle: "Onaylı üyeler e-mail ve şifre ile giriş yapabilir.",
+    emailLabel: "Email",
+    passwordLabel: "Şifre",
+    loginBtn: "Giriş Yap",
+    forgotBtn: "Şifremi Unuttum",
+    homeBtn: "Ana Sayfaya Dön",
+    emptyAlert: "Lütfen email ve şifre girin.",
+    loginError: "Giriş hatası: ",
+    emailFirst: "Lütfen önce email adresinizi yazın.",
+    sending: "Şifre yenileme linki gönderiliyor...",
+    error: "Hata: ",
+    sent: "Şifre yenileme linki email adresinize gönderildi."
+  }
+};
 
-      document.querySelectorAll(".lang-btn").forEach(button => {
-        button.classList.toggle("active", button.dataset.lang === code);
-      });
+let currentLang = localStorage.getItem("qentroLang") || "en";
 
-      localStorage.setItem("qentroLang", code);
-    }
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
 
-    document.querySelectorAll(".lang-btn").forEach(button => {
-      button.addEventListener("click", function () {
-        setLang(this.dataset.lang);
-      });
-    });
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
 
-    async function login() {
-      const t = texts[currentLang] || texts.en;
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("pass").value;
+  document.getElementById("eyebrow").innerHTML = t.eyebrow;
+  document.getElementById("headline").innerHTML = t.headline;
+  document.getElementById("lead").innerHTML = t.lead;
+  document.getElementById("title").innerHTML = t.title;
+  document.getElementById("subtitle").innerHTML = t.subtitle;
+  document.getElementById("emailLabel").innerHTML = t.emailLabel;
+  document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
+  document.getElementById("loginBtn").innerHTML = t.loginBtn;
+  document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
+  document.getElementById("homeBtn").innerHTML = t.homeBtn;
 
-      if (!email || !password) {
-        alert(t.emptyAlert);
-        return;
-      }
+  document.querySelectorAll(".language-bar span").forEach(item => {
+    item.classList.toggle("active", item.dataset.lang === code);
+  });
 
-      const { error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+  localStorage.setItem("qentroLang", code);
+}
 
-      if (error) {
-        alert(t.loginError + error.message);
-        return;
-      }
+document.querySelectorAll(".language-bar span").forEach(item => {
+  item.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
 
-      window.location.href = "dashboard.html";
-    }
+async function login() {
+  const t = texts[currentLang] || texts.en;
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("pass").value;
 
-    async function forgotPassword() {
-      const t = texts[currentLang] || texts.en;
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const msg = document.getElementById("msg");
+  if (!email || !password) {
+    alert(t.emptyAlert);
+    return;
+  }
 
-      if (!email) {
-        alert(t.emailFirst);
-        return;
-      }
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
 
-      msg.textContent = t.sending;
+  if (error) {
+    alert(t.loginError + error.message);
+    return;
+  }
 
-      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://www.qentro.com/reset.html"
-      });
+  window.location.href = "dashboard.html";
+}
 
-      if (error) {
-        msg.textContent = t.error + error.message;
-        return;
-      }
+async function forgotPassword() {
+  const t = texts[currentLang] || texts.en;
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const msg = document.getElementById("msg");
 
-      msg.textContent = t.sent;
-    }
+  if (!email) {
+    alert(t.emailFirst);
+    return;
+  }
 
-    function goHome() {
-      window.location.href = "index.html";
-    }
+  msg.textContent = t.sending;
 
-    setLang(currentLang);
-  </script>
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: "https://www.qentro.com/reset.html"
+  });
+
+  if (error) {
+    msg.textContent = t.error + error.message;
+    return;
+  }
+
+  msg.textContent = t.sent;
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+setLang(currentLang);
+</script>
+
 </body>
 </html>
