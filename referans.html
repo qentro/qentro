@@ -2,141 +2,95 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Qentro | Referanslı Üyelik Başvurusu</title>
+<title>Qentro | Üyelik Girişi</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 body {
   background: #000;
   color: #fff;
   font-family: Arial;
-  margin: 0;
-  min-height: 100vh;
-}
-
-.wrapper {
   display: flex;
   justify-content: center;
-  padding: 70px 20px;
+  align-items: center;
+  height: 100vh;
 }
 
 .box {
-  width: 520px;
-  background: #151515;
-  border: 1px solid #2a2a2a;
-  border-radius: 22px;
-  padding: 34px;
+  width: 420px;
 }
 
-h1 {
-  font-size: 34px;
-  margin-bottom: 12px;
-}
-
-p {
-  color: #aaa;
-}
-
-label {
-  display: block;
-  margin-top: 18px;
-  margin-bottom: 7px;
-  color: #ddd;
-  font-size: 14px;
-}
-
-input, textarea, button {
+input, button {
   width: 100%;
-  box-sizing: border-box;
-  padding: 13px;
-  border-radius: 12px;
-  border: 1px solid #333;
-  background: #262626;
-  color: white;
-}
-
-textarea {
-  height: 110px;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
 }
 
 button {
-  margin-top: 22px;
   cursor: pointer;
 }
 
 .primary {
-  background: #fff;
-  color: #000;
+  background: white;
+  color: black;
 }
 
 .secondary {
-  background: #262626;
-  color: #fff;
+  background: #222;
+  color: white;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <div class="box">
-    <h1>Referanslı Üyelik Başvurusu Yap</h1>
-    <p>Başvurular incelenir. Uygun görülen kişilere davet kodu gönderilir.</p>
+<div class="box">
+  <h2>Qentro Access</h2>
 
-    <label>Ad Soyad</label>
-    <input id="full_name">
+  <input id="name" placeholder="Ad Soyad">
+  <input id="email" placeholder="Email">
+  <input id="ref" placeholder="Size Referans Olan Kişi">
+  <input id="code" placeholder="Davet Kodu">
 
-    <label>Email</label>
-    <input id="email" type="email">
-
-    <label>Size Referans Olan Kişinin Adı Soyadı</label>
-    <input id="referral_email">
-
-    <label>Meslek / İş Alanı</label>
-    <input id="application_type">
-
-    <label>Neden katılmak istiyorsun?</label>
-    <textarea id="message"></textarea>
-
-    <button class="primary" onclick="sendApplication()">Başvuruyu Gönder</button>
-    <button class="secondary" onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
-  </div>
+  <button class="primary" onclick="checkAccess()">Giriş Yap</button>
+  <button class="secondary" onclick="goHome()">Ana Sayfa</button>
 </div>
 
 <script>
-const supabase = window.supabase.createClient(
+const { createClient } = supabase;
+
+const client = createClient(
   "https://wfkyriteptajmwkyzvub.supabase.co",
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
-async function sendApplication() {
-  const full_name = document.getElementById("full_name").value;
+async function checkAccess() {
   const email = document.getElementById("email").value;
-  const referral_email = document.getElementById("referral_email").value;
-  const application_type = document.getElementById("application_type").value;
-  const message = document.getElementById("message").value;
+  const code = document.getElementById("code").value;
 
-  if (!full_name || !email) {
-    alert("Lütfen ad soyad ve email alanlarını doldurun.");
+  const { data } = await client
+    .from("applications")
+    .select("*")
+    .eq("email", email)
+    .eq("invite_code", code)
+    .eq("status", "approved");
+
+  if (!data || data.length === 0) {
+    alert("Davet kodu veya email hatalı");
     return;
   }
 
-  const { error } = await supabase.from("applications").insert([{
-    full_name,
-    email,
-    referral_email,
-    application_type,
-    message,
-    status: "pending"
-  }]);
+  // geçici olarak bilgiyi sakla
+  localStorage.setItem("q_email", email);
 
-  if (error) {
-    alert("Başvuru gönderilemedi: " + error.message);
-    return;
-  }
+  // ikinci sayfaya geç
+  window.location.href = "complete.html";
+}
 
-  alert("Başvurunuz alındı. Uygun görülürse davet kodu gönderilecektir.");
+function goHome() {
   window.location.href = "index.html";
 }
 </script>
