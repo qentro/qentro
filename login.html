@@ -43,10 +43,15 @@ body {
 
 .lang-btn {
   width: auto;
+  min-width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(255,255,255,0.16);
   background: rgba(255,255,255,0.06);
   color: rgba(255,255,255,0.78);
   padding: 9px 12px;
+  margin: 0;
   border-radius: 999px;
   cursor: pointer;
   font-size: 12px;
@@ -102,7 +107,7 @@ input {
   font-size: 15px;
 }
 
-.card button {
+.action-btn {
   width: 100%;
   padding: 16px;
   margin-top: 8px;
@@ -115,11 +120,11 @@ input {
 }
 
 .secondary {
-  background: linear-gradient(90deg, #292929, #1b1b1b) !important;
-  margin-top: 12px !important;
+  background: linear-gradient(90deg, #292929, #1b1b1b);
+  margin-top: 12px;
 }
 
-.card button:hover {
+.action-btn:hover {
   filter: brightness(1.12);
 }
 
@@ -181,9 +186,9 @@ input {
     <label id="passwordLabel">Password</label>
     <input id="pass" type="password" autocomplete="current-password">
 
-    <button id="loginBtn" onclick="login()">Sign In</button>
-    <button id="forgotBtn" class="secondary" onclick="forgotPassword()">Forgot Password</button>
-    <button id="homeBtn" class="secondary" onclick="goHome()">Back to Home</button>
+    <button id="loginBtn" class="action-btn" onclick="login()">Sign In</button>
+    <button id="forgotBtn" class="action-btn secondary" onclick="forgotPassword()">Forgot Password</button>
+    <button id="homeBtn" class="action-btn secondary" onclick="goHome()">Back to Home</button>
 
     <div id="msg"></div>
   </div>
