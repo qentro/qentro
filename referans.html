@@ -1,105 +1,145 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qentro | Referanslı Üyelik Başvurusu</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
-      color: #fff; display: flex; align-items: center; justify-content: center; padding: 24px;
-    }
-    .card {
-      width: 100%; max-width: 720px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12); border-radius: 28px; padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-    }
-    h1 { font-size: 40px; margin-bottom: 12px; }
-    p { color: rgba(255,255,255,0.72); line-height: 1.65; margin-bottom: 24px; }
-    .field { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 8px; font-size: 14px; color: rgba(255,255,255,0.82); }
-    input, textarea {
-      width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06); color: #fff; outline: none;
-    }
-    textarea { min-height: 110px; resize: vertical; }
-    button, a.btn {
-      width: 100%; display: inline-flex; justify-content: center; align-items: center;
-      padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; cursor: pointer; margin-top: 8px;
-    }
-    button:hover, a.btn:hover { background: rgba(255,255,255,0.12); }
-    .back { margin-top: 14px; }
-    #msg { margin-top: 16px; color: rgba(255,255,255,0.82); font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<title>Qentro | Referanslı Üyelik Başvurusu</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  background: #000;
+  color: #fff;
+  font-family: Arial;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 70px 20px;
+}
+
+.box {
+  width: 520px;
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 22px;
+  padding: 34px;
+}
+
+h1 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #aaa;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  color: #ddd;
+  font-size: 14px;
+}
+
+input, textarea, button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #262626;
+  color: white;
+}
+
+textarea {
+  height: 110px;
+}
+
+button {
+  margin-top: 22px;
+  cursor: pointer;
+}
+
+.primary {
+  background: #fff;
+  color: #000;
+}
+
+.secondary {
+  background: #262626;
+  color: #fff;
+}
+</style>
 </head>
+
 <body>
-  <div class="card">
+
+<div class="wrapper">
+  <div class="box">
     <h1>Referanslı Üyelik Başvurusu Yap</h1>
-    <p>Referansın varsa öncelikli değerlendirme için başvurunu bırakabilirsin.</p>
+    <p>Başvurular incelenir. Uygun görülen kişilere davet kodu gönderilir.</p>
 
-    <div class="field">
-      <label for="full_name">Ad Soyad</label>
-      <input id="full_name" type="text" />
-    </div>
+    <label>Ad Soyad</label>
+    <input id="full_name">
 
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" type="email" />
-    </div>
+    <label>Email</label>
+    <input id="email" type="email">
 
-    <div class="field">
-      <label for="referral_code">Referans Kodu</label>
-      <input id="referral_code" type="text" />
-    </div>
+    <label>Size Referans Olan Kişinin Adı Soyadı</label>
+    <input id="referral_email">
 
-    <div class="field">
-      <label for="profession">Meslek / İş Alanı</label>
-      <input id="profession" type="text" />
-    </div>
+    <label>Meslek / İş Alanı</label>
+    <input id="application_type">
 
-    <div class="field">
-      <label for="why_join">Neden katılmak istiyorsun?</label>
-      <textarea id="why_join"></textarea>
-    </div>
+    <label>Neden katılmak istiyorsun?</label>
+    <textarea id="message"></textarea>
 
-    <button id="applyBtn" type="button">Referanslı Başvuruyu Gönder</button>
-    <a class="btn back" href="index.html">Ana Sayfaya Dön</a>
-    <div id="msg"></div>
+    <button class="primary" onclick="sendApplication()">Başvuruyu Gönder</button>
+    <button class="secondary" onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
   </div>
+</div>
 
-  <script>
-    const { createClient } = supabase;
-    const client = createClient(
-      "https://phepgsayyzfeydrwjnvr.supabase.co",
-      "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
-    );
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
 
-    document.getElementById("applyBtn").addEventListener("click", async () => {
-      const payload = {
-        full_name: document.getElementById("full_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        profession: document.getElementById("profession").value.trim(),
-        why_join: document.getElementById("why_join").value.trim(),
-        referral_code: document.getElementById("referral_code").value.trim()
-      };
+async function sendApplication() {
+  const full_name = document.getElementById("full_name").value;
+  const email = document.getElementById("email").value;
+  const referral_email = document.getElementById("referral_email").value;
+  const application_type = document.getElementById("application_type").value;
+  const message = document.getElementById("message").value;
 
-      if (!payload.full_name || !payload.email || !payload.referral_code) {
-        document.getElementById("msg").textContent = "Lütfen ad, email ve referans kodunu doldur.";
-        return;
-      }
+  if (!full_name || !email) {
+    alert("Lütfen ad soyad ve email alanlarını doldurun.");
+    return;
+  }
 
-      const { error } = await client.from("applications").insert([payload]);
+  const { error } = await supabase.from("applications").insert([{
+    full_name,
+    email,
+    referral_email,
+    application_type,
+    message,
+    status: "pending"
+  }]);
 
-      if (error) {
-        document.getElementById("msg").textContent = "Başvuru hatası: " + error.message;
-      } else {
-        document.getElementById("msg").textContent = "Referanslı başvurun gönderildi.";
-      }
-    });
-  </script>
+  if (error) {
+    alert("Başvuru gönderilemedi: " + error.message);
+    return;
+  }
+
+  alert("Başvurunuz alındı. Uygun görülürse davet kodu gönderilecektir.");
+  window.location.href = "index.html";
+}
+</script>
+
 </body>
 </html>
