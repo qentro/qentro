@@ -1,249 +1,193 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qentro | Üyeliği Tamamla</title>
 
-  <title>Qentro | Üyelik Tamamlama</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, rgba(198,166,100,0.18), transparent 35%),
-        linear-gradient(135deg, #030303, #0b0b0b 45%, #111);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
 
-    .card {
-      width: 100%;
-      max-width: 460px;
-      background: rgba(12,12,12,0.92);
-      border: 1px solid rgba(212,175,55,0.35);
-      border-radius: 28px;
-      padding: 34px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.65);
-      backdrop-filter: blur(18px);
-    }
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 38px 34px;
+  border-radius: 28px;
+  background: rgba(22,22,22,0.78);
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: 0 35px 80px rgba(0,0,0,0.55);
+}
 
-    .logo {
-      text-align: center;
-      letter-spacing: 7px;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #f5d77b;
-    }
+h1 {
+  font-size: 34px;
+  margin: 0 0 10px;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #bdbdbd;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
+p {
+  margin: 0 0 24px;
+  color: #aaa;
+  font-size: 14px;
+}
 
-    label {
-      display: block;
-      font-size: 13px;
-      color: #d7d7d7;
-      margin-bottom: 8px;
-    }
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d0d0d0;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-    input {
-      width: 100%;
-      padding: 15px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.055);
-      color: white;
-      outline: none;
-      margin-bottom: 18px;
-      font-size: 15px;
-    }
+input {
+  width: 100%;
+  padding: 15px 16px;
+  margin-bottom: 16px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.11);
+  background: linear-gradient(90deg, #2a2a2a, #202020);
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
 
-    input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
-    }
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(90deg, #333, #222);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
 
-    button {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #f5d77b, #b88a2b);
-      color: #050505;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 6px;
-    }
+.secondary {
+  background: linear-gradient(90deg, #292929, #1b1b1b);
+  margin-top: 12px;
+}
 
-    button:hover {
-      filter: brightness(1.08);
-    }
-
-    .links {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 22px;
-      font-size: 13px;
-    }
-
-    .links a {
-      color: #d4af37;
-      text-decoration: none;
-    }
-
-    .message {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.5;
-      display: none;
-    }
-
-    .success {
-      display: block;
-      background: rgba(46, 204, 113, 0.12);
-      border: 1px solid rgba(46, 204, 113, 0.35);
-      color: #8ff0b2;
-    }
-
-    .error {
-      display: block;
-      background: rgba(255, 77, 77, 0.12);
-      border: 1px solid rgba(255, 77, 77, 0.35);
-      color: #ff9b9b;
-    }
-
-    .note {
-      margin-top: 18px;
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-      line-height: 1.5;
-    }
-  </style>
+button:hover {
+  filter: brightness(1.12);
+}
+</style>
 </head>
 
 <body>
-  <div class="card">
-    <div class="logo">QENTRO</div>
 
-    <div class="subtitle">
-      Davet kodunuz onaylandıysa üyeliğinizi tamamlayın.<br>
-      Qentro erişimi yalnızca onaylı kişiler içindir.
-    </div>
+<div class="card">
+  <h1>Üyeliği Tamamla</h1>
+  <p>Onaylı davet kodunuzla hesabınızı oluşturun.</p>
 
-    <form id="completeForm">
-      <label>Ad Soyad</label>
-      <input id="fullName" type="text" placeholder="Adınız Soyadınız" required>
+  <label>Ad Soyad</label>
+  <input id="fullName">
 
-      <label>E-mail</label>
-      <input id="email" type="email" placeholder="ornek@mail.com" required>
+  <label>Email</label>
+  <input id="email" type="email">
 
-      <label>Davet Kodu</label>
-      <input id="inviteCode" type="text" placeholder="Size gönderilen davet kodu" required>
+  <label>Davet Kodu</label>
+  <input id="code">
 
-      <label>Şifre Oluştur</label>
-      <input id="password" type="password" placeholder="En az 6 karakter" required minlength="6">
+  <label>Şifre Oluştur</label>
+  <input id="password" type="password">
 
-      <button type="submit">Üyeliğimi Tamamla</button>
-    </form>
+  <button onclick="completeMembership()">Üyeliği Tamamla</button>
+  <button class="secondary" onclick="goLogin()">Giriş Sayfasına Dön</button>
+</div>
 
-    <div id="message" class="message"></div>
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
 
-    <div class="links">
-      <a href="login.html">Giriş Yap</a>
-      <a href="index.html">Anasayfa</a>
-    </div>
+window.onload = function() {
+  const savedEmail = localStorage.getItem("q_email");
+  const savedCode = localStorage.getItem("q_code");
 
-    <div class="note">
-      Davet kodu olmadan üyelik oluşturulamaz.
-    </div>
-  </div>
+  if (savedEmail) {
+    document.getElementById("email").value = savedEmail;
+  }
 
-  <script>
-    const SUPABASE_URL = "https://wfkyriteptajmwkyzvub.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX";
+  if (savedCode) {
+    document.getElementById("code").value = savedCode;
+  }
+};
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+async function completeMembership() {
+  const fullName = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const code = document.getElementById("code").value.trim().toUpperCase();
+  const password = document.getElementById("password").value;
 
-    const form = document.getElementById("completeForm");
-    const messageBox = document.getElementById("message");
+  if (!fullName || !email || !code || !password) {
+    alert("Lütfen tüm alanları doldurun.");
+    return;
+  }
 
-    function showMessage(text, type) {
-      messageBox.textContent = text;
-      messageBox.className = "message " + type;
+  if (password.length < 6) {
+    alert("Şifre en az 6 karakter olmalı.");
+    return;
+  }
+
+  const { data: application, error: appError } = await supabaseClient
+    .from("applications")
+    .select("*")
+    .eq("email", email)
+    .eq("invite_code", code)
+    .eq("status", "approved")
+    .single();
+
+  if (appError || !application) {
+    alert("Onaylı başvuru bulunamadı.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data: {
+        full_name: fullName,
+        invite_code: code
+      }
     }
+  });
 
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
+  if (error) {
+    alert("Üyelik oluşturulamadı: " + error.message);
+    return;
+  }
 
-      const fullName = document.getElementById("fullName").value.trim();
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const inviteCode = document.getElementById("inviteCode").value.trim().toUpperCase();
-      const password = document.getElementById("password").value;
+  await supabaseClient
+    .from("applications")
+    .update({ status: "completed" })
+    .eq("id", application.id);
 
-      showMessage("Kontrol ediliyor...", "success");
+  alert("Üyelik tamamlandı. Şimdi giriş yapabilirsiniz.");
+  window.location.href = "login.html";
+}
 
-      const { data: application, error: appError } = await supabaseClient
-        .from("applications")
-        .select("*")
-        .eq("email", email)
-        .eq("invite_code", inviteCode)
-        .eq("status", "approved")
-        .single();
+function goLogin() {
+  window.location.href = "login.html";
+}
+</script>
 
-      if (appError || !application) {
-        showMessage("Bu e-mail ve davet kodu ile onaylı başvuru bulunamadı.", "error");
-        return;
-      }
-
-      const { data: authData, error: signUpError } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            full_name: fullName,
-            invite_code: inviteCode
-          }
-        }
-      });
-
-      if (signUpError) {
-        showMessage("Üyelik oluşturulamadı: " + signUpError.message, "error");
-        return;
-      }
-
-      await supabaseClient
-        .from("applications")
-        .update({
-          status: "completed"
-        })
-        .eq("id", application.id);
-
-      showMessage("Üyeliğiniz başarıyla tamamlandı. Şimdi giriş yapabilirsiniz.", "success");
-
-      setTimeout(function() {
-        window.location.href = "login.html";
-      }, 1800);
-    });
-  </script>
 </body>
 </html>
