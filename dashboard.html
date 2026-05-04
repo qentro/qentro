@@ -17,14 +17,15 @@ body {
 button {
   padding: 10px 20px;
   margin-top: 20px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Qentro Private Area</h1>
-<p>Hoşgeldin. Artık içeridesin.</p>
+<h1 id="title">Qentro Private Area</h1>
+<p id="welcome">Yükleniyor...</p>
 
 <button onclick="logout()">Çıkış Yap</button>
 
@@ -34,20 +35,43 @@ const supabase = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
+// Kullanıcı kontrol
 async function checkUser() {
   const { data } = await supabase.auth.getUser();
 
   if (!data.user) {
     window.location.href = "login.html";
+    return;
+  }
+
+  loadUser(data.user.email);
+}
+
+// Kullanıcı bilgilerini çek
+async function loadUser(email) {
+
+  const { data: userData, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  if (userData) {
+    document.getElementById("welcome").innerText =
+      "Hoşgeldin, " + userData.name;
+  } else {
+    document.getElementById("welcome").innerText =
+      "Hoşgeldin";
   }
 }
 
-checkUser();
-
+// Çıkış
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
 }
+
+checkUser();
 </script>
 
 </body>
