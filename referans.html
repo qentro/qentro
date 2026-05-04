@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qentro | Referanslı Erişim</title>
+<title>Qentro | Referral Access</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
   display: flex;
   justify-content: center;
@@ -25,31 +27,63 @@ body {
   padding: 24px;
 }
 
+.page {
+  width: 100%;
+  max-width: 520px;
+}
+
+.language-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
 .card {
   width: 100%;
-  max-width: 460px;
   padding: 38px 34px;
   border-radius: 28px;
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   box-shadow: 0 35px 80px rgba(0,0,0,0.55);
 }
 
 h1 {
-  font-size: 34px;
+  font-size: 36px;
   margin: 0 0 10px;
+  letter-spacing: -0.04em;
 }
 
 p {
   margin: 0 0 24px;
-  color: #aaa;
-  font-size: 14px;
+  color: rgba(255,255,255,0.68);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
-  color: #d0d0d0;
+  color: rgba(255,255,255,0.82);
   font-size: 14px;
   font-weight: 600;
 }
@@ -59,7 +93,7 @@ input {
   padding: 15px 16px;
   margin-bottom: 16px;
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.11);
+  border: 1px solid rgba(255,255,255,0.12);
   background: linear-gradient(90deg, #2a2a2a, #202020);
   color: #fff;
   outline: none;
@@ -71,7 +105,7 @@ button {
   padding: 16px;
   margin-top: 8px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   background: linear-gradient(90deg, #333, #222);
   color: #fff;
   font-weight: 700;
@@ -86,29 +120,67 @@ button {
 button:hover {
   filter: brightness(1.12);
 }
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 30px 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Referanslı Erişim</h1>
-  <p>Onaylı kullanıcılar davet kodu ile giriş yapabilir.</p>
+<div class="page">
+  <div class="language-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+  </div>
 
-  <label>Ad Soyad</label>
-  <input id="name">
+  <div class="card">
+    <h1 id="title">Referral Access</h1>
+    <p id="subtitle">Approved guests can continue with a private invitation code.</p>
 
-  <label>Email</label>
-  <input id="email">
+    <label id="nameLabel">Full Name</label>
+    <input id="name" type="text">
 
-  <label>Referans Olan Kişi</label>
-  <input id="ref">
+    <label id="emailLabel">Email</label>
+    <input id="email" type="email">
 
-  <label>Davet Kodu</label>
-  <input id="code">
+    <label id="refLabel">Referring Person</label>
+    <input id="ref" type="text">
 
-  <button onclick="checkAccess()">Erişimi Doğrula</button>
-  <button class="secondary" onclick="goHome()">Ana Sayfaya Dön</button>
+    <label id="codeLabel">Invitation Code</label>
+    <input id="code" type="text">
+
+    <button id="accessBtn" onclick="checkAccess()">Verify Access</button>
+    <button id="homeBtn" class="secondary" onclick="goHome()">Back to Home</button>
+  </div>
 </div>
 
 <script>
@@ -117,12 +189,231 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    pageTitle: "Qentro | Referral Access",
+    title: "Referral Access",
+    subtitle: "Approved guests can continue with a private invitation code.",
+    nameLabel: "Full Name",
+    emailLabel: "Email",
+    refLabel: "Referring Person",
+    codeLabel: "Invitation Code",
+    accessBtn: "Verify Access",
+    homeBtn: "Back to Home",
+    emptyAlert: "Please enter your email and invitation code.",
+    wrongAlert: "Invalid information."
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    pageTitle: "Qentro | Referanslı Erişim",
+    title: "Referanslı Erişim",
+    subtitle: "Onaylı kullanıcılar davet kodu ile devam edebilir.",
+    nameLabel: "Ad Soyad",
+    emailLabel: "Email",
+    refLabel: "Referans Olan Kişi",
+    codeLabel: "Davet Kodu",
+    accessBtn: "Erişimi Doğrula",
+    homeBtn: "Ana Sayfaya Dön",
+    emptyAlert: "Email ve davet kodu girin.",
+    wrongAlert: "Hatalı bilgi."
+  },
+  es: {
+    lang: "es", dir: "ltr",
+    pageTitle: "Qentro | Acceso con Referencia",
+    title: "Acceso con referencia",
+    subtitle: "Los invitados aprobados pueden continuar con un código de invitación privado.",
+    nameLabel: "Nombre completo",
+    emailLabel: "Email",
+    refLabel: "Persona que refiere",
+    codeLabel: "Código de invitación",
+    accessBtn: "Verificar acceso",
+    homeBtn: "Volver al inicio",
+    emptyAlert: "Por favor ingresa tu email y código de invitación.",
+    wrongAlert: "Información inválida."
+  },
+  fr: {
+    lang: "fr", dir: "ltr",
+    pageTitle: "Qentro | Accès avec recommandation",
+    title: "Accès avec recommandation",
+    subtitle: "Les invités approuvés peuvent continuer avec un code d’invitation privé.",
+    nameLabel: "Nom complet",
+    emailLabel: "Email",
+    refLabel: "Personne référente",
+    codeLabel: "Code d’invitation",
+    accessBtn: "Vérifier l’accès",
+    homeBtn: "Retour à l’accueil",
+    emptyAlert: "Veuillez entrer votre email et votre code d’invitation.",
+    wrongAlert: "Informations invalides."
+  },
+  de: {
+    lang: "de", dir: "ltr",
+    pageTitle: "Qentro | Zugang mit Empfehlung",
+    title: "Zugang mit Empfehlung",
+    subtitle: "Genehmigte Gäste können mit einem privaten Einladungscode fortfahren.",
+    nameLabel: "Vollständiger Name",
+    emailLabel: "Email",
+    refLabel: "Empfehlende Person",
+    codeLabel: "Einladungscode",
+    accessBtn: "Zugang prüfen",
+    homeBtn: "Zur Startseite",
+    emptyAlert: "Bitte gib deine E-Mail und deinen Einladungscode ein.",
+    wrongAlert: "Ungültige Informationen."
+  },
+  it: {
+    lang: "it", dir: "ltr",
+    pageTitle: "Qentro | Accesso con referenza",
+    title: "Accesso con referenza",
+    subtitle: "Gli ospiti approvati possono continuare con un codice di invito privato.",
+    nameLabel: "Nome completo",
+    emailLabel: "Email",
+    refLabel: "Persona referente",
+    codeLabel: "Codice di invito",
+    accessBtn: "Verifica accesso",
+    homeBtn: "Torna alla home",
+    emptyAlert: "Inserisci email e codice di invito.",
+    wrongAlert: "Informazioni non valide."
+  },
+  ru: {
+    lang: "ru", dir: "ltr",
+    pageTitle: "Qentro | Доступ по рекомендации",
+    title: "Доступ по рекомендации",
+    subtitle: "Одобренные гости могут продолжить с частным кодом приглашения.",
+    nameLabel: "Полное имя",
+    emailLabel: "Email",
+    refLabel: "Рекомендатель",
+    codeLabel: "Код приглашения",
+    accessBtn: "Проверить доступ",
+    homeBtn: "На главную",
+    emptyAlert: "Введите email и код приглашения.",
+    wrongAlert: "Неверная информация."
+  },
+  zh: {
+    lang: "zh", dir: "ltr",
+    pageTitle: "Qentro | 推荐访问",
+    title: "推荐访问",
+    subtitle: "已批准的访客可以使用私人邀请码继续。",
+    nameLabel: "姓名",
+    emailLabel: "邮箱",
+    refLabel: "推荐人",
+    codeLabel: "邀请码",
+    accessBtn: "验证访问",
+    homeBtn: "返回首页",
+    emptyAlert: "请输入邮箱和邀请码。",
+    wrongAlert: "信息无效。"
+  },
+  ar: {
+    lang: "ar", dir: "rtl",
+    pageTitle: "Qentro | دخول بالإحالة",
+    title: "دخول بالإحالة",
+    subtitle: "يمكن للضيوف المعتمدين المتابعة باستخدام رمز دعوة خاص.",
+    nameLabel: "الاسم الكامل",
+    emailLabel: "البريد الإلكتروني",
+    refLabel: "الشخص المُحيل",
+    codeLabel: "رمز الدعوة",
+    accessBtn: "تحقق من الدخول",
+    homeBtn: "العودة إلى الرئيسية",
+    emptyAlert: "يرجى إدخال البريد الإلكتروني ورمز الدعوة.",
+    wrongAlert: "معلومات غير صحيحة."
+  },
+  fa: {
+    lang: "fa", dir: "rtl",
+    pageTitle: "Qentro | دسترسی با معرفی",
+    title: "دسترسی با معرفی",
+    subtitle: "مهمانان تأییدشده می‌توانند با کد دعوت خصوصی ادامه دهند.",
+    nameLabel: "نام و نام خانوادگی",
+    emailLabel: "ایمیل",
+    refLabel: "شخص معرف",
+    codeLabel: "کد دعوت",
+    accessBtn: "تأیید دسترسی",
+    homeBtn: "بازگشت به صفحه اصلی",
+    emptyAlert: "لطفاً ایمیل و کد دعوت را وارد کنید.",
+    wrongAlert: "اطلاعات نامعتبر است."
+  },
+  hi: {
+    lang: "hi", dir: "ltr",
+    pageTitle: "Qentro | रेफरल एक्सेस",
+    title: "रेफरल एक्सेस",
+    subtitle: "स्वीकृत मेहमान निजी निमंत्रण कोड के साथ आगे बढ़ सकते हैं।",
+    nameLabel: "पूरा नाम",
+    emailLabel: "Email",
+    refLabel: "रेफर करने वाला व्यक्ति",
+    codeLabel: "निमंत्रण कोड",
+    accessBtn: "एक्सेस सत्यापित करें",
+    homeBtn: "होम पर वापस जाएँ",
+    emptyAlert: "कृपया email और निमंत्रण कोड दर्ज करें।",
+    wrongAlert: "गलत जानकारी."
+  },
+  ja: {
+    lang: "ja", dir: "ltr",
+    pageTitle: "Qentro | 紹介アクセス",
+    title: "紹介アクセス",
+    subtitle: "承認済みのゲストは、専用の招待コードで続行できます。",
+    nameLabel: "氏名",
+    emailLabel: "メール",
+    refLabel: "紹介者",
+    codeLabel: "招待コード",
+    accessBtn: "アクセスを確認",
+    homeBtn: "ホームに戻る",
+    emptyAlert: "メールと招待コードを入力してください。",
+    wrongAlert: "情報が正しくありません。"
+  },
+  bn: {
+    lang: "bn", dir: "ltr",
+    pageTitle: "Qentro | রেফারেল অ্যাক্সেস",
+    title: "রেফারেল অ্যাক্সেস",
+    subtitle: "অনুমোদিত অতিথিরা ব্যক্তিগত আমন্ত্রণ কোড দিয়ে এগোতে পারেন।",
+    nameLabel: "পুরো নাম",
+    emailLabel: "Email",
+    refLabel: "রেফার করা ব্যক্তি",
+    codeLabel: "আমন্ত্রণ কোড",
+    accessBtn: "অ্যাক্সেস যাচাই করুন",
+    homeBtn: "হোমে ফিরুন",
+    emptyAlert: "অনুগ্রহ করে email এবং আমন্ত্রণ কোড লিখুন।",
+    wrongAlert: "ভুল তথ্য।"
+  }
+};
+
+let currentLang = localStorage.getItem("qentroLang") || "en";
+
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
+
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+
+  document.getElementById("title").innerHTML = t.title;
+  document.getElementById("subtitle").innerHTML = t.subtitle;
+  document.getElementById("nameLabel").innerHTML = t.nameLabel;
+  document.getElementById("emailLabel").innerHTML = t.emailLabel;
+  document.getElementById("refLabel").innerHTML = t.refLabel;
+  document.getElementById("codeLabel").innerHTML = t.codeLabel;
+  document.getElementById("accessBtn").innerHTML = t.accessBtn;
+  document.getElementById("homeBtn").innerHTML = t.homeBtn;
+
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
+  });
+
+  localStorage.setItem("qentroLang", code);
+}
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
+
 async function checkAccess() {
+  const t = texts[currentLang] || texts.en;
+
   const email = document.getElementById("email").value.trim().toLowerCase();
   const code = document.getElementById("code").value.trim().toUpperCase();
 
   if (!email || !code) {
-    alert("Email ve davet kodu girin.");
+    alert(t.emptyAlert);
     return;
   }
 
@@ -134,7 +425,7 @@ async function checkAccess() {
     .eq("status", "approved");
 
   if (error || !data || data.length === 0) {
-    alert("Hatalı bilgi.");
+    alert(t.wrongAlert);
     return;
   }
 
@@ -147,6 +438,8 @@ async function checkAccess() {
 function goHome() {
   window.location.href = "index.html";
 }
+
+setLang(currentLang);
 </script>
 
 </body>
