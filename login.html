@@ -9,57 +9,64 @@
 
 <style>
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
+html, body {
+  min-height: 100%;
+}
+
 body {
-  margin: 0;
-  min-height: 100vh;
   background:
     radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
     radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
     linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
+  padding: 22px;
+}
+
+.language-bar {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  transition: 0.2s ease;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.login-wrap {
+  width: 100%;
+  min-height: calc(100vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-}
-
-.language-top {
-  position: fixed;
-  top: 18px;
-  right: 22px;
-  z-index: 50;
-  display: flex;
-  gap: 9px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  max-width: 520px;
-}
-
-.language-top span {
-  color: rgba(255,255,255,0.46);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color .2s ease;
-}
-
-.language-top span:hover,
-.language-top span.active {
-  color: #fff;
-}
-
-.page {
-  width: 100%;
-  max-width: 520px;
 }
 
 .card {
   width: 100%;
+  max-width: 520px;
   padding: 38px 34px;
   border-radius: 28px;
   background: rgba(22,22,22,0.78);
@@ -130,20 +137,23 @@ input {
 
 @media (max-width: 560px) {
   body {
-    padding: 16px;
+    padding: 15px;
+  }
+
+  .language-bar {
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .lang-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .login-wrap {
+    min-height: calc(100vh - 80px);
     align-items: flex-start;
-    padding-top: 76px;
-  }
-
-  .language-top {
-    top: 16px;
-    right: 16px;
-    left: 16px;
-    max-width: none;
-  }
-
-  .language-top span {
-    font-size: 10px;
+    padding-top: 20px;
   }
 
   .card {
@@ -160,23 +170,23 @@ input {
 
 <body>
 
-<div class="language-top">
-  <span data-lang="en">EN</span>
-  <span data-lang="ar">AR</span>
-  <span data-lang="bn">BN</span>
-  <span data-lang="zh">ZH</span>
-  <span data-lang="fr">FR</span>
-  <span data-lang="de">DE</span>
-  <span data-lang="hi">HI</span>
-  <span data-lang="it">IT</span>
-  <span data-lang="ja">JA</span>
-  <span data-lang="fa">FA</span>
-  <span data-lang="ru">RU</span>
-  <span data-lang="es">ES</span>
-  <span data-lang="tr">TR</span>
+<div class="language-bar">
+  <button class="lang-btn active" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="ar">AR</button>
+  <button class="lang-btn" data-lang="bn">BN</button>
+  <button class="lang-btn" data-lang="zh">中文</button>
+  <button class="lang-btn" data-lang="fr">FR</button>
+  <button class="lang-btn" data-lang="de">DE</button>
+  <button class="lang-btn" data-lang="hi">HI</button>
+  <button class="lang-btn" data-lang="it">IT</button>
+  <button class="lang-btn" data-lang="ja">JA</button>
+  <button class="lang-btn" data-lang="fa">FA</button>
+  <button class="lang-btn" data-lang="ru">RU</button>
+  <button class="lang-btn" data-lang="es">ES</button>
+  <button class="lang-btn" data-lang="tr">TR</button>
 </div>
 
-<div class="page">
+<main class="login-wrap">
   <div class="card">
     <h1 id="title">Member Login</h1>
     <p id="subtitle">Approved members can sign in with their email and password.</p>
@@ -193,7 +203,7 @@ input {
 
     <div id="msg"></div>
   </div>
-</div>
+</main>
 
 <script>
 const supabaseClient = window.supabase.createClient(
@@ -256,15 +266,15 @@ function setLang(code) {
   document.getElementById("forgotBtn").textContent = t.forgotBtn;
   document.getElementById("homeBtn").textContent = t.homeBtn;
 
-  document.querySelectorAll(".language-top span").forEach(item => {
-    item.classList.toggle("active", item.dataset.lang === code);
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
   });
 
   localStorage.setItem("qentroLang", code);
 }
 
-document.querySelectorAll(".language-top span").forEach(item => {
-  item.addEventListener("click", function () {
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
     setLang(this.dataset.lang);
   });
 });
