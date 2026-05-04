@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Private Access</title>
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
     }
 
     body {
@@ -19,15 +20,40 @@
         radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 20%),
         linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
       color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 24px;
+    }
+
+    .language-bar {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.78);
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .lang-btn.active,
+    .lang-btn:hover {
+      background: #fff;
+      color: #000;
     }
 
     .container {
       width: 100%;
       max-width: 1200px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 28px;
@@ -69,19 +95,18 @@
     }
 
     h1 {
-      font-size: clamp(48px, 7vw, 86px);
+      font-size: clamp(46px, 7vw, 86px);
       line-height: 0.95;
       letter-spacing: -0.05em;
       margin-bottom: 26px;
-      max-width: 560px;
+      max-width: 650px;
     }
 
     .lead {
-      max-width: 560px;
+      max-width: 590px;
       color: rgba(255,255,255,0.78);
       font-size: 18px;
       line-height: 1.65;
-      margin-bottom: 34px;
     }
 
     .panel h2 {
@@ -156,67 +181,330 @@
         min-height: auto;
       }
     }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 16px;
+      }
+
+      .hero, .panel {
+        padding: 28px;
+        border-radius: 22px;
+      }
+
+      .language-bar {
+        justify-content: center;
+      }
+    }
   </style>
 </head>
+
 <body>
+  <div class="language-bar">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+    <button class="lang-btn" onclick="setLang('bn')">BN</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('de')">DE</button>
+    <button class="lang-btn" onclick="setLang('hi')">HI</button>
+    <button class="lang-btn" onclick="setLang('it')">IT</button>
+    <button class="lang-btn" onclick="setLang('ja')">JA</button>
+    <button class="lang-btn" onclick="setLang('fa')">FA</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('tr')">TR</button>
+  </div>
+
   <div class="container">
     <section class="hero">
       <div class="eyebrow">
         <span class="dot"></span>
-        <span>QENTRO PRIVATE NETWORK</span>
+        <span id="eyebrow">QENTRO PRIVATE NETWORK</span>
       </div>
 
-      <h1>Not everyone gets in.</h1>
+      <h1 id="headline">Not everyone gets in.</h1>
 
-      <p class="lead">
-        Qentro is a private network built for selected members.
-        Access is not public. Referred guests and approved applicants
-        may receive a private entry path.
+      <p class="lead" id="lead">
+        Qentro is a private network built for selected members. Access is not public.
+        Referred guests and approved applicants may receive a private entry path.
       </p>
     </section>
 
     <aside class="panel">
       <div>
-        <h2>Giriş Seçenekleri</h2>
-        <p class="top-text">
-          Referansın varsa öncelikli başvuru yapabilirsin.
-          Referansın yoksa detaylı üyelik başvurusu bırakabilirsin.
-          Onaylı üyeler ise doğrudan giriş yapabilir.
+        <h2 id="panelTitle">Access Options</h2>
+
+        <p class="top-text" id="panelText">
+          If you have a referral, you may apply through the priority access path.
+          If you do not have a referral, you may submit a membership application.
+          Approved members can sign in directly.
         </p>
 
         <div class="button-group">
           <a class="btn" href="login.html">
             <div>
-              <strong>Üye Girişi</strong>
-              <span>Onaylı üyeler için giriş</span>
+              <strong id="loginTitle">Member Login</strong>
+              <span id="loginDesc">For approved members</span>
             </div>
             <div class="arrow">›</div>
           </a>
 
           <a class="btn" href="referans.html">
             <div>
-              <strong>Referanslı Üyelik Başvurusu Yap</strong>
-              <span>Referansı olan kullanıcılar için öncelikli başvuru</span>
+              <strong id="refTitle">Apply With Referral</strong>
+              <span id="refDesc">Priority application for referred guests</span>
             </div>
             <div class="arrow">›</div>
           </a>
 
           <a class="btn" href="basvuru.html">
             <div>
-              <strong>Üyelik Başvurusu Yap</strong>
-              <span>Referansı olmayan kullanıcılar için başvuru</span>
+              <strong id="applyTitle">Apply For Membership</strong>
+              <span id="applyDesc">Application path for guests without referral</span>
             </div>
             <div class="arrow">›</div>
           </a>
         </div>
       </div>
 
-      <div class="panel-bottom">
+      <div class="panel-bottom" id="bottomText">
         Access is limited and reviewed manually.<br />
         Approval is not guaranteed.<br />
         Private invitations and verified member credentials are required for full entry.
       </div>
     </aside>
   </div>
+
+  <script>
+    const texts = {
+      en: {
+        lang: "en", dir: "ltr",
+        eyebrow: "QENTRO PRIVATE NETWORK",
+        headline: "Not everyone gets in.",
+        lead: "Qentro is a private network built for selected members. Access is not public. Referred guests and approved applicants may receive a private entry path.",
+        panelTitle: "Access Options",
+        panelText: "If you have a referral, you may apply through the priority access path. If you do not have a referral, you may submit a membership application. Approved members can sign in directly.",
+        loginTitle: "Member Login",
+        loginDesc: "For approved members",
+        refTitle: "Apply With Referral",
+        refDesc: "Priority application for referred guests",
+        applyTitle: "Apply For Membership",
+        applyDesc: "Application path for guests without referral",
+        bottomText: "Access is limited and reviewed manually.<br />Approval is not guaranteed.<br />Private invitations and verified member credentials are required for full entry."
+      },
+      ar: {
+        lang: "ar", dir: "rtl",
+        eyebrow: "شبكة QENTRO الخاصة",
+        headline: "ليس الجميع يحصلون على الدخول.",
+        lead: "Qentro شبكة خاصة صُممت للأعضاء المختارين. الوصول ليس عامًا. قد يحصل الضيوف المحالون والمتقدمون المعتمدون على مسار دخول خاص.",
+        panelTitle: "خيارات الدخول",
+        panelText: "إذا كان لديك إحالة، يمكنك التقديم عبر مسار أولوية. إذا لم تكن لديك إحالة، يمكنك إرسال طلب عضوية. يمكن للأعضاء المعتمدين تسجيل الدخول مباشرة.",
+        loginTitle: "تسجيل دخول الأعضاء",
+        loginDesc: "للأعضاء المعتمدين",
+        refTitle: "التقديم بإحالة",
+        refDesc: "طلب أولوية للضيوف المحالين",
+        applyTitle: "طلب عضوية",
+        applyDesc: "مسار التقديم للضيوف بدون إحالة",
+        bottomText: "الوصول محدود ويتم مراجعته يدويًا.<br />الموافقة غير مضمونة.<br />يتطلب الدخول الكامل دعوة خاصة أو بيانات عضوية موثقة."
+      },
+      bn: {
+        lang: "bn", dir: "ltr",
+        eyebrow: "QENTRO ব্যক্তিগত নেটওয়ার্ক",
+        headline: "সবাই প্রবেশ করতে পারে না।",
+        lead: "Qentro নির্বাচিত সদস্যদের জন্য তৈরি একটি ব্যক্তিগত নেটওয়ার্ক। প্রবেশ সবার জন্য উন্মুক্ত নয়। রেফার করা অতিথি এবং অনুমোদিত আবেদনকারীরা ব্যক্তিগত প্রবেশপথ পেতে পারেন।",
+        panelTitle: "প্রবেশের বিকল্প",
+        panelText: "আপনার যদি রেফারেল থাকে, আপনি অগ্রাধিকার পথে আবেদন করতে পারেন। রেফারেল না থাকলে আপনি সদস্যপদের আবেদন জমা দিতে পারেন। অনুমোদিত সদস্যরা সরাসরি লগইন করতে পারেন।",
+        loginTitle: "সদস্য লগইন",
+        loginDesc: "অনুমোদিত সদস্যদের জন্য",
+        refTitle: "রেফারেলসহ আবেদন করুন",
+        refDesc: "রেফার করা অতিথিদের জন্য অগ্রাধিকার আবেদন",
+        applyTitle: "সদস্যপদের জন্য আবেদন করুন",
+        applyDesc: "রেফারেল ছাড়া অতিথিদের জন্য আবেদন পথ",
+        bottomText: "প্রবেশ সীমিত এবং ম্যানুয়ালি পর্যালোচনা করা হয়।<br />অনুমোদন নিশ্চিত নয়।<br />সম্পূর্ণ প্রবেশের জন্য ব্যক্তিগত আমন্ত্রণ বা যাচাইকৃত সদস্য তথ্য প্রয়োজন।"
+      },
+      zh: {
+        lang: "zh", dir: "ltr",
+        eyebrow: "QENTRO 私人网络",
+        headline: "并非所有人都能加入。",
+        lead: "Qentro 是为精选成员打造的私人网络。访问并非公开。受推荐的访客和通过审核的申请人可能获得私人入口。",
+        panelTitle: "访问选项",
+        panelText: "如果你有推荐人，可以通过优先通道申请。如果没有推荐人，也可以提交会员申请。已批准的成员可以直接登录。",
+        loginTitle: "会员登录",
+        loginDesc: "适用于已批准的成员",
+        refTitle: "通过推荐申请",
+        refDesc: "适用于受推荐访客的优先申请",
+        applyTitle: "申请会员",
+        applyDesc: "适用于无推荐人的访客",
+        bottomText: "访问名额有限，并由人工审核。<br />不保证一定通过。<br />完整访问需要私人邀请或已验证的会员凭证。"
+      },
+      fr: {
+        lang: "fr", dir: "ltr",
+        eyebrow: "QENTRO RÉSEAU PRIVÉ",
+        headline: "Tout le monde n’entre pas.",
+        lead: "Qentro est un réseau privé conçu pour des membres sélectionnés. L’accès n’est pas public. Les invités recommandés et les candidats approuvés peuvent recevoir un accès privé.",
+        panelTitle: "Options d’accès",
+        panelText: "Si vous avez une recommandation, vous pouvez postuler via l’accès prioritaire. Sans recommandation, vous pouvez soumettre une demande d’adhésion. Les membres approuvés peuvent se connecter directement.",
+        loginTitle: "Connexion membre",
+        loginDesc: "Pour les membres approuvés",
+        refTitle: "Postuler avec recommandation",
+        refDesc: "Demande prioritaire pour les invités recommandés",
+        applyTitle: "Demander une adhésion",
+        applyDesc: "Demande pour les invités sans recommandation",
+        bottomText: "L’accès est limité et examiné manuellement.<br />L’approbation n’est pas garantie.<br />Des invitations privées ou des identifiants vérifiés sont requis pour un accès complet."
+      },
+      de: {
+        lang: "de", dir: "ltr",
+        eyebrow: "QENTRO PRIVATES NETZWERK",
+        headline: "Nicht jeder kommt hinein.",
+        lead: "Qentro ist ein privates Netzwerk für ausgewählte Mitglieder. Der Zugang ist nicht öffentlich. Empfohlene Gäste und genehmigte Bewerber können einen privaten Zugang erhalten.",
+        panelTitle: "Zugangsoptionen",
+        panelText: "Wenn du eine Empfehlung hast, kannst du dich über den bevorzugten Zugang bewerben. Ohne Empfehlung kannst du eine Mitgliedschaftsanfrage senden. Genehmigte Mitglieder können sich direkt anmelden.",
+        loginTitle: "Mitglieder-Login",
+        loginDesc: "Für genehmigte Mitglieder",
+        refTitle: "Mit Empfehlung bewerben",
+        refDesc: "Priorisierte Bewerbung für empfohlene Gäste",
+        applyTitle: "Mitgliedschaft beantragen",
+        applyDesc: "Bewerbung für Gäste ohne Empfehlung",
+        bottomText: "Der Zugang ist begrenzt und wird manuell geprüft.<br />Eine Genehmigung ist nicht garantiert.<br />Für den vollständigen Zugang sind private Einladungen oder verifizierte Mitgliedsdaten erforderlich."
+      },
+      hi: {
+        lang: "hi", dir: "ltr",
+        eyebrow: "QENTRO निजी नेटवर्क",
+        headline: "हर कोई अंदर नहीं आता.",
+        lead: "Qentro चुने हुए सदस्यों के लिए बनाया गया एक निजी नेटवर्क है। प्रवेश सार्वजनिक नहीं है। रेफर किए गए मेहमानों और स्वीकृत आवेदकों को निजी प्रवेश मार्ग मिल सकता है।",
+        panelTitle: "प्रवेश विकल्प",
+        panelText: "यदि आपके पास रेफरल है, तो आप प्राथमिकता मार्ग से आवेदन कर सकते हैं। यदि आपके पास रेफरल नहीं है, तो आप सदस्यता आवेदन जमा कर सकते हैं। स्वीकृत सदस्य सीधे लॉगिन कर सकते हैं।",
+        loginTitle: "सदस्य लॉगिन",
+        loginDesc: "स्वीकृत सदस्यों के लिए",
+        refTitle: "रेफरल के साथ आवेदन करें",
+        refDesc: "रेफर किए गए मेहमानों के लिए प्राथमिक आवेदन",
+        applyTitle: "सदस्यता के लिए आवेदन करें",
+        applyDesc: "बिना रेफरल वाले मेहमानों के लिए आवेदन",
+        bottomText: "प्रवेश सीमित है और मैन्युअल रूप से समीक्षा की जाती है।<br />स्वीकृति की गारंटी नहीं है।<br />पूर्ण प्रवेश के लिए निजी निमंत्रण या सत्यापित सदस्य जानकारी आवश्यक है।"
+      },
+      it: {
+        lang: "it", dir: "ltr",
+        eyebrow: "QENTRO RETE PRIVATA",
+        headline: "Non tutti entrano.",
+        lead: "Qentro è una rete privata creata per membri selezionati. L'accesso non è pubblico. Gli ospiti referenziati e i candidati approvati possono ricevere un percorso di accesso privato.",
+        panelTitle: "Opzioni di accesso",
+        panelText: "Se hai una referenza, puoi candidarti tramite il percorso prioritario. Se non hai una referenza, puoi inviare una richiesta di iscrizione. I membri approvati possono accedere direttamente.",
+        loginTitle: "Accesso membri",
+        loginDesc: "Per membri approvati",
+        refTitle: "Candidati con referenza",
+        refDesc: "Richiesta prioritaria per ospiti referenziati",
+        applyTitle: "Richiedi iscrizione",
+        applyDesc: "Richiesta per ospiti senza referenza",
+        bottomText: "L'accesso è limitato e revisionato manualmente.<br />L'approvazione non è garantita.<br />Per l'accesso completo sono richiesti inviti privati o credenziali verificate."
+      },
+      ja: {
+        lang: "ja", dir: "ltr",
+        eyebrow: "QENTRO プライベートネットワーク",
+        headline: "誰もが入れるわけではありません。",
+        lead: "Qentroは、選ばれたメンバーのために作られたプライベートネットワークです。アクセスは一般公開されていません。紹介されたゲストと承認された申請者は、専用の入場ルートを受け取ることができます。",
+        panelTitle: "アクセスオプション",
+        panelText: "紹介がある場合は、優先ルートで申請できます。紹介がない場合でも、メンバーシップ申請を送信できます。承認済みのメンバーは直接ログインできます。",
+        loginTitle: "メンバーログイン",
+        loginDesc: "承認済みメンバー向け",
+        refTitle: "紹介で申請",
+        refDesc: "紹介されたゲスト向けの優先申請",
+        applyTitle: "メンバーシップ申請",
+        applyDesc: "紹介のないゲスト向けの申請ルート",
+        bottomText: "アクセスは限定され、手動で審査されます。<br />承認は保証されません。<br />完全なアクセスには、プライベート招待または確認済みのメンバー情報が必要です。"
+      },
+      fa: {
+        lang: "fa", dir: "rtl",
+        eyebrow: "شبکه خصوصی QENTRO",
+        headline: "همه پذیرفته نمی‌شوند.",
+        lead: "Qentro یک شبکه خصوصی برای اعضای منتخب است. دسترسی عمومی نیست. مهمانان معرفی‌شده و متقاضیان تأییدشده ممکن است مسیر ورود خصوصی دریافت کنند.",
+        panelTitle: "گزینه‌های ورود",
+        panelText: "اگر معرف دارید، می‌توانید از مسیر اولویت‌دار درخواست دهید. اگر معرف ندارید، می‌توانید درخواست عضویت ارسال کنید. اعضای تأییدشده می‌توانند مستقیماً وارد شوند.",
+        loginTitle: "ورود اعضا",
+        loginDesc: "برای اعضای تأییدشده",
+        refTitle: "درخواست با معرفی‌نامه",
+        refDesc: "درخواست اولویت‌دار برای مهمانان معرفی‌شده",
+        applyTitle: "درخواست عضویت",
+        applyDesc: "درخواست برای مهمانان بدون معرف",
+        bottomText: "دسترسی محدود است و به‌صورت دستی بررسی می‌شود.<br />تأیید تضمین‌شده نیست.<br />برای ورود کامل، دعوت خصوصی یا اطلاعات تأییدشده عضویت لازم است."
+      },
+      ru: {
+        lang: "ru", dir: "ltr",
+        eyebrow: "QENTRO ЧАСТНАЯ СЕТЬ",
+        headline: "Не каждый получает доступ.",
+        lead: "Qentro — это частная сеть для выбранных участников. Доступ не является публичным. Приглашённые гости и одобренные кандидаты могут получить частный путь входа.",
+        panelTitle: "Варианты доступа",
+        panelText: "Если у вас есть рекомендация, вы можете подать приоритетную заявку. Если рекомендации нет, вы можете отправить заявку на членство. Одобренные участники могут войти напрямую.",
+        loginTitle: "Вход для участников",
+        loginDesc: "Для одобренных участников",
+        refTitle: "Заявка с рекомендацией",
+        refDesc: "Приоритетная заявка для приглашённых гостей",
+        applyTitle: "Подать заявку на членство",
+        applyDesc: "Заявка для гостей без рекомендации",
+        bottomText: "Доступ ограничен и проверяется вручную.<br />Одобрение не гарантируется.<br />Для полного входа требуется частное приглашение или подтверждённые данные участника."
+      },
+      es: {
+        lang: "es", dir: "ltr",
+        eyebrow: "QENTRO RED PRIVADA",
+        headline: "No todos entran.",
+        lead: "Qentro es una red privada creada para miembros seleccionados. El acceso no es público. Los invitados referidos y los solicitantes aprobados pueden recibir una vía de entrada privada.",
+        panelTitle: "Opciones de acceso",
+        panelText: "Si tienes una referencia, puedes solicitar acceso prioritario. Si no tienes una referencia, puedes enviar una solicitud de membresía. Los miembros aprobados pueden iniciar sesión directamente.",
+        loginTitle: "Acceso de miembros",
+        loginDesc: "Para miembros aprobados",
+        refTitle: "Solicitar con referencia",
+        refDesc: "Solicitud prioritaria para invitados referidos",
+        applyTitle: "Solicitar membresía",
+        applyDesc: "Solicitud para invitados sin referencia",
+        bottomText: "El acceso es limitado y se revisa manualmente.<br />La aprobación no está garantizada.<br />Se requieren invitaciones privadas o credenciales verificadas para el acceso completo."
+      },
+      tr: {
+        lang: "tr", dir: "ltr",
+        eyebrow: "QENTRO ÖZEL AĞ",
+        headline: "Herkes kabul edilmez.",
+        lead: "Qentro, seçilmiş üyeler için oluşturulmuş özel bir ağdır. Erişim herkese açık değildir. Referanslı misafirler ve onaylanan başvuru sahipleri özel giriş hakkı alabilir.",
+        panelTitle: "Giriş Seçenekleri",
+        panelText: "Referansın varsa öncelikli başvuru yapabilirsin. Referansın yoksa üyelik başvurusu bırakabilirsin. Onaylı üyeler doğrudan giriş yapabilir.",
+        loginTitle: "Üye Girişi",
+        loginDesc: "Onaylı üyeler için giriş",
+        refTitle: "Referanslı Üyelik Başvurusu Yap",
+        refDesc: "Referansı olan kullanıcılar için öncelikli başvuru",
+        applyTitle: "Üyelik Başvurusu Yap",
+        applyDesc: "Referansı olmayan kullanıcılar için başvuru",
+        bottomText: "Erişim sınırlıdır ve başvurular manuel olarak incelenir.<br />Onay garanti edilmez.<br />Tam giriş için özel davet veya doğrulanmış üye bilgileri gerekir."
+      }
+    };
+
+    function setLang(code) {
+      const t = texts[code] || texts.en;
+
+      document.documentElement.lang = t.lang;
+      document.documentElement.dir = t.dir;
+
+      document.getElementById("eyebrow").innerHTML = t.eyebrow;
+      document.getElementById("headline").innerHTML = t.headline;
+      document.getElementById("lead").innerHTML = t.lead;
+      document.getElementById("panelTitle").innerHTML = t.panelTitle;
+      document.getElementById("panelText").innerHTML = t.panelText;
+      document.getElementById("loginTitle").innerHTML = t.loginTitle;
+      document.getElementById("loginDesc").innerHTML = t.loginDesc;
+      document.getElementById("refTitle").innerHTML = t.refTitle;
+      document.getElementById("refDesc").innerHTML = t.refDesc;
+      document.getElementById("applyTitle").innerHTML = t.applyTitle;
+      document.getElementById("applyDesc").innerHTML = t.applyDesc;
+      document.getElementById("bottomText").innerHTML = t.bottomText;
+
+      document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.remove("active"));
+      const activeBtn = Array.from(document.querySelectorAll(".lang-btn")).find(btn =>
+        btn.getAttribute("onclick") === "setLang('" + code + "')"
+      );
+      if (activeBtn) activeBtn.classList.add("active");
+
+      localStorage.setItem("qentroLang", code);
+    }
+
+    const savedLang = localStorage.getItem("qentroLang") || "en";
+    setLang(savedLang);
+  </script>
 </body>
 </html>
