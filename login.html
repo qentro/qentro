@@ -42,6 +42,7 @@ body {
 }
 
 .lang-btn {
+  width: auto;
   border: 1px solid rgba(255,255,255,0.16);
   background: rgba(255,255,255,0.06);
   color: rgba(255,255,255,0.78);
@@ -50,6 +51,7 @@ body {
   cursor: pointer;
   font-size: 12px;
   letter-spacing: 0.05em;
+  font-weight: 700;
 }
 
 .lang-btn.active,
@@ -100,7 +102,7 @@ input {
   font-size: 15px;
 }
 
-button {
+.card button {
   width: 100%;
   padding: 16px;
   margin-top: 8px;
@@ -113,11 +115,11 @@ button {
 }
 
 .secondary {
-  background: linear-gradient(90deg, #292929, #1b1b1b);
-  margin-top: 12px;
+  background: linear-gradient(90deg, #292929, #1b1b1b) !important;
+  margin-top: 12px !important;
 }
 
-button:hover {
+.card button:hover {
   filter: brightness(1.12);
 }
 
