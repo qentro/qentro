@@ -1,101 +1,249 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Qentro - Hesap Tamamla</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <title>Qentro | Üyelik Tamamlama</title>
 
-<style>
-body {
-  background: #000;
-  color: #fff;
-  font-family: Arial;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.box {
-  width: 400px;
-}
-input, textarea, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
-}
-button {
-  background: #fff;
-  color: #000;
-}
-</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(198,166,100,0.18), transparent 35%),
+        linear-gradient(135deg, #030303, #0b0b0b 45%, #111);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(12,12,12,0.92);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      text-align: center;
+      letter-spacing: 7px;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #f5d77b;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #bdbdbd;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #d7d7d7;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.055);
+      color: white;
+      outline: none;
+      margin-bottom: 18px;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f5d77b, #b88a2b);
+      color: #050505;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      font-size: 13px;
+    }
+
+    .links a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .success {
+      display: block;
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      color: #8ff0b2;
+    }
+
+    .error {
+      display: block;
+      background: rgba(255, 77, 77, 0.12);
+      border: 1px solid rgba(255, 77, 77, 0.35);
+      color: #ff9b9b;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="card">
+    <div class="logo">QENTRO</div>
 
-<div class="box">
-  <h2>Hesabı Tamamla</h2>
+    <div class="subtitle">
+      Davet kodunuz onaylandıysa üyeliğinizi tamamlayın.<br>
+      Qentro erişimi yalnızca onaylı kişiler içindir.
+    </div>
 
-  <input id="pass" type="password" placeholder="Şifre">
-  <input id="pass2" type="password" placeholder="Şifre tekrar">
-  <input id="phone" placeholder="Telefon">
-  <input id="job" placeholder="Meslek">
-  <input id="country" placeholder="Ülke">
-  <input id="city" placeholder="Şehir">
+    <form id="completeForm">
+      <label>Ad Soyad</label>
+      <input id="fullName" type="text" placeholder="Adınız Soyadınız" required>
 
-  <textarea id="why" placeholder="Neden katılmak istiyorsun?"></textarea>
-  <textarea id="about" placeholder="Kendinden bahset"></textarea>
+      <label>E-mail</label>
+      <input id="email" type="email" placeholder="ornek@mail.com" required>
 
-  <button onclick="register()">Hesabı Oluştur</button>
-</div>
+      <label>Davet Kodu</label>
+      <input id="inviteCode" type="text" placeholder="Size gönderilen davet kodu" required>
 
-<script>
-const supabase = window.supabase.createClient(
-  "https://wfkyriteptajmwkyzvub.supabase.co",
-  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-);
+      <label>Şifre Oluştur</label>
+      <input id="password" type="password" placeholder="En az 6 karakter" required minlength="6">
 
-async function register() {
+      <button type="submit">Üyeliğimi Tamamla</button>
+    </form>
 
-  const email = localStorage.getItem("q_email");
-  const name = localStorage.getItem("q_name");
+    <div id="message" class="message"></div>
 
-  const pass = document.getElementById("pass").value;
-  const pass2 = document.getElementById("pass2").value;
+    <div class="links">
+      <a href="login.html">Giriş Yap</a>
+      <a href="index.html">Anasayfa</a>
+    </div>
 
-  if (pass !== pass2) {
-    alert("Şifreler aynı değil!");
-    return;
-  }
+    <div class="note">
+      Davet kodu olmadan üyelik oluşturulamaz.
+    </div>
+  </div>
 
-  // kullanıcı oluştur
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: pass
-  });
+  <script>
+    const SUPABASE_URL = "https://wfkyriteptajmwkyzvub.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX";
 
-  if (error) {
-    alert("Hata: " + error.message);
-    return;
-  }
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // profil kaydet
-  await supabase.from("users").insert([{
-    name: name,
-    email: email,
-    phone: document.getElementById("phone").value,
-    job: document.getElementById("job").value,
-    country: document.getElementById("country").value,
-    city: document.getElementById("city").value,
-    why: document.getElementById("why").value,
-    about: document.getElementById("about").value
-  }]);
+    const form = document.getElementById("completeForm");
+    const messageBox = document.getElementById("message");
 
-  alert("Hesap oluşturuldu! Mailini kontrol et.");
-}
-</script>
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = "message " + type;
+    }
 
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const inviteCode = document.getElementById("inviteCode").value.trim().toUpperCase();
+      const password = document.getElementById("password").value;
+
+      showMessage("Kontrol ediliyor...", "success");
+
+      const { data: application, error: appError } = await supabaseClient
+        .from("applications")
+        .select("*")
+        .eq("email", email)
+        .eq("invite_code", inviteCode)
+        .eq("status", "approved")
+        .single();
+
+      if (appError || !application) {
+        showMessage("Bu e-mail ve davet kodu ile onaylı başvuru bulunamadı.", "error");
+        return;
+      }
+
+      const { data: authData, error: signUpError } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            invite_code: inviteCode
+          }
+        }
+      });
+
+      if (signUpError) {
+        showMessage("Üyelik oluşturulamadı: " + signUpError.message, "error");
+        return;
+      }
+
+      await supabaseClient
+        .from("applications")
+        .update({
+          status: "completed"
+        })
+        .eq("id", application.id);
+
+      showMessage("Üyeliğiniz başarıyla tamamlandı. Şimdi giriş yapabilirsiniz.", "success");
+
+      setTimeout(function() {
+        window.location.href = "login.html";
+      }, 1800);
+    });
+  </script>
 </body>
 </html>
