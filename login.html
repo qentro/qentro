@@ -1,349 +1,331 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Qentro | Member Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qentro | Member Login</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
+    }
 
-html, body {
-  min-height: 100%;
-}
+    html, body {
+      min-height: 100%;
+    }
 
-body {
-  background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
-    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
-    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
-  color: #fff;
-  padding: 22px;
-}
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+        linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
+      color: #fff;
+      padding: 22px;
+    }
 
-.q-language-bar {
-  width: 100%;
-  max-width: 1180px;
-  margin: 0 auto 18px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+    .language-bar {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
-.q-lang-btn {
-  width: auto !important;
-  min-width: 0 !important;
-  height: auto !important;
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 12px !important;
-  margin: 0 !important;
-  border-radius: 999px !important;
-  border: 1px solid rgba(255,255,255,0.16) !important;
-  background: rgba(255,255,255,0.06) !important;
-  color: rgba(255,255,255,0.78) !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1 !important;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-}
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.78);
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: 0.2s ease;
+    }
 
-.q-lang-btn.active,
-.q-lang-btn:hover {
-  background: #fff !important;
-  color: #000 !important;
-}
+    .lang-btn.active,
+    .lang-btn:hover {
+      background: #fff;
+      color: #000;
+    }
 
-.login-wrap {
-  width: 100%;
-  min-height: calc(100vh - 90px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: calc(100vh - 90px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.card {
-  width: 100%;
-  max-width: 520px;
-  padding: 38px 34px;
-  border-radius: 28px;
-  background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.11);
-  box-shadow: 0 35px 80px rgba(0,0,0,0.55);
-}
+    .panel {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.13);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 42px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    }
 
-h1 {
-  font-size: 38px;
-  margin: 0 0 12px;
-  letter-spacing: -0.04em;
-}
+    .panel h1 {
+      font-size: 38px;
+      margin-bottom: 12px;
+      letter-spacing: -0.04em;
+    }
 
-p {
-  margin: 0 0 28px;
-  color: rgba(255,255,255,0.68);
-  font-size: 15px;
-  line-height: 1.6;
-}
+    .panel p {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      font-size: 16px;
+    }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: rgba(255,255,255,0.82);
-  font-size: 14px;
-  font-weight: 600;
-}
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-input {
-  width: 100%;
-  padding: 15px 16px;
-  margin-bottom: 18px;
-  border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: linear-gradient(90deg, #2a2a2a, #202020);
-  color: #fff;
-  outline: none;
-  font-size: 15px;
-}
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(90deg, #2a2a2a, #202020);
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
 
-.action-btn {
-  width: 100%;
-  padding: 16px;
-  margin-top: 8px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.13);
-  background: linear-gradient(90deg, #333, #222);
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-}
+    .login-button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 8px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background: linear-gradient(90deg, #333, #222);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+    }
 
-.secondary {
-  background: linear-gradient(90deg, #292929, #1b1b1b);
-  margin-top: 12px;
-}
+    .secondary {
+      background: linear-gradient(90deg, #292929, #1b1b1b);
+      margin-top: 12px;
+    }
 
-.action-btn:hover {
-  filter: brightness(1.12);
-}
+    .login-button:hover {
+      filter: brightness(1.12);
+    }
 
-#msg {
-  margin-top: 16px;
-  color: rgba(255,255,255,0.68);
-  font-size: 14px;
-  line-height: 1.5;
-}
+    #msg {
+      margin-top: 16px;
+      color: rgba(255,255,255,0.68);
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
-@media (max-width: 560px) {
-  body {
-    padding: 15px;
-  }
+    @media (max-width: 560px) {
+      body {
+        padding: 15px;
+      }
 
-  .q-language-bar {
-    justify-content: center;
-    margin-bottom: 14px;
-  }
+      .language-bar {
+        justify-content: center;
+        margin-bottom: 14px;
+      }
 
-  .q-lang-btn {
-    padding: 8px 10px !important;
-    font-size: 11px !important;
-  }
+      .lang-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+      }
 
-  .login-wrap {
-    min-height: calc(100vh - 80px);
-    align-items: flex-start;
-    padding-top: 20px;
-  }
+      .panel {
+        padding: 28px;
+        border-radius: 22px;
+      }
 
-  .card {
-    padding: 30px 24px;
-    border-radius: 24px;
-  }
-
-  h1 {
-    font-size: 34px;
-  }
-}
-</style>
+      .panel h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="q-language-bar">
-  <button type="button" class="q-lang-btn active" data-lang="en">EN</button>
-  <button type="button" class="q-lang-btn" data-lang="ar">AR</button>
-  <button type="button" class="q-lang-btn" data-lang="bn">BN</button>
-  <button type="button" class="q-lang-btn" data-lang="zh">中文</button>
-  <button type="button" class="q-lang-btn" data-lang="fr">FR</button>
-  <button type="button" class="q-lang-btn" data-lang="de">DE</button>
-  <button type="button" class="q-lang-btn" data-lang="hi">HI</button>
-  <button type="button" class="q-lang-btn" data-lang="it">IT</button>
-  <button type="button" class="q-lang-btn" data-lang="ja">JA</button>
-  <button type="button" class="q-lang-btn" data-lang="fa">FA</button>
-  <button type="button" class="q-lang-btn" data-lang="ru">RU</button>
-  <button type="button" class="q-lang-btn" data-lang="es">ES</button>
-  <button type="button" class="q-lang-btn" data-lang="tr">TR</button>
-</div>
-
-<main class="login-wrap">
-  <div class="card">
-    <h1 id="title">Member Login</h1>
-    <p id="subtitle">Approved members can sign in with their email and password.</p>
-
-    <label id="emailLabel">Email</label>
-    <input id="email" type="email" autocomplete="email" />
-
-    <label id="passwordLabel">Password</label>
-    <input id="pass" type="password" autocomplete="current-password" />
-
-    <button id="loginBtn" class="action-btn" onclick="login()">Sign In</button>
-    <button id="forgotBtn" class="action-btn secondary" onclick="forgotPassword()">Forgot Password</button>
-    <button id="homeBtn" class="action-btn secondary" onclick="goHome()">Back to Home</button>
-
-    <div id="msg"></div>
+  <div class="language-bar">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
   </div>
-</main>
 
-<script>
-const supabaseClient = window.supabase.createClient(
-  "https://wfkyriteptajmwkyzvub.supabase.co",
-  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
-);
+  <main class="container">
+    <section class="panel">
+      <h1 id="title">Member Login</h1>
+      <p id="subtitle">Approved members can sign in with their email and password.</p>
 
-const texts = {
-  en: {
-    lang: "en", dir: "ltr",
-    pageTitle: "Qentro | Member Login",
-    title: "Member Login",
-    subtitle: "Approved members can sign in with their email and password.",
-    emailLabel: "Email",
-    passwordLabel: "Password",
-    loginBtn: "Sign In",
-    forgotBtn: "Forgot Password",
-    homeBtn: "Back to Home",
-    emptyAlert: "Please enter your email and password.",
-    loginError: "Login error: ",
-    emailFirst: "Please enter your email address first.",
-    sending: "Sending password reset link...",
-    error: "Error: ",
-    sent: "Password reset link has been sent to your email address. Please check your inbox."
-  },
-  tr: {
-    lang: "tr", dir: "ltr",
-    pageTitle: "Qentro | Üye Girişi",
-    title: "Üye Girişi",
-    subtitle: "Onaylı üyeler e-mail ve şifre ile giriş yapabilir.",
-    emailLabel: "Email",
-    passwordLabel: "Şifre",
-    loginBtn: "Giriş Yap",
-    forgotBtn: "Şifremi Unuttum",
-    homeBtn: "Ana Sayfaya Dön",
-    emptyAlert: "Lütfen email ve şifre girin.",
-    loginError: "Giriş hatası: ",
-    emailFirst: "Lütfen önce email adresinizi yazın.",
-    sending: "Şifre yenileme linki gönderiliyor...",
-    error: "Hata: ",
-    sent: "Şifre yenileme linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin."
-  }
-};
+      <label id="emailLabel">Email</label>
+      <input id="email" type="email" autocomplete="email" />
 
-let currentLang = localStorage.getItem("qentroLang") || "en";
+      <label id="passwordLabel">Password</label>
+      <input id="pass" type="password" autocomplete="current-password" />
 
-function setLang(code) {
-  const t = texts[code] || texts.en;
-  currentLang = code;
+      <button id="loginBtn" class="login-button" onclick="login()">Sign In</button>
+      <button id="forgotBtn" class="login-button secondary" onclick="forgotPassword()">Forgot Password</button>
+      <button id="homeBtn" class="login-button secondary" onclick="goHome()">Back to Home</button>
 
-  document.documentElement.lang = t.lang;
-  document.documentElement.dir = t.dir;
-  document.title = t.pageTitle;
+      <div id="msg"></div>
+    </section>
+  </main>
 
-  document.getElementById("title").textContent = t.title;
-  document.getElementById("subtitle").textContent = t.subtitle;
-  document.getElementById("emailLabel").textContent = t.emailLabel;
-  document.getElementById("passwordLabel").textContent = t.passwordLabel;
-  document.getElementById("loginBtn").textContent = t.loginBtn;
-  document.getElementById("forgotBtn").textContent = t.forgotBtn;
-  document.getElementById("homeBtn").textContent = t.homeBtn;
+  <script>
+    const supabaseClient = window.supabase.createClient(
+      "https://wfkyriteptajmwkyzvub.supabase.co",
+      "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+    );
 
-  document.querySelectorAll(".q-lang-btn").forEach(button => {
-    button.classList.toggle("active", button.dataset.lang === code);
-  });
+    const texts = {
+      en: {
+        lang: "en", dir: "ltr",
+        title: "Member Login",
+        subtitle: "Approved members can sign in with their email and password.",
+        emailLabel: "Email",
+        passwordLabel: "Password",
+        loginBtn: "Sign In",
+        forgotBtn: "Forgot Password",
+        homeBtn: "Back to Home",
+        emptyAlert: "Please enter your email and password.",
+        loginError: "Login error: ",
+        emailFirst: "Please enter your email address first.",
+        sending: "Sending password reset link...",
+        error: "Error: ",
+        sent: "Password reset link has been sent to your email address."
+      },
+      tr: {
+        lang: "tr", dir: "ltr",
+        title: "Üye Girişi",
+        subtitle: "Onaylı üyeler e-mail ve şifre ile giriş yapabilir.",
+        emailLabel: "Email",
+        passwordLabel: "Şifre",
+        loginBtn: "Giriş Yap",
+        forgotBtn: "Şifremi Unuttum",
+        homeBtn: "Ana Sayfaya Dön",
+        emptyAlert: "Lütfen email ve şifre girin.",
+        loginError: "Giriş hatası: ",
+        emailFirst: "Lütfen önce email adresinizi yazın.",
+        sending: "Şifre yenileme linki gönderiliyor...",
+        error: "Hata: ",
+        sent: "Şifre yenileme linki email adresinize gönderildi."
+      }
+    };
 
-  localStorage.setItem("qentroLang", code);
-}
+    let currentLang = localStorage.getItem("qentroLang") || "en";
 
-document.querySelectorAll(".q-lang-btn").forEach(button => {
-  button.addEventListener("click", function () {
-    setLang(this.dataset.lang);
-  });
-});
+    function setLang(code) {
+      const t = texts[code] || texts.en;
+      currentLang = code;
 
-async function login() {
-  const t = texts[currentLang] || texts.en;
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  const password = document.getElementById("pass").value;
+      document.documentElement.lang = t.lang;
+      document.documentElement.dir = t.dir;
 
-  if (!email || !password) {
-    alert(t.emptyAlert);
-    return;
-  }
+      document.getElementById("title").innerHTML = t.title;
+      document.getElementById("subtitle").innerHTML = t.subtitle;
+      document.getElementById("emailLabel").innerHTML = t.emailLabel;
+      document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
+      document.getElementById("loginBtn").innerHTML = t.loginBtn;
+      document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
+      document.getElementById("homeBtn").innerHTML = t.homeBtn;
 
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+      document.querySelectorAll(".lang-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.lang === code);
+      });
 
-  if (error) {
-    alert(t.loginError + error.message);
-    return;
-  }
+      localStorage.setItem("qentroLang", code);
+    }
 
-  window.location.href = "dashboard.html";
-}
+    document.querySelectorAll(".lang-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        setLang(this.dataset.lang);
+      });
+    });
 
-async function forgotPassword() {
-  const t = texts[currentLang] || texts.en;
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  const msg = document.getElementById("msg");
+    async function login() {
+      const t = texts[currentLang] || texts.en;
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("pass").value;
 
-  if (!email) {
-    alert(t.emailFirst);
-    return;
-  }
+      if (!email || !password) {
+        alert(t.emptyAlert);
+        return;
+      }
 
-  msg.textContent = t.sending;
+      const { error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
 
-  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://www.qentro.com/reset.html"
-  });
+      if (error) {
+        alert(t.loginError + error.message);
+        return;
+      }
 
-  if (error) {
-    msg.textContent = t.error + error.message;
-    return;
-  }
+      window.location.href = "dashboard.html";
+    }
 
-  msg.textContent = t.sent;
-}
+    async function forgotPassword() {
+      const t = texts[currentLang] || texts.en;
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const msg = document.getElementById("msg");
 
-function goHome() {
-  window.location.href = "index.html";
-}
+      if (!email) {
+        alert(t.emailFirst);
+        return;
+      }
 
-setLang(currentLang);
-</script>
+      msg.textContent = t.sending;
 
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: "https://www.qentro.com/reset.html"
+      });
+
+      if (error) {
+        msg.textContent = t.error + error.message;
+        return;
+      }
+
+      msg.textContent = t.sent;
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+    setLang(currentLang);
+  </script>
 </body>
 </html>
