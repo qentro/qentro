@@ -8,69 +8,83 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
 body {
-  margin:0;
-  background: radial-gradient(circle at center, #0d0d0d, #000);
-  color:#fff;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
 }
 
 .card {
-  width:420px;
-  padding:30px;
-  border-radius:20px;
-  background: rgba(20,20,20,0.6);
-  backdrop-filter: blur(20px);
-  border:1px solid rgba(255,255,255,0.08);
+  width: 100%;
+  max-width: 460px;
+  padding: 38px 34px;
+  border-radius: 28px;
+  background: rgba(22,22,22,0.78);
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: 0 35px 80px rgba(0,0,0,0.55);
 }
 
-h2 {
-  margin-bottom:8px;
+h1 {
+  font-size: 34px;
+  margin: 0 0 10px;
 }
 
-.sub {
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:20px;
+p {
+  margin: 0 0 24px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d0d0d0;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 input {
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-  color:#fff;
-  background: linear-gradient(90deg,#2a2a2a,#1c1c1c);
+  width: 100%;
+  padding: 15px 16px;
+  margin-bottom: 16px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.11);
+  background: linear-gradient(90deg, #2a2a2a, #202020);
+  color: #fff;
+  outline: none;
+  font-size: 15px;
 }
 
 button {
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.primary {
-  background: linear-gradient(90deg,#3a3a3a,#1f1f1f);
-  color:#fff;
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(90deg, #333, #222);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .secondary {
-  background:#111;
-  color:#888;
+  background: linear-gradient(90deg, #292929, #1b1b1b);
+  margin-top: 12px;
 }
 
-.primary:hover {
-  opacity:0.9;
+button:hover {
+  filter: brightness(1.12);
 }
 </style>
 </head>
@@ -78,43 +92,55 @@ button {
 <body>
 
 <div class="card">
-  <h2>Referanslı Erişim</h2>
-  <div class="sub">Onaylı kullanıcılar erişebilir</div>
+  <h1>Referanslı Erişim</h1>
+  <p>Onaylı kullanıcılar davet kodu ile giriş yapabilir.</p>
 
-  <input id="name" placeholder="Ad Soyad">
-  <input id="email" placeholder="Email">
-  <input id="ref" placeholder="Referans Olan Kişi">
-  <input id="code" placeholder="Davet Kodu">
+  <label>Ad Soyad</label>
+  <input id="name">
 
-  <button class="primary" onclick="checkAccess()">Erişimi Doğrula</button>
-  <button class="secondary" onclick="goHome()">Ana Sayfa</button>
+  <label>Email</label>
+  <input id="email">
+
+  <label>Referans Olan Kişi</label>
+  <input id="ref">
+
+  <label>Davet Kodu</label>
+  <input id="code">
+
+  <button onclick="checkAccess()">Erişimi Doğrula</button>
+  <button class="secondary" onclick="goHome()">Ana Sayfaya Dön</button>
 </div>
 
 <script>
-const { createClient } = supabase;
-
-const client = createClient(
+const supabaseClient = window.supabase.createClient(
   "https://wfkyriteptajmwkyzvub.supabase.co",
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
 async function checkAccess() {
-  const email = document.getElementById("email").value;
-  const code = document.getElementById("code").value;
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const code = document.getElementById("code").value.trim().toUpperCase();
 
-  const { data } = await client
+  if (!email || !code) {
+    alert("Email ve davet kodu girin.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
     .from("applications")
     .select("*")
     .eq("email", email)
     .eq("invite_code", code)
     .eq("status", "approved");
 
-  if (!data || data.length === 0) {
-    alert("Hatalı bilgi");
+  if (error || !data || data.length === 0) {
+    alert("Hatalı bilgi.");
     return;
   }
 
   localStorage.setItem("q_email", email);
+  localStorage.setItem("q_code", code);
+
   window.location.href = "complete.html";
 }
 
