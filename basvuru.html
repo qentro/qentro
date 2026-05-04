@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Üyelik Başvurusu</title>
-
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     body { min-height:100vh; background:linear-gradient(135deg,#050505,#111); color:white; display:flex; align-items:center; justify-content:center; padding:24px; }
@@ -25,25 +24,26 @@
     <h1>Üyelik Başvurusu Yap</h1>
     <p>Referansın yoksa başvuru bırakabilirsin. Uygun görülen başvurular incelenir.</p>
 
-    <div class="field">
-      <label>Ad Soyad</label>
-      <input id="full_name" type="text">
-    </div>
-
-    <div class="field">
-      <label>Email</label>
-      <input id="email" type="email">
-    </div>
+    <div class="field"><label>Ad Soyad</label><input id="full_name" type="text"></div>
+    <div class="field"><label>Email</label><input id="email" type="email"></div>
+    <div class="field"><label>Telefon</label><input id="phone" type="text"></div>
+    <div class="field"><label>Şehir</label><input id="city" type="text"></div>
+    <div class="field"><label>Ülke</label><input id="country" type="text"></div>
 
     <div class="field">
       <label>Sosyal Medya Hesapların</label>
       <textarea id="socials" placeholder="Instagram:&#10;LinkedIn:&#10;X:&#10;Facebook:"></textarea>
     </div>
 
+    <div class="field"><label>Meslek / İş Alanı</label><input id="profession" type="text"></div>
+
     <div class="field">
-      <label>Meslek / İş Alanı</label>
-      <input id="profession" type="text">
+      <label>Referans Kişi — en az 1 iş arkadaşı</label>
+      <input id="referral_name" type="text" placeholder="Ad Soyad">
     </div>
+
+    <div class="field"><label>Referans Telefon</label><input id="referral_phone" type="text"></div>
+    <div class="field"><label>Referans Email</label><input id="referral_email" type="email"></div>
 
     <div class="field">
       <label>Neden katılmak istiyorsun?</label>
@@ -52,7 +52,6 @@
 
     <button id="applyBtn" type="button">Başvuruyu Gönder</button>
     <a href="index.html">Ana Sayfaya Dön</a>
-
     <div id="msg"></div>
   </div>
 
@@ -67,13 +66,19 @@ document.getElementById("applyBtn").onclick = async function () {
   const data = {
     full_name: document.getElementById("full_name").value.trim(),
     email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    country: document.getElementById("country").value.trim(),
     socials: document.getElementById("socials").value.trim(),
     profession: document.getElementById("profession").value.trim(),
+    referral_name: document.getElementById("referral_name").value.trim(),
+    referral_phone: document.getElementById("referral_phone").value.trim(),
+    referral_email: document.getElementById("referral_email").value.trim(),
     why_join: document.getElementById("why_join").value.trim()
   };
 
-  if (!data.full_name || !data.email || !data.why_join) {
-    msg.textContent = "Lütfen ad soyad, email ve neden katılmak istediğini doldur.";
+  if (!data.full_name || !data.email || !data.phone || !data.city || !data.country || !data.referral_name || !data.referral_phone || !data.referral_email || !data.why_join) {
+    msg.textContent = "Lütfen zorunlu alanları doldur.";
     button.disabled = false;
     return;
   }
@@ -98,13 +103,11 @@ document.getElementById("applyBtn").onclick = async function () {
     }
 
     window.location.href = "success.html";
-
   } catch (error) {
     msg.textContent = "Bağlantı hatası: " + error.message;
     button.disabled = false;
   }
 };
 </script>
-
 </body>
 </html>
