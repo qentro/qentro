@@ -37,7 +37,6 @@ body {
 h1 {
   font-size: 38px;
   margin: 0 0 12px;
-  letter-spacing: -1px;
 }
 
 p {
@@ -102,10 +101,10 @@ button:hover {
   <p>Onaylı üyeler e-mail ve şifre ile giriş yapabilir.</p>
 
   <label>Email</label>
-  <input id="email" type="email">
+  <input id="email" type="email" autocomplete="email">
 
   <label>Şifre</label>
-  <input id="pass" type="password">
+  <input id="pass" type="password" autocomplete="current-password">
 
   <button onclick="login()">Giriş Yap</button>
   <button class="secondary" onclick="forgotPassword()">Şifremi Unuttum</button>
@@ -162,7 +161,7 @@ async function forgotPassword() {
     return;
   }
 
-  msg.textContent = "Şifre yenileme linki email adresinize gönderildi.";
+  msg.textContent = "Şifre yenileme linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin.";
 }
 
 function goHome() {
