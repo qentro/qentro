@@ -13,19 +13,22 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
     }
 
+    html, body {
+      min-height: 100%;
+    }
+
     body {
-      min-height: 100vh;
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 25%),
-        radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 20%),
-        linear-gradient(135deg, #050505, #0d0d0d 45%, #111 100%);
+        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+        linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
       color: #fff;
-      padding: 24px;
+      padding: 22px;
     }
 
     .language-bar {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto 18px;
       display: flex;
       justify-content: flex-end;
@@ -42,6 +45,7 @@
       cursor: pointer;
       font-size: 12px;
       letter-spacing: 0.05em;
+      transition: 0.2s ease;
     }
 
     .lang-btn.active,
@@ -52,24 +56,28 @@
 
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
+      min-height: calc(100vh - 90px);
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 28px;
+      align-items: center;
     }
 
-    .hero, .panel {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
+    .hero,
+    .panel {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.13);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-radius: 28px;
-      padding: 40px;
+      padding: 42px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
     }
 
     .hero {
-      min-height: 620px;
+      min-height: 590px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -87,23 +95,24 @@
     }
 
     .dot {
-      width: 10px;
-      height: 10px;
+      width: 9px;
+      height: 9px;
       border-radius: 999px;
       background: #fff;
       box-shadow: 0 0 20px rgba(255,255,255,0.8);
+      flex: 0 0 auto;
     }
 
     h1 {
-      font-size: clamp(46px, 7vw, 86px);
+      font-size: clamp(48px, 7vw, 86px);
       line-height: 0.95;
-      letter-spacing: -0.05em;
-      margin-bottom: 26px;
-      max-width: 650px;
+      letter-spacing: -0.055em;
+      margin-bottom: 28px;
+      max-width: 680px;
     }
 
     .lead {
-      max-width: 590px;
+      max-width: 610px;
       color: rgba(255,255,255,0.78);
       font-size: 18px;
       line-height: 1.65;
@@ -112,6 +121,7 @@
     .panel h2 {
       font-size: 32px;
       margin-bottom: 20px;
+      letter-spacing: -0.03em;
     }
 
     .panel p.top-text {
@@ -124,7 +134,7 @@
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 15px;
     }
 
     .btn {
@@ -133,15 +143,15 @@
       align-items: center;
       padding: 22px;
       border-radius: 20px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.065);
+      border: 1px solid rgba(255,255,255,0.13);
       text-decoration: none;
       color: #fff;
       transition: 0.2s ease;
     }
 
     .btn:hover {
-      background: rgba(255,255,255,0.11);
+      background: rgba(255,255,255,0.12);
       transform: translateY(-1px);
     }
 
@@ -152,29 +162,31 @@
     }
 
     .btn span {
+      display: block;
       font-size: 14px;
       color: rgba(255,255,255,0.66);
       line-height: 1.45;
     }
 
     .arrow {
-      font-size: 28px;
+      font-size: 30px;
       color: rgba(255,255,255,0.85);
-      margin-left: 20px;
+      margin-left: 18px;
     }
 
     .panel-bottom {
       margin-top: 28px;
       padding-top: 22px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.58);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     @media (max-width: 980px) {
       .container {
         grid-template-columns: 1fr;
+        align-items: stretch;
       }
 
       .hero {
@@ -182,18 +194,33 @@
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       body {
-        padding: 16px;
-      }
-
-      .hero, .panel {
-        padding: 28px;
-        border-radius: 22px;
+        padding: 15px;
       }
 
       .language-bar {
         justify-content: center;
+        margin-bottom: 14px;
+      }
+
+      .lang-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+      }
+
+      .hero,
+      .panel {
+        padding: 28px;
+        border-radius: 22px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .lead {
+        font-size: 16px;
       }
     }
   </style>
@@ -201,22 +228,22 @@
 
 <body>
   <div class="language-bar">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('ar')">AR</button>
-    <button class="lang-btn" onclick="setLang('bn')">BN</button>
-    <button class="lang-btn" onclick="setLang('zh')">中文</button>
-    <button class="lang-btn" onclick="setLang('fr')">FR</button>
-    <button class="lang-btn" onclick="setLang('de')">DE</button>
-    <button class="lang-btn" onclick="setLang('hi')">HI</button>
-    <button class="lang-btn" onclick="setLang('it')">IT</button>
-    <button class="lang-btn" onclick="setLang('ja')">JA</button>
-    <button class="lang-btn" onclick="setLang('fa')">FA</button>
-    <button class="lang-btn" onclick="setLang('ru')">RU</button>
-    <button class="lang-btn" onclick="setLang('es')">ES</button>
-    <button class="lang-btn" onclick="setLang('tr')">TR</button>
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
   </div>
 
-  <div class="container">
+  <main class="container">
     <section class="hero">
       <div class="eyebrow">
         <span class="dot"></span>
@@ -232,49 +259,47 @@
     </section>
 
     <aside class="panel">
-      <div>
-        <h2 id="panelTitle">Access Options</h2>
+      <h2 id="panelTitle">Access Options</h2>
 
-        <p class="top-text" id="panelText">
-          If you have a referral, you may apply through the priority access path.
-          If you do not have a referral, you may submit a membership application.
-          Approved members can sign in directly.
-        </p>
+      <p class="top-text" id="panelText">
+        If you have a referral, you may apply through the priority access path.
+        If you do not have a referral, you may submit a membership application.
+        Approved members can sign in directly.
+      </p>
 
-        <div class="button-group">
-          <a class="btn" href="login.html">
-            <div>
-              <strong id="loginTitle">Member Login</strong>
-              <span id="loginDesc">For approved members</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
+      <div class="button-group">
+        <a class="btn" href="login.html">
+          <div>
+            <strong id="loginTitle">Member Login</strong>
+            <span id="loginDesc">For approved members</span>
+          </div>
+          <div class="arrow">›</div>
+        </a>
 
-          <a class="btn" href="referans.html">
-            <div>
-              <strong id="refTitle">Apply With Referral</strong>
-              <span id="refDesc">Priority application for referred guests</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
+        <a class="btn" href="referans.html">
+          <div>
+            <strong id="refTitle">Apply With Referral</strong>
+            <span id="refDesc">Priority application for referred guests</span>
+          </div>
+          <div class="arrow">›</div>
+        </a>
 
-          <a class="btn" href="basvuru.html">
-            <div>
-              <strong id="applyTitle">Apply For Membership</strong>
-              <span id="applyDesc">Application path for guests without referral</span>
-            </div>
-            <div class="arrow">›</div>
-          </a>
-        </div>
+        <a class="btn" href="basvuru.html">
+          <div>
+            <strong id="applyTitle">Apply For Membership</strong>
+            <span id="applyDesc">Application path for guests without referral</span>
+          </div>
+          <div class="arrow">›</div>
+        </a>
       </div>
 
       <div class="panel-bottom" id="bottomText">
-        Access is limited and reviewed manually.<br />
-        Approval is not guaranteed.<br />
+        Access is limited and reviewed manually.<br>
+        Approval is not guaranteed.<br>
         Private invitations and verified member credentials are required for full entry.
       </div>
     </aside>
-  </div>
+  </main>
 
   <script>
     const texts = {
@@ -291,22 +316,22 @@
         refDesc: "Priority application for referred guests",
         applyTitle: "Apply For Membership",
         applyDesc: "Application path for guests without referral",
-        bottomText: "Access is limited and reviewed manually.<br />Approval is not guaranteed.<br />Private invitations and verified member credentials are required for full entry."
+        bottomText: "Access is limited and reviewed manually.<br>Approval is not guaranteed.<br>Private invitations and verified member credentials are required for full entry."
       },
       ar: {
         lang: "ar", dir: "rtl",
         eyebrow: "شبكة QENTRO الخاصة",
         headline: "ليس الجميع يحصلون على الدخول.",
-        lead: "Qentro شبكة خاصة صُممت للأعضاء المختارين. الوصول ليس عامًا. قد يحصل الضيوف المحالون والمتقدمون المعتمدون على مسار دخول خاص.",
+        lead: "Qentro شبكة خاصة للأعضاء المختارين. الوصول ليس عامًا. يمكن للضيوف المحالين والمتقدمين المعتمدين الحصول على مسار دخول خاص.",
         panelTitle: "خيارات الدخول",
-        panelText: "إذا كان لديك إحالة، يمكنك التقديم عبر مسار أولوية. إذا لم تكن لديك إحالة، يمكنك إرسال طلب عضوية. يمكن للأعضاء المعتمدين تسجيل الدخول مباشرة.",
+        panelText: "إذا كان لديك إحالة، يمكنك التقديم عبر مسار الأولوية. إذا لم تكن لديك إحالة، يمكنك إرسال طلب عضوية. يمكن للأعضاء المعتمدين تسجيل الدخول مباشرة.",
         loginTitle: "تسجيل دخول الأعضاء",
         loginDesc: "للأعضاء المعتمدين",
         refTitle: "التقديم بإحالة",
         refDesc: "طلب أولوية للضيوف المحالين",
         applyTitle: "طلب عضوية",
         applyDesc: "مسار التقديم للضيوف بدون إحالة",
-        bottomText: "الوصول محدود ويتم مراجعته يدويًا.<br />الموافقة غير مضمونة.<br />يتطلب الدخول الكامل دعوة خاصة أو بيانات عضوية موثقة."
+        bottomText: "الوصول محدود ويتم مراجعته يدويًا.<br>الموافقة غير مضمونة.<br>يتطلب الدخول الكامل دعوة خاصة أو بيانات عضوية موثقة."
       },
       bn: {
         lang: "bn", dir: "ltr",
@@ -321,7 +346,7 @@
         refDesc: "রেফার করা অতিথিদের জন্য অগ্রাধিকার আবেদন",
         applyTitle: "সদস্যপদের জন্য আবেদন করুন",
         applyDesc: "রেফারেল ছাড়া অতিথিদের জন্য আবেদন পথ",
-        bottomText: "প্রবেশ সীমিত এবং ম্যানুয়ালি পর্যালোচনা করা হয়।<br />অনুমোদন নিশ্চিত নয়।<br />সম্পূর্ণ প্রবেশের জন্য ব্যক্তিগত আমন্ত্রণ বা যাচাইকৃত সদস্য তথ্য প্রয়োজন।"
+        bottomText: "প্রবেশ সীমিত এবং ম্যানুয়ালি পর্যালোচনা করা হয়।<br>অনুমোদন নিশ্চিত নয়।<br>সম্পূর্ণ প্রবেশের জন্য ব্যক্তিগত আমন্ত্রণ বা যাচাইকৃত সদস্য তথ্য প্রয়োজন।"
       },
       zh: {
         lang: "zh", dir: "ltr",
@@ -336,7 +361,7 @@
         refDesc: "适用于受推荐访客的优先申请",
         applyTitle: "申请会员",
         applyDesc: "适用于无推荐人的访客",
-        bottomText: "访问名额有限，并由人工审核。<br />不保证一定通过。<br />完整访问需要私人邀请或已验证的会员凭证。"
+        bottomText: "访问名额有限，并由人工审核。<br>不保证一定通过。<br>完整访问需要私人邀请或已验证的会员凭证。"
       },
       fr: {
         lang: "fr", dir: "ltr",
@@ -351,7 +376,7 @@
         refDesc: "Demande prioritaire pour les invités recommandés",
         applyTitle: "Demander une adhésion",
         applyDesc: "Demande pour les invités sans recommandation",
-        bottomText: "L’accès est limité et examiné manuellement.<br />L’approbation n’est pas garantie.<br />Des invitations privées ou des identifiants vérifiés sont requis pour un accès complet."
+        bottomText: "L’accès est limité et examiné manuellement.<br>L’approbation n’est pas garantie.<br>Des invitations privées ou des identifiants vérifiés sont requis pour un accès complet."
       },
       de: {
         lang: "de", dir: "ltr",
@@ -366,7 +391,7 @@
         refDesc: "Priorisierte Bewerbung für empfohlene Gäste",
         applyTitle: "Mitgliedschaft beantragen",
         applyDesc: "Bewerbung für Gäste ohne Empfehlung",
-        bottomText: "Der Zugang ist begrenzt und wird manuell geprüft.<br />Eine Genehmigung ist nicht garantiert.<br />Für den vollständigen Zugang sind private Einladungen oder verifizierte Mitgliedsdaten erforderlich."
+        bottomText: "Der Zugang ist begrenzt und wird manuell geprüft.<br>Eine Genehmigung ist nicht garantiert.<br>Für den vollständigen Zugang sind private Einladungen oder verifizierte Mitgliedsdaten erforderlich."
       },
       hi: {
         lang: "hi", dir: "ltr",
@@ -381,7 +406,7 @@
         refDesc: "रेफर किए गए मेहमानों के लिए प्राथमिक आवेदन",
         applyTitle: "सदस्यता के लिए आवेदन करें",
         applyDesc: "बिना रेफरल वाले मेहमानों के लिए आवेदन",
-        bottomText: "प्रवेश सीमित है और मैन्युअल रूप से समीक्षा की जाती है।<br />स्वीकृति की गारंटी नहीं है।<br />पूर्ण प्रवेश के लिए निजी निमंत्रण या सत्यापित सदस्य जानकारी आवश्यक है।"
+        bottomText: "प्रवेश सीमित है और मैन्युअल रूप से समीक्षा की जाती है।<br>स्वीकृति की गारंटी नहीं है।<br>पूर्ण प्रवेश के लिए निजी निमंत्रण या सत्यापित सदस्य जानकारी आवश्यक है।"
       },
       it: {
         lang: "it", dir: "ltr",
@@ -396,7 +421,7 @@
         refDesc: "Richiesta prioritaria per ospiti referenziati",
         applyTitle: "Richiedi iscrizione",
         applyDesc: "Richiesta per ospiti senza referenza",
-        bottomText: "L'accesso è limitato e revisionato manualmente.<br />L'approvazione non è garantita.<br />Per l'accesso completo sono richiesti inviti privati o credenziali verificate."
+        bottomText: "L'accesso è limitato e revisionato manualmente.<br>L'approvazione non è garantita.<br>Per l'accesso completo sono richiesti inviti privati o credenziali verificate."
       },
       ja: {
         lang: "ja", dir: "ltr",
@@ -411,7 +436,7 @@
         refDesc: "紹介されたゲスト向けの優先申請",
         applyTitle: "メンバーシップ申請",
         applyDesc: "紹介のないゲスト向けの申請ルート",
-        bottomText: "アクセスは限定され、手動で審査されます。<br />承認は保証されません。<br />完全なアクセスには、プライベート招待または確認済みのメンバー情報が必要です。"
+        bottomText: "アクセスは限定され、手動で審査されます。<br>承認は保証されません。<br>完全なアクセスには、プライベート招待または確認済みのメンバー情報が必要です。"
       },
       fa: {
         lang: "fa", dir: "rtl",
@@ -426,7 +451,7 @@
         refDesc: "درخواست اولویت‌دار برای مهمانان معرفی‌شده",
         applyTitle: "درخواست عضویت",
         applyDesc: "درخواست برای مهمانان بدون معرف",
-        bottomText: "دسترسی محدود است و به‌صورت دستی بررسی می‌شود.<br />تأیید تضمین‌شده نیست.<br />برای ورود کامل، دعوت خصوصی یا اطلاعات تأییدشده عضویت لازم است."
+        bottomText: "دسترسی محدود است و به‌صورت دستی بررسی می‌شود.<br>تأیید تضمین‌شده نیست.<br>برای ورود کامل، دعوت خصوصی یا اطلاعات تأییدشده عضویت لازم است."
       },
       ru: {
         lang: "ru", dir: "ltr",
@@ -441,7 +466,7 @@
         refDesc: "Приоритетная заявка для приглашённых гостей",
         applyTitle: "Подать заявку на членство",
         applyDesc: "Заявка для гостей без рекомендации",
-        bottomText: "Доступ ограничен и проверяется вручную.<br />Одобрение не гарантируется.<br />Для полного входа требуется частное приглашение или подтверждённые данные участника."
+        bottomText: "Доступ ограничен и проверяется вручную.<br>Одобрение не гарантируется.<br>Для полного входа требуется частное приглашение или подтверждённые данные участника."
       },
       es: {
         lang: "es", dir: "ltr",
@@ -456,7 +481,7 @@
         refDesc: "Solicitud prioritaria para invitados referidos",
         applyTitle: "Solicitar membresía",
         applyDesc: "Solicitud para invitados sin referencia",
-        bottomText: "El acceso es limitado y se revisa manualmente.<br />La aprobación no está garantizada.<br />Se requieren invitaciones privadas o credenciales verificadas para el acceso completo."
+        bottomText: "El acceso es limitado y se revisa manualmente.<br>La aprobación no está garantizada.<br>Se requieren invitaciones privadas o credenciales verificadas para el acceso completo."
       },
       tr: {
         lang: "tr", dir: "ltr",
@@ -471,7 +496,7 @@
         refDesc: "Referansı olan kullanıcılar için öncelikli başvuru",
         applyTitle: "Üyelik Başvurusu Yap",
         applyDesc: "Referansı olmayan kullanıcılar için başvuru",
-        bottomText: "Erişim sınırlıdır ve başvurular manuel olarak incelenir.<br />Onay garanti edilmez.<br />Tam giriş için özel davet veya doğrulanmış üye bilgileri gerekir."
+        bottomText: "Erişim sınırlıdır ve başvurular manuel olarak incelenir.<br>Onay garanti edilmez.<br>Tam giriş için özel davet veya doğrulanmış üye bilgileri gerekir."
       }
     };
 
@@ -494,14 +519,18 @@
       document.getElementById("applyDesc").innerHTML = t.applyDesc;
       document.getElementById("bottomText").innerHTML = t.bottomText;
 
-      document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.remove("active"));
-      const activeBtn = Array.from(document.querySelectorAll(".lang-btn")).find(btn =>
-        btn.getAttribute("onclick") === "setLang('" + code + "')"
-      );
-      if (activeBtn) activeBtn.classList.add("active");
+      document.querySelectorAll(".lang-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.lang === code);
+      });
 
       localStorage.setItem("qentroLang", code);
     }
+
+    document.querySelectorAll(".lang-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        setLang(this.dataset.lang);
+      });
+    });
 
     const savedLang = localStorage.getItem("qentroLang") || "en";
     setLang(savedLang);
