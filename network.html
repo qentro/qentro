@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Qentro Network</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  background: #000;
+  color: #fff;
+  font-family: Arial;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid #222;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.btn {
+  background: #fff;
+  color: #000;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.container {
+  padding: 60px 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 25px;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+}
+
+.card p {
+  color: #aaa;
+  margin: 6px 0;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">Qentro Network</div>
+  <button class="btn" onclick="goDashboard()">Dashboard</button>
+</div>
+
+<div class="container">
+  <h1>Private Members Network</h1>
+  <div class="subtitle">Approved members of Qentro</div>
+
+  <div id="members" class="grid">
+    Yükleniyor...
+  </div>
+</div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://wfkyriteptajmwkyzvub.supabase.co",
+  "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
+);
+
+async function checkUser() {
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  loadMembers();
+}
+
+async function loadMembers() {
+  const { data, error } = await supabase
+    .from("users")
+    .select("name, job, country, city")
+    .order("name", { ascending: true });
+
+  const membersBox = document.getElementById("members");
+
+  if (error) {
+    membersBox.innerHTML = "Üyeler yüklenemedi.";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    membersBox.innerHTML = "Henüz üye yok.";
+    return;
+  }
+
+  membersBox.innerHTML = "";
+
+  data.forEach(user => {
+    membersBox.innerHTML += `
+      <div class="card">
+        <h3>${user.name || "Qentro Member"}</h3>
+        <p>${user.job || "Member"}</p>
+        <p>${user.city || ""} ${user.country || ""}</p>
+      </div>
+    `;
+  });
+}
+
+function goDashboard() {
+  window.location.href = "dashboard.html";
+}
+
+checkUser();
+</script>
+
+</body>
+</html>
