@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qentro | Üyelik Başvurusu</title>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; }
     body {
@@ -18,91 +19,57 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.45);
     }
     h1 { font-size: 40px; margin-bottom: 12px; }
-    p { color: rgba(255,255,255,0.72); line-height: 1.65; margin-bottom: 24px; }
+    p { color: rgba(255,255,255,0.72); margin-bottom: 24px; }
     .field { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 8px; font-size: 14px; color: rgba(255,255,255,0.82); }
+    label { display: block; margin-bottom: 8px; font-size: 14px; }
     input, textarea {
-      width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06); color: #fff; outline: none;
+      width: 100%; padding: 14px 16px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06); color: #fff;
     }
-    textarea { min-height: 120px; resize: vertical; }
-    button, a.btn {
-      width: 100%; display: inline-flex; justify-content: center; align-items: center;
-      padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; cursor: pointer; margin-top: 8px;
+    textarea { min-height: 120px; }
+    button {
+      width: 100%; padding: 16px; border-radius: 16px;
+      background: rgba(255,255,255,0.08); color: #fff;
+      border: 1px solid rgba(255,255,255,0.14); cursor: pointer;
     }
-    button:hover, a.btn:hover { background: rgba(255,255,255,0.12); }
-    .back { margin-top: 14px; }
-    #msg { margin-top: 16px; color: rgba(255,255,255,0.82); font-size: 14px; }
+    #msg { margin-top: 16px; }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>Üyelik Başvurusu Yap</h1>
-    <p>Referansın yoksa detaylı başvuru bırakabilirsin. Uygun görülen başvurular incelenir.</p>
+    <p>Referansın yoksa başvuru bırakabilirsin.</p>
 
     <div class="field">
-      <label for="full_name">Ad Soyad</label>
-      <input id="full_name" type="text" />
+      <label>Ad Soyad</label>
+      <input id="full_name">
     </div>
 
     <div class="field">
-      <label for="email">Email</label>
-      <input id="email" type="email" />
+      <label>Email</label>
+      <input id="email">
     </div>
 
     <div class="field">
-      <label for="instagram">Instagram</label>
-      <input id="instagram" type="text" />
+      <label>Instagram</label>
+      <input id="instagram">
     </div>
 
     <div class="field">
-      <label for="profession">Meslek / İş Alanı</label>
-      <input id="profession" type="text" />
+      <label>Meslek</label>
+      <input id="profession">
     </div>
 
     <div class="field">
-      <label for="why_join">Neden katılmak istiyorsun?</label>
+      <label>Neden katılmak istiyorsun?</label>
       <textarea id="why_join"></textarea>
     </div>
 
-    <button id="applyBtn" type="button">Başvuruyu Gönder</button>
-    <a class="btn back" href="index.html">Ana Sayfaya Dön</a>
+    <button id="applyBtn">Başvuruyu Gönder</button>
     <div id="msg"></div>
   </div>
-
-  <script>
-    const { createClient } = supabase;
-    const client = createClient(
-      "https://phepgsayyzfeydrwjnvr.supabase.co",
-      "sb_publishable_olN5yx48coKxozFihjdn3Q_q36Vrgbv"
-    );
-
-    document.getElementById("applyBtn").addEventListener("click", async () => {
-      const payload = {
-        full_name: document.getElementById("full_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        instagram: document.getElementById("instagram").value.trim(),
-        profession: document.getElementById("profession").value.trim(),
-        why_join: document.getElementById("why_join").value.trim()
-      };
-
-      if (!payload.full_name || !payload.email || !payload.why_join) {
-        document.getElementById("msg").textContent = "Lütfen zorunlu alanları doldur.";
-        return;
-      }
-
-      const { error } = await client.from("applications").insert([payload]);
-
-      if (error) {
-        document.getElementById("msg").textContent = "Başvuru hatası: " + error.message;
-      } else {
-        document.getElementById("msg").textContent = "Başvurun gönderildi.";
-      }
-    });
-  </script>
-</html>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 const supabase = window.supabase.createClient(
@@ -110,30 +77,30 @@ const supabase = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.getElementById("applyBtn").addEventListener("click", async () => {
 
-  const formData = new FormData(e.target);
-
-  const data = {
-    application_type: "normal",
-    full_name: formData.get("full_name"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    city: formData.get("city"),
-    country: formData.get("country"),
-    referral_email: formData.get("referral_email"),
-    message: formData.get("message"),
+  const payload = {
+    full_name: document.getElementById("full_name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    instagram: document.getElementById("instagram").value.trim(),
+    profession: document.getElementById("profession").value.trim(),
+    why_join: document.getElementById("why_join").value.trim()
   };
 
-  const { error } = await supabase.from("applications").insert([data]);
+  if (!payload.full_name || !payload.email || !payload.why_join) {
+    document.getElementById("msg").textContent = "Zorunlu alanları doldur.";
+    return;
+  }
+
+  const { error } = await supabase.from("applications").insert([payload]);
 
   if (error) {
-    alert("Hata: " + error.message);
+    document.getElementById("msg").textContent = "Hata: " + error.message;
   } else {
-    alert("Başvurunuz alındı!");
-    e.target.reset();
+    document.getElementById("msg").textContent = "Başvurun gönderildi ✅";
   }
 });
 </script>
+
 </body>
+</html>
