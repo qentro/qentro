@@ -1,46 +1,81 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qentro | Üyelik Başvurusu</title>
+<title>Qentro | Membership Application</title>
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 50px 24px;
+  padding: 34px 24px;
+}
+
+.page {
+  width: 100%;
+  max-width: 760px;
+}
+
+.language-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
 }
 
 .card {
   width: 100%;
-  max-width: 720px;
   padding: 38px 34px;
   border-radius: 28px;
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   box-shadow: 0 35px 80px rgba(0,0,0,0.55);
 }
 
 h1 {
   font-size: 38px;
   margin: 0 0 10px;
+  letter-spacing: -0.04em;
 }
 
 p {
   margin: 0 0 28px;
-  color: #aaa;
+  color: rgba(255,255,255,0.68);
   font-size: 15px;
+  line-height: 1.6;
 }
 
 .field {
@@ -50,7 +85,7 @@ p {
 label {
   display: block;
   margin-bottom: 8px;
-  color: #d0d0d0;
+  color: rgba(255,255,255,0.82);
   font-size: 14px;
   font-weight: 600;
 }
@@ -59,7 +94,7 @@ input, textarea {
   width: 100%;
   padding: 15px 16px;
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.11);
+  border: 1px solid rgba(255,255,255,0.12);
   background: linear-gradient(90deg, #2a2a2a, #202020);
   color: #fff;
   outline: none;
@@ -76,7 +111,7 @@ button, a {
   padding: 16px;
   margin-top: 10px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   background: linear-gradient(90deg, #333, #222);
   color: #fff;
   font-weight: 700;
@@ -91,54 +126,444 @@ a {
   background: linear-gradient(90deg, #292929, #1b1b1b);
 }
 
+button:hover, a:hover {
+  filter: brightness(1.12);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 #msg {
   margin-top: 18px;
-  color: #aaa;
+  color: rgba(255,255,255,0.68);
   font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 30px 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Üyelik Başvurusu Yap</h1>
-  <p>Referansın yoksa başvuru bırakabilirsin. Uygun görülen başvurular incelenir.</p>
-
-  <div class="field"><label>Ad Soyad</label><input id="full_name" type="text"></div>
-  <div class="field"><label>Email</label><input id="email" type="email"></div>
-  <div class="field"><label>Telefon</label><input id="phone" type="text"></div>
-  <div class="field"><label>Şehir</label><input id="city" type="text"></div>
-  <div class="field"><label>Ülke</label><input id="country" type="text"></div>
-
-  <div class="field">
-    <label>Sosyal Medya Hesapların</label>
-    <textarea id="socials" placeholder="Instagram:&#10;LinkedIn:&#10;X:&#10;Facebook:"></textarea>
+<div class="page">
+  <div class="language-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
   </div>
 
-  <div class="field"><label>Meslek / İş Alanı</label><input id="profession" type="text"></div>
+  <div class="card">
+    <h1 id="title">Apply For Membership</h1>
+    <p id="subtitle">If you do not have a referral, you may submit an application. Suitable applications are reviewed manually.</p>
 
-  <div class="field"><label>Referans Kişi — en az 1 iş arkadaşı</label><input id="referral_name" type="text"></div>
-  <div class="field"><label>Referans Telefon</label><input id="referral_phone" type="text"></div>
-  <div class="field"><label>Referans Email</label><input id="referral_email" type="email"></div>
+    <div class="field"><label id="fullNameLabel">Full Name</label><input id="full_name" type="text"></div>
+    <div class="field"><label id="emailLabel">Email</label><input id="email" type="email"></div>
+    <div class="field"><label id="phoneLabel">Phone</label><input id="phone" type="text"></div>
+    <div class="field"><label id="cityLabel">City</label><input id="city" type="text"></div>
+    <div class="field"><label id="countryLabel">Country</label><input id="country" type="text"></div>
 
-  <div class="field">
-    <label>Neden katılmak istiyorsun?</label>
-    <textarea id="why_join"></textarea>
+    <div class="field">
+      <label id="socialsLabel">Social Media Accounts</label>
+      <textarea id="socials" placeholder="Instagram:&#10;LinkedIn:&#10;X:&#10;Facebook:"></textarea>
+    </div>
+
+    <div class="field"><label id="professionLabel">Profession / Business Field</label><input id="profession" type="text"></div>
+
+    <div class="field"><label id="referralNameLabel">Reference Person — at least 1 business contact</label><input id="referral_name" type="text"></div>
+    <div class="field"><label id="referralPhoneLabel">Reference Phone</label><input id="referral_phone" type="text"></div>
+    <div class="field"><label id="referralEmailLabel">Reference Email</label><input id="referral_email" type="email"></div>
+
+    <div class="field">
+      <label id="whyJoinLabel">Why do you want to join?</label>
+      <textarea id="why_join"></textarea>
+    </div>
+
+    <button id="applyBtn" type="button">Submit Application</button>
+    <a id="homeBtn" href="index.html">Back to Home</a>
+
+    <div id="msg"></div>
   </div>
-
-  <button id="applyBtn" type="button">Başvuruyu Gönder</button>
-  <a href="index.html">Ana Sayfaya Dön</a>
-
-  <div id="msg"></div>
 </div>
 
 <script>
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    pageTitle: "Qentro | Membership Application",
+    title: "Apply For Membership",
+    subtitle: "If you do not have a referral, you may submit an application. Suitable applications are reviewed manually.",
+    fullNameLabel: "Full Name",
+    emailLabel: "Email",
+    phoneLabel: "Phone",
+    cityLabel: "City",
+    countryLabel: "Country",
+    socialsLabel: "Social Media Accounts",
+    professionLabel: "Profession / Business Field",
+    referralNameLabel: "Reference Person — at least 1 business contact",
+    referralPhoneLabel: "Reference Phone",
+    referralEmailLabel: "Reference Email",
+    whyJoinLabel: "Why do you want to join?",
+    applyBtn: "Submit Application",
+    homeBtn: "Back to Home",
+    sending: "Submitting...",
+    required: "Please fill in the required fields.",
+    error: "Error: ",
+    connectionError: "Connection error: "
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    pageTitle: "Qentro | Üyelik Başvurusu",
+    title: "Üyelik Başvurusu Yap",
+    subtitle: "Referansın yoksa başvuru bırakabilirsin. Uygun görülen başvurular manuel olarak incelenir.",
+    fullNameLabel: "Ad Soyad",
+    emailLabel: "Email",
+    phoneLabel: "Telefon",
+    cityLabel: "Şehir",
+    countryLabel: "Ülke",
+    socialsLabel: "Sosyal Medya Hesapların",
+    professionLabel: "Meslek / İş Alanı",
+    referralNameLabel: "Referans Kişi — en az 1 iş arkadaşı",
+    referralPhoneLabel: "Referans Telefon",
+    referralEmailLabel: "Referans Email",
+    whyJoinLabel: "Neden katılmak istiyorsun?",
+    applyBtn: "Başvuruyu Gönder",
+    homeBtn: "Ana Sayfaya Dön",
+    sending: "Gönderiliyor...",
+    required: "Lütfen zorunlu alanları doldur.",
+    error: "Hata: ",
+    connectionError: "Bağlantı hatası: "
+  },
+  es: {
+    lang: "es", dir: "ltr",
+    pageTitle: "Qentro | Solicitud de Membresía",
+    title: "Solicitar membresía",
+    subtitle: "Si no tienes una referencia, puedes enviar una solicitud. Las solicitudes adecuadas se revisan manualmente.",
+    fullNameLabel: "Nombre completo",
+    emailLabel: "Email",
+    phoneLabel: "Teléfono",
+    cityLabel: "Ciudad",
+    countryLabel: "País",
+    socialsLabel: "Cuentas de redes sociales",
+    professionLabel: "Profesión / Área de negocio",
+    referralNameLabel: "Persona de referencia — al menos 1 contacto profesional",
+    referralPhoneLabel: "Teléfono de referencia",
+    referralEmailLabel: "Email de referencia",
+    whyJoinLabel: "¿Por qué quieres unirte?",
+    applyBtn: "Enviar solicitud",
+    homeBtn: "Volver al inicio",
+    sending: "Enviando...",
+    required: "Por favor completa los campos obligatorios.",
+    error: "Error: ",
+    connectionError: "Error de conexión: "
+  },
+  fr: {
+    lang: "fr", dir: "ltr",
+    pageTitle: "Qentro | Demande d’adhésion",
+    title: "Demander une adhésion",
+    subtitle: "Si vous n’avez pas de recommandation, vous pouvez soumettre une demande. Les demandes appropriées sont examinées manuellement.",
+    fullNameLabel: "Nom complet",
+    emailLabel: "Email",
+    phoneLabel: "Téléphone",
+    cityLabel: "Ville",
+    countryLabel: "Pays",
+    socialsLabel: "Comptes de réseaux sociaux",
+    professionLabel: "Profession / Domaine d’activité",
+    referralNameLabel: "Personne de référence — au moins 1 contact professionnel",
+    referralPhoneLabel: "Téléphone de référence",
+    referralEmailLabel: "Email de référence",
+    whyJoinLabel: "Pourquoi souhaitez-vous rejoindre Qentro ?",
+    applyBtn: "Envoyer la demande",
+    homeBtn: "Retour à l’accueil",
+    sending: "Envoi...",
+    required: "Veuillez remplir les champs obligatoires.",
+    error: "Erreur : ",
+    connectionError: "Erreur de connexion : "
+  },
+  de: {
+    lang: "de", dir: "ltr",
+    pageTitle: "Qentro | Mitgliedschaft beantragen",
+    title: "Mitgliedschaft beantragen",
+    subtitle: "Wenn du keine Empfehlung hast, kannst du eine Bewerbung einreichen. Geeignete Bewerbungen werden manuell geprüft.",
+    fullNameLabel: "Vollständiger Name",
+    emailLabel: "Email",
+    phoneLabel: "Telefon",
+    cityLabel: "Stadt",
+    countryLabel: "Land",
+    socialsLabel: "Social-Media-Konten",
+    professionLabel: "Beruf / Geschäftsbereich",
+    referralNameLabel: "Referenzperson — mindestens 1 Geschäftskontakt",
+    referralPhoneLabel: "Telefon der Referenzperson",
+    referralEmailLabel: "Email der Referenzperson",
+    whyJoinLabel: "Warum möchtest du beitreten?",
+    applyBtn: "Bewerbung senden",
+    homeBtn: "Zur Startseite",
+    sending: "Wird gesendet...",
+    required: "Bitte fülle die Pflichtfelder aus.",
+    error: "Fehler: ",
+    connectionError: "Verbindungsfehler: "
+  },
+  it: {
+    lang: "it", dir: "ltr",
+    pageTitle: "Qentro | Richiesta di iscrizione",
+    title: "Richiedi iscrizione",
+    subtitle: "Se non hai una referenza, puoi inviare una richiesta. Le richieste idonee vengono revisionate manualmente.",
+    fullNameLabel: "Nome completo",
+    emailLabel: "Email",
+    phoneLabel: "Telefono",
+    cityLabel: "Città",
+    countryLabel: "Paese",
+    socialsLabel: "Account social",
+    professionLabel: "Professione / Settore",
+    referralNameLabel: "Persona di riferimento — almeno 1 contatto professionale",
+    referralPhoneLabel: "Telefono del riferimento",
+    referralEmailLabel: "Email del riferimento",
+    whyJoinLabel: "Perché vuoi unirti?",
+    applyBtn: "Invia richiesta",
+    homeBtn: "Torna alla home",
+    sending: "Invio...",
+    required: "Compila i campi obbligatori.",
+    error: "Errore: ",
+    connectionError: "Errore di connessione: "
+  },
+  ru: {
+    lang: "ru", dir: "ltr",
+    pageTitle: "Qentro | Заявка на членство",
+    title: "Подать заявку на членство",
+    subtitle: "Если у вас нет рекомендации, вы можете отправить заявку. Подходящие заявки рассматриваются вручную.",
+    fullNameLabel: "Полное имя",
+    emailLabel: "Email",
+    phoneLabel: "Телефон",
+    cityLabel: "Город",
+    countryLabel: "Страна",
+    socialsLabel: "Аккаунты в социальных сетях",
+    professionLabel: "Профессия / Сфера деятельности",
+    referralNameLabel: "Рекомендатель — минимум 1 деловой контакт",
+    referralPhoneLabel: "Телефон рекомендателя",
+    referralEmailLabel: "Email рекомендателя",
+    whyJoinLabel: "Почему вы хотите присоединиться?",
+    applyBtn: "Отправить заявку",
+    homeBtn: "На главную",
+    sending: "Отправка...",
+    required: "Пожалуйста, заполните обязательные поля.",
+    error: "Ошибка: ",
+    connectionError: "Ошибка соединения: "
+  },
+  zh: {
+    lang: "zh", dir: "ltr",
+    pageTitle: "Qentro | 会员申请",
+    title: "申请会员",
+    subtitle: "如果你没有推荐人，也可以提交申请。合适的申请将由人工审核。",
+    fullNameLabel: "姓名",
+    emailLabel: "邮箱",
+    phoneLabel: "电话",
+    cityLabel: "城市",
+    countryLabel: "国家",
+    socialsLabel: "社交媒体账号",
+    professionLabel: "职业 / 商业领域",
+    referralNameLabel: "推荐联系人 — 至少 1 位业务联系人",
+    referralPhoneLabel: "推荐人电话",
+    referralEmailLabel: "推荐人邮箱",
+    whyJoinLabel: "你为什么想加入？",
+    applyBtn: "提交申请",
+    homeBtn: "返回首页",
+    sending: "正在提交...",
+    required: "请填写必填字段。",
+    error: "错误：",
+    connectionError: "连接错误："
+  },
+  ar: {
+    lang: "ar", dir: "rtl",
+    pageTitle: "Qentro | طلب عضوية",
+    title: "طلب عضوية",
+    subtitle: "إذا لم تكن لديك إحالة، يمكنك إرسال طلب عضوية. تتم مراجعة الطلبات المناسبة يدويًا.",
+    fullNameLabel: "الاسم الكامل",
+    emailLabel: "البريد الإلكتروني",
+    phoneLabel: "الهاتف",
+    cityLabel: "المدينة",
+    countryLabel: "الدولة",
+    socialsLabel: "حسابات التواصل الاجتماعي",
+    professionLabel: "المهنة / مجال العمل",
+    referralNameLabel: "شخص مرجعي — جهة اتصال مهنية واحدة على الأقل",
+    referralPhoneLabel: "هاتف المرجع",
+    referralEmailLabel: "بريد المرجع",
+    whyJoinLabel: "لماذا ترغب في الانضمام؟",
+    applyBtn: "إرسال الطلب",
+    homeBtn: "العودة إلى الرئيسية",
+    sending: "جارٍ الإرسال...",
+    required: "يرجى ملء الحقول المطلوبة.",
+    error: "خطأ: ",
+    connectionError: "خطأ في الاتصال: "
+  },
+  fa: {
+    lang: "fa", dir: "rtl",
+    pageTitle: "Qentro | درخواست عضویت",
+    title: "درخواست عضویت",
+    subtitle: "اگر معرف ندارید، می‌توانید درخواست عضویت ارسال کنید. درخواست‌های مناسب به‌صورت دستی بررسی می‌شوند.",
+    fullNameLabel: "نام و نام خانوادگی",
+    emailLabel: "ایمیل",
+    phoneLabel: "تلفن",
+    cityLabel: "شهر",
+    countryLabel: "کشور",
+    socialsLabel: "حساب‌های شبکه‌های اجتماعی",
+    professionLabel: "حرفه / حوزه کاری",
+    referralNameLabel: "شخص معرف — حداقل ۱ ارتباط کاری",
+    referralPhoneLabel: "تلفن معرف",
+    referralEmailLabel: "ایمیل معرف",
+    whyJoinLabel: "چرا می‌خواهید عضو شوید؟",
+    applyBtn: "ارسال درخواست",
+    homeBtn: "بازگشت به صفحه اصلی",
+    sending: "در حال ارسال...",
+    required: "لطفاً فیلدهای ضروری را تکمیل کنید.",
+    error: "خطا: ",
+    connectionError: "خطای اتصال: "
+  },
+  hi: {
+    lang: "hi", dir: "ltr",
+    pageTitle: "Qentro | सदस्यता आवेदन",
+    title: "सदस्यता के लिए आवेदन करें",
+    subtitle: "यदि आपके पास रेफरल नहीं है, तो आप आवेदन जमा कर सकते हैं। उपयुक्त आवेदनों की मैन्युअल समीक्षा की जाती है।",
+    fullNameLabel: "पूरा नाम",
+    emailLabel: "Email",
+    phoneLabel: "फोन",
+    cityLabel: "शहर",
+    countryLabel: "देश",
+    socialsLabel: "सोशल मीडिया खाते",
+    professionLabel: "पेशा / व्यवसाय क्षेत्र",
+    referralNameLabel: "संदर्भ व्यक्ति — कम से कम 1 व्यावसायिक संपर्क",
+    referralPhoneLabel: "संदर्भ फोन",
+    referralEmailLabel: "संदर्भ Email",
+    whyJoinLabel: "आप क्यों जुड़ना चाहते हैं?",
+    applyBtn: "आवेदन भेजें",
+    homeBtn: "होम पर वापस जाएँ",
+    sending: "भेजा जा रहा है...",
+    required: "कृपया आवश्यक फ़ील्ड भरें।",
+    error: "त्रुटि: ",
+    connectionError: "कनेक्शन त्रुटि: "
+  },
+  ja: {
+    lang: "ja", dir: "ltr",
+    pageTitle: "Qentro | メンバーシップ申請",
+    title: "メンバーシップ申請",
+    subtitle: "紹介がない場合でも申請できます。適切な申請は手動で審査されます。",
+    fullNameLabel: "氏名",
+    emailLabel: "メール",
+    phoneLabel: "電話番号",
+    cityLabel: "都市",
+    countryLabel: "国",
+    socialsLabel: "ソーシャルメディアアカウント",
+    professionLabel: "職業 / ビジネス分野",
+    referralNameLabel: "紹介者 — 少なくとも1名のビジネス連絡先",
+    referralPhoneLabel: "紹介者の電話番号",
+    referralEmailLabel: "紹介者のメール",
+    whyJoinLabel: "なぜ参加したいですか？",
+    applyBtn: "申請を送信",
+    homeBtn: "ホームに戻る",
+    sending: "送信中...",
+    required: "必須項目を入力してください。",
+    error: "エラー: ",
+    connectionError: "接続エラー: "
+  },
+  bn: {
+    lang: "bn", dir: "ltr",
+    pageTitle: "Qentro | সদস্যপদ আবেদন",
+    title: "সদস্যপদের জন্য আবেদন করুন",
+    subtitle: "রেফারেল না থাকলেও আপনি আবেদন জমা দিতে পারেন। উপযুক্ত আবেদনগুলো ম্যানুয়ালি পর্যালোচনা করা হয়।",
+    fullNameLabel: "পুরো নাম",
+    emailLabel: "Email",
+    phoneLabel: "ফোন",
+    cityLabel: "শহর",
+    countryLabel: "দেশ",
+    socialsLabel: "সোশ্যাল মিডিয়া অ্যাকাউন্ট",
+    professionLabel: "পেশা / ব্যবসার ক্ষেত্র",
+    referralNameLabel: "রেফারেন্স ব্যক্তি — অন্তত ১টি ব্যবসায়িক যোগাযোগ",
+    referralPhoneLabel: "রেফারেন্স ফোন",
+    referralEmailLabel: "রেফারেন্স Email",
+    whyJoinLabel: "আপনি কেন যোগ দিতে চান?",
+    applyBtn: "আবেদন পাঠান",
+    homeBtn: "হোমে ফিরুন",
+    sending: "পাঠানো হচ্ছে...",
+    required: "অনুগ্রহ করে প্রয়োজনীয় ঘরগুলো পূরণ করুন।",
+    error: "ত্রুটি: ",
+    connectionError: "সংযোগ ত্রুটি: "
+  }
+};
+
+let currentLang = localStorage.getItem("qentroLang") || "en";
+
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
+
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+
+  document.getElementById("title").innerHTML = t.title;
+  document.getElementById("subtitle").innerHTML = t.subtitle;
+  document.getElementById("fullNameLabel").innerHTML = t.fullNameLabel;
+  document.getElementById("emailLabel").innerHTML = t.emailLabel;
+  document.getElementById("phoneLabel").innerHTML = t.phoneLabel;
+  document.getElementById("cityLabel").innerHTML = t.cityLabel;
+  document.getElementById("countryLabel").innerHTML = t.countryLabel;
+  document.getElementById("socialsLabel").innerHTML = t.socialsLabel;
+  document.getElementById("professionLabel").innerHTML = t.professionLabel;
+  document.getElementById("referralNameLabel").innerHTML = t.referralNameLabel;
+  document.getElementById("referralPhoneLabel").innerHTML = t.referralPhoneLabel;
+  document.getElementById("referralEmailLabel").innerHTML = t.referralEmailLabel;
+  document.getElementById("whyJoinLabel").innerHTML = t.whyJoinLabel;
+  document.getElementById("applyBtn").innerHTML = t.applyBtn;
+  document.getElementById("homeBtn").innerHTML = t.homeBtn;
+
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
+  });
+
+  localStorage.setItem("qentroLang", code);
+}
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
+
 document.getElementById("applyBtn").onclick = async function () {
+  const t = texts[currentLang] || texts.en;
   const msg = document.getElementById("msg");
   const button = document.getElementById("applyBtn");
 
-  msg.textContent = "Gönderiliyor...";
+  msg.textContent = t.sending;
   button.disabled = true;
 
   const data = {
@@ -157,7 +582,7 @@ document.getElementById("applyBtn").onclick = async function () {
   };
 
   if (!data.full_name || !data.email || !data.phone || !data.city || !data.country || !data.referral_name || !data.referral_phone || !data.referral_email || !data.why_join) {
-    msg.textContent = "Lütfen zorunlu alanları doldur.";
+    msg.textContent = t.required;
     button.disabled = false;
     return;
   }
@@ -176,7 +601,7 @@ document.getElementById("applyBtn").onclick = async function () {
 
     if (!response.ok) {
       const errorText = await response.text();
-      msg.textContent = "Hata: " + errorText;
+      msg.textContent = t.error + errorText;
       button.disabled = false;
       return;
     }
@@ -184,10 +609,12 @@ document.getElementById("applyBtn").onclick = async function () {
     window.location.href = "success.html";
 
   } catch (error) {
-    msg.textContent = "Bağlantı hatası: " + error.message;
+    msg.textContent = t.connectionError + error.message;
     button.disabled = false;
   }
 };
+
+setLang(currentLang);
 </script>
 
 </body>
