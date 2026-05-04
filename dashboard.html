@@ -2,141 +2,201 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Qentro Private Area</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qentro | Private Area</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
 body {
-  background: #000;
-  color: #fff;
-  font-family: Arial;
   margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  color: #fff;
+  padding: 34px 24px;
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 40px;
-  border-bottom: 1px solid #222;
+  align-items: center;
+  margin-bottom: 42px;
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 6px;
 }
 
 .logout {
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(90deg, #333, #222);
+  color: #fff;
+  font-weight: 700;
   cursor: pointer;
-  background: #fff;
-  color: #000;
-  padding: 8px 15px;
-  border-radius: 6px;
 }
 
-.container {
-  text-align: center;
-  padding-top: 120px;
+.hero {
+  background: rgba(22,22,22,0.78);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 28px;
+  padding: 38px 34px;
+  box-shadow: 0 35px 80px rgba(0,0,0,0.55);
+  margin-bottom: 22px;
 }
 
-.title {
-  font-size: 32px;
-  margin-bottom: 10px;
+h1 {
+  font-size: 42px;
+  margin: 0 0 12px;
 }
 
-.subtitle {
+p {
   color: #aaa;
-  margin-bottom: 40px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .cards {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
 }
 
 .card {
-  background: #111;
-  padding: 30px;
-  width: 220px;
-  border-radius: 12px;
-  border: 1px solid #222;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 24px;
   text-decoration: none;
-  color: white;
+  color: #fff;
   display: block;
 }
 
+.card:hover {
+  border-color: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.07);
+}
+
 .card h3 {
-  margin: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
+  font-size: 20px;
 }
 
 .card p {
-  color: #aaa;
   font-size: 14px;
 }
 
-.clickable {
-  cursor: pointer;
+.section {
+  background: rgba(22,22,22,0.78);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 28px;
+  padding: 34px;
+  margin-top: 22px;
 }
 
-.clickable:hover {
-  border-color: #555;
-  background: #181818;
+@media (max-width: 760px) {
+  .header {
+    align-items: flex-start;
+    gap: 18px;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="logo">Qentro</div>
-  <div class="logout" onclick="logout()">Çıkış</div>
-</div>
-
 <div class="container">
-  <div class="title">Private Access Granted</div>
-  <div class="subtitle">Welcome to Qentro Network</div>
 
-  <div class="cards">
-    <div class="card">
-      <h3>Status</h3>
-      <p>Active Member</p>
-    </div>
-
-    <div class="card">
-      <h3>Access</h3>
-      <p>Approved</p>
-    </div>
-
-    <a class="card clickable" href="network.html">
-      <h3>Network</h3>
-      <p>Private</p>
-    </a>
+  <div class="header">
+    <div class="logo">QENTRO</div>
+    <button class="logout" onclick="logout()">Çıkış Yap</button>
   </div>
+
+  <div class="hero">
+    <h1 id="welcome">Private Access Granted</h1>
+    <p>
+      Qentro özel erişim alanına hoş geldiniz.  
+      Bu bölüm yalnızca onaylı üyeler için hazırlanmıştır.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Status</h3>
+        <p>Active Member</p>
+      </div>
+
+      <div class="card">
+        <h3>Access</h3>
+        <p>Approved</p>
+      </div>
+
+      <a class="card" href="network.html">
+        <h3>Network</h3>
+        <p>Private network alanına geç</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h1>Qentro Network</h1>
+    <p>
+      Qentro; seçilmiş üyeler, özel bağlantılar ve kapalı fırsatlar için oluşturulan
+      premium bir ağdır. Yeni özellikler yakında aktif edilecektir.
+    </p>
+  </div>
+
 </div>
 
 <script>
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   "https://wfkyriteptajmwkyzvub.supabase.co",
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
 async function checkUser() {
-  const { data } = await supabase.auth.getUser();
+  const { data } = await supabaseClient.auth.getUser();
 
-  if (!data.user) {
+  if (!data || !data.user) {
     window.location.href = "login.html";
+    return;
+  }
+
+  const name = data.user.user_metadata?.full_name;
+
+  if (name) {
+    document.getElementById("welcome").textContent = "Hoş geldiniz, " + name;
   }
 }
 
-checkUser();
-
 async function logout() {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   window.location.href = "login.html";
 }
+
+checkUser();
 </script>
 
 </body>
