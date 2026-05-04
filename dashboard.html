@@ -2,29 +2,111 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Qentro Dashboard</title>
+<title>Qentro Private Area</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
 <style>
 body {
-  background: black;
-  color: white;
+  background: #000;
+  color: #fff;
   font-family: Arial;
-  text-align: center;
-  padding-top: 100px;
+  margin: 0;
 }
-button {
-  padding: 10px 20px;
-  margin-top: 20px;
+
+/* üst bar */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid #222;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.logout {
   cursor: pointer;
+  background: #fff;
+  color: #000;
+  padding: 8px 15px;
+  border-radius: 6px;
+}
+
+/* ana alan */
+.container {
+  text-align: center;
+  padding-top: 120px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+/* kartlar */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #111;
+  padding: 30px;
+  width: 220px;
+  border-radius: 12px;
+  border: 1px solid #222;
+}
+
+.card h3 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #aaa;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Qentro Private Area</h1>
-<p id="welcome">Kontrol ediliyor...</p>
-<button onclick="logout()">Çıkış Yap</button>
+<div class="header">
+  <div class="logo">Qentro</div>
+  <div class="logout" onclick="logout()">Çıkış</div>
+</div>
+
+<div class="container">
+  <div class="title">Private Access Granted</div>
+  <div class="subtitle">Welcome to Qentro Network</div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Status</h3>
+      <p>Active Member</p>
+    </div>
+
+    <div class="card">
+      <h3>Access</h3>
+      <p>Approved</p>
+    </div>
+
+    <div class="card">
+      <h3>Network</h3>
+      <p>Private</p>
+    </div>
+  </div>
+</div>
 
 <script>
 const supabase = window.supabase.createClient(
@@ -32,43 +114,22 @@ const supabase = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
-async function start() {
-  const userResult = await supabase.auth.getUser();
+// giriş kontrol
+async function checkUser() {
+  const { data } = await supabase.auth.getUser();
 
-  if (!userResult.data || !userResult.data.user) {
+  if (!data.user) {
     window.location.href = "login.html";
-    return;
-  }
-
-  const email = userResult.data.user.email;
-
-  const profileResult = await supabase
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .maybeSingle();
-
-  if (profileResult.error) {
-    document.getElementById("welcome").innerText =
-      "Profil okunamadı: " + profileResult.error.message;
-    return;
-  }
-
-  if (profileResult.data && profileResult.data.name) {
-    document.getElementById("welcome").innerText =
-      "Hoşgeldin, " + profileResult.data.name;
-  } else {
-    document.getElementById("welcome").innerText =
-      "Hoşgeldin. Profil bilgisi bulunamadı.";
   }
 }
 
+checkUser();
+
+// çıkış
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
 }
-
-start();
 </script>
 
 </body>
