@@ -39,7 +39,7 @@ h1 {
   margin: 0 0 10px;
 }
 
-p {
+p, #msg {
   margin: 0 0 24px;
   color: #aaa;
   font-size: 14px;
@@ -89,6 +89,8 @@ button {
   <input id="password" type="password">
 
   <button onclick="updatePassword()">Şifreyi Güncelle</button>
+
+  <div id="msg"></div>
 </div>
 
 <script>
@@ -97,20 +99,29 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    document.getElementById("msg").textContent = "Şifre yenileme bağlantısı doğrulandı.";
+  }
+});
+
 async function updatePassword() {
   const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
 
   if (!password || password.length < 6) {
     alert("Şifre en az 6 karakter olmalı.");
     return;
   }
 
+  msg.textContent = "Şifre güncelleniyor...";
+
   const { error } = await supabaseClient.auth.updateUser({
     password: password
   });
 
   if (error) {
-    alert("Şifre güncellenemedi: " + error.message);
+    msg.textContent = "Şifre güncellenemedi: " + error.message;
     return;
   }
 
