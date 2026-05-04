@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qentro | Üye Girişi</title>
+<title>Qentro | Member Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
   display: flex;
   justify-content: center;
@@ -24,31 +27,63 @@ body {
   padding: 24px;
 }
 
+.page {
+  width: 100%;
+  max-width: 520px;
+}
+
+.language-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
 .card {
   width: 100%;
-  max-width: 460px;
   padding: 38px 34px;
   border-radius: 28px;
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   box-shadow: 0 35px 80px rgba(0,0,0,0.55);
 }
 
 h1 {
   font-size: 38px;
   margin: 0 0 12px;
+  letter-spacing: -0.04em;
 }
 
 p {
   margin: 0 0 28px;
-  color: #aaa;
+  color: rgba(255,255,255,0.68);
   font-size: 15px;
+  line-height: 1.6;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
-  color: #d0d0d0;
+  color: rgba(255,255,255,0.82);
   font-size: 14px;
   font-weight: 600;
 }
@@ -58,7 +93,7 @@ input {
   padding: 15px 16px;
   margin-bottom: 18px;
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.11);
+  border: 1px solid rgba(255,255,255,0.12);
   background: linear-gradient(90deg, #2a2a2a, #202020);
   color: #fff;
   outline: none;
@@ -70,7 +105,7 @@ button {
   padding: 16px;
   margin-top: 8px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   background: linear-gradient(90deg, #333, #222);
   color: #fff;
   font-weight: 700;
@@ -88,29 +123,68 @@ button:hover {
 
 #msg {
   margin-top: 16px;
-  color: #aaa;
+  color: rgba(255,255,255,0.68);
   font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 30px 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Üye Girişi</h1>
-  <p>Onaylı üyeler e-mail ve şifre ile giriş yapabilir.</p>
+<div class="page">
+  <div class="language-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+  </div>
 
-  <label>Email</label>
-  <input id="email" type="email" autocomplete="email">
+  <div class="card">
+    <h1 id="title">Member Login</h1>
+    <p id="subtitle">Approved members can sign in with their email and password.</p>
 
-  <label>Şifre</label>
-  <input id="pass" type="password" autocomplete="current-password">
+    <label id="emailLabel">Email</label>
+    <input id="email" type="email" autocomplete="email">
 
-  <button onclick="login()">Giriş Yap</button>
-  <button class="secondary" onclick="forgotPassword()">Şifremi Unuttum</button>
-  <button class="secondary" onclick="goHome()">Ana Sayfaya Dön</button>
+    <label id="passwordLabel">Password</label>
+    <input id="pass" type="password" autocomplete="current-password">
 
-  <div id="msg"></div>
+    <button id="loginBtn" onclick="login()">Sign In</button>
+    <button id="forgotBtn" class="secondary" onclick="forgotPassword()">Forgot Password</button>
+    <button id="homeBtn" class="secondary" onclick="goHome()">Back to Home</button>
+
+    <div id="msg"></div>
+  </div>
 </div>
 
 <script>
@@ -119,12 +193,268 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    pageTitle: "Qentro | Member Login",
+    title: "Member Login",
+    subtitle: "Approved members can sign in with their email and password.",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    loginBtn: "Sign In",
+    forgotBtn: "Forgot Password",
+    homeBtn: "Back to Home",
+    emptyAlert: "Please enter your email and password.",
+    loginError: "Login error: ",
+    emailFirst: "Please enter your email address first.",
+    sending: "Sending password reset link...",
+    error: "Error: ",
+    sent: "Password reset link has been sent to your email address. Please check your inbox."
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    pageTitle: "Qentro | Üye Girişi",
+    title: "Üye Girişi",
+    subtitle: "Onaylı üyeler e-mail ve şifre ile giriş yapabilir.",
+    emailLabel: "Email",
+    passwordLabel: "Şifre",
+    loginBtn: "Giriş Yap",
+    forgotBtn: "Şifremi Unuttum",
+    homeBtn: "Ana Sayfaya Dön",
+    emptyAlert: "Lütfen email ve şifre girin.",
+    loginError: "Giriş hatası: ",
+    emailFirst: "Lütfen önce email adresinizi yazın.",
+    sending: "Şifre yenileme linki gönderiliyor...",
+    error: "Hata: ",
+    sent: "Şifre yenileme linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin."
+  },
+  es: {
+    lang: "es", dir: "ltr",
+    pageTitle: "Qentro | Acceso de Miembros",
+    title: "Acceso de miembros",
+    subtitle: "Los miembros aprobados pueden iniciar sesión con su email y contraseña.",
+    emailLabel: "Email",
+    passwordLabel: "Contraseña",
+    loginBtn: "Iniciar sesión",
+    forgotBtn: "Olvidé mi contraseña",
+    homeBtn: "Volver al inicio",
+    emptyAlert: "Por favor ingresa tu email y contraseña.",
+    loginError: "Error de acceso: ",
+    emailFirst: "Por favor escribe primero tu email.",
+    sending: "Enviando enlace de recuperación...",
+    error: "Error: ",
+    sent: "El enlace de recuperación fue enviado a tu email. Revisa tu bandeja de entrada."
+  },
+  fr: {
+    lang: "fr", dir: "ltr",
+    pageTitle: "Qentro | Connexion membre",
+    title: "Connexion membre",
+    subtitle: "Les membres approuvés peuvent se connecter avec leur email et mot de passe.",
+    emailLabel: "Email",
+    passwordLabel: "Mot de passe",
+    loginBtn: "Se connecter",
+    forgotBtn: "Mot de passe oublié",
+    homeBtn: "Retour à l’accueil",
+    emptyAlert: "Veuillez entrer votre email et votre mot de passe.",
+    loginError: "Erreur de connexion : ",
+    emailFirst: "Veuillez d’abord entrer votre email.",
+    sending: "Envoi du lien de réinitialisation...",
+    error: "Erreur : ",
+    sent: "Le lien de réinitialisation a été envoyé à votre email. Veuillez vérifier votre boîte de réception."
+  },
+  de: {
+    lang: "de", dir: "ltr",
+    pageTitle: "Qentro | Mitglieder-Login",
+    title: "Mitglieder-Login",
+    subtitle: "Genehmigte Mitglieder können sich mit E-Mail und Passwort anmelden.",
+    emailLabel: "Email",
+    passwordLabel: "Passwort",
+    loginBtn: "Anmelden",
+    forgotBtn: "Passwort vergessen",
+    homeBtn: "Zur Startseite",
+    emptyAlert: "Bitte gib deine E-Mail und dein Passwort ein.",
+    loginError: "Login-Fehler: ",
+    emailFirst: "Bitte gib zuerst deine E-Mail-Adresse ein.",
+    sending: "Passwort-Link wird gesendet...",
+    error: "Fehler: ",
+    sent: "Der Link zum Zurücksetzen des Passworts wurde an deine E-Mail gesendet."
+  },
+  it: {
+    lang: "it", dir: "ltr",
+    pageTitle: "Qentro | Accesso membri",
+    title: "Accesso membri",
+    subtitle: "I membri approvati possono accedere con email e password.",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    loginBtn: "Accedi",
+    forgotBtn: "Password dimenticata",
+    homeBtn: "Torna alla home",
+    emptyAlert: "Inserisci email e password.",
+    loginError: "Errore di accesso: ",
+    emailFirst: "Inserisci prima il tuo indirizzo email.",
+    sending: "Invio del link di recupero...",
+    error: "Errore: ",
+    sent: "Il link di recupero password è stato inviato alla tua email."
+  },
+  ru: {
+    lang: "ru", dir: "ltr",
+    pageTitle: "Qentro | Вход для участников",
+    title: "Вход для участников",
+    subtitle: "Одобренные участники могут войти с помощью email и пароля.",
+    emailLabel: "Email",
+    passwordLabel: "Пароль",
+    loginBtn: "Войти",
+    forgotBtn: "Забыли пароль",
+    homeBtn: "На главную",
+    emptyAlert: "Введите email и пароль.",
+    loginError: "Ошибка входа: ",
+    emailFirst: "Сначала введите ваш email.",
+    sending: "Отправка ссылки для сброса пароля...",
+    error: "Ошибка: ",
+    sent: "Ссылка для сброса пароля отправлена на ваш email."
+  },
+  zh: {
+    lang: "zh", dir: "ltr",
+    pageTitle: "Qentro | 会员登录",
+    title: "会员登录",
+    subtitle: "已批准的会员可以使用邮箱和密码登录。",
+    emailLabel: "邮箱",
+    passwordLabel: "密码",
+    loginBtn: "登录",
+    forgotBtn: "忘记密码",
+    homeBtn: "返回首页",
+    emptyAlert: "请输入邮箱和密码。",
+    loginError: "登录错误：",
+    emailFirst: "请先输入你的邮箱地址。",
+    sending: "正在发送密码重置链接...",
+    error: "错误：",
+    sent: "密码重置链接已发送到你的邮箱。请检查收件箱。"
+  },
+  ar: {
+    lang: "ar", dir: "rtl",
+    pageTitle: "Qentro | تسجيل دخول الأعضاء",
+    title: "تسجيل دخول الأعضاء",
+    subtitle: "يمكن للأعضاء المعتمدين تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور.",
+    emailLabel: "البريد الإلكتروني",
+    passwordLabel: "كلمة المرور",
+    loginBtn: "تسجيل الدخول",
+    forgotBtn: "نسيت كلمة المرور",
+    homeBtn: "العودة إلى الرئيسية",
+    emptyAlert: "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+    loginError: "خطأ في تسجيل الدخول: ",
+    emailFirst: "يرجى إدخال البريد الإلكتروني أولاً.",
+    sending: "جارٍ إرسال رابط إعادة تعيين كلمة المرور...",
+    error: "خطأ: ",
+    sent: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني."
+  },
+  fa: {
+    lang: "fa", dir: "rtl",
+    pageTitle: "Qentro | ورود اعضا",
+    title: "ورود اعضا",
+    subtitle: "اعضای تأییدشده می‌توانند با ایمیل و رمز عبور وارد شوند.",
+    emailLabel: "ایمیل",
+    passwordLabel: "رمز عبور",
+    loginBtn: "ورود",
+    forgotBtn: "رمز عبور را فراموش کردم",
+    homeBtn: "بازگشت به صفحه اصلی",
+    emptyAlert: "لطفاً ایمیل و رمز عبور را وارد کنید.",
+    loginError: "خطای ورود: ",
+    emailFirst: "لطفاً ابتدا ایمیل خود را وارد کنید.",
+    sending: "در حال ارسال لینک بازیابی رمز عبور...",
+    error: "خطا: ",
+    sent: "لینک بازیابی رمز عبور به ایمیل شما ارسال شد."
+  },
+  hi: {
+    lang: "hi", dir: "ltr",
+    pageTitle: "Qentro | सदस्य लॉगिन",
+    title: "सदस्य लॉगिन",
+    subtitle: "स्वीकृत सदस्य ईमेल और पासवर्ड से लॉगिन कर सकते हैं।",
+    emailLabel: "Email",
+    passwordLabel: "पासवर्ड",
+    loginBtn: "लॉगिन करें",
+    forgotBtn: "पासवर्ड भूल गए",
+    homeBtn: "होम पर वापस जाएँ",
+    emptyAlert: "कृपया email और पासवर्ड दर्ज करें।",
+    loginError: "लॉगिन त्रुटि: ",
+    emailFirst: "कृपया पहले अपना email दर्ज करें।",
+    sending: "पासवर्ड रीसेट लिंक भेजा जा रहा है...",
+    error: "त्रुटि: ",
+    sent: "पासवर्ड रीसेट लिंक आपके email पर भेज दिया गया है।"
+  },
+  ja: {
+    lang: "ja", dir: "ltr",
+    pageTitle: "Qentro | メンバーログイン",
+    title: "メンバーログイン",
+    subtitle: "承認済みメンバーはメールアドレスとパスワードでログインできます。",
+    emailLabel: "メール",
+    passwordLabel: "パスワード",
+    loginBtn: "ログイン",
+    forgotBtn: "パスワードを忘れた",
+    homeBtn: "ホームに戻る",
+    emptyAlert: "メールとパスワードを入力してください。",
+    loginError: "ログインエラー: ",
+    emailFirst: "先にメールアドレスを入力してください。",
+    sending: "パスワード再設定リンクを送信中...",
+    error: "エラー: ",
+    sent: "パスワード再設定リンクをメールに送信しました。"
+  },
+  bn: {
+    lang: "bn", dir: "ltr",
+    pageTitle: "Qentro | সদস্য লগইন",
+    title: "সদস্য লগইন",
+    subtitle: "অনুমোদিত সদস্যরা email এবং password দিয়ে লগইন করতে পারেন।",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    loginBtn: "লগইন করুন",
+    forgotBtn: "Password ভুলে গেছেন",
+    homeBtn: "হোমে ফিরুন",
+    emptyAlert: "অনুগ্রহ করে email এবং password লিখুন।",
+    loginError: "লগইন ত্রুটি: ",
+    emailFirst: "অনুগ্রহ করে আগে আপনার email লিখুন।",
+    sending: "Password reset link পাঠানো হচ্ছে...",
+    error: "ত্রুটি: ",
+    sent: "Password reset link আপনার email-এ পাঠানো হয়েছে।"
+  }
+};
+
+let currentLang = localStorage.getItem("qentroLang") || "en";
+
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
+
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+
+  document.getElementById("title").innerHTML = t.title;
+  document.getElementById("subtitle").innerHTML = t.subtitle;
+  document.getElementById("emailLabel").innerHTML = t.emailLabel;
+  document.getElementById("passwordLabel").innerHTML = t.passwordLabel;
+  document.getElementById("loginBtn").innerHTML = t.loginBtn;
+  document.getElementById("forgotBtn").innerHTML = t.forgotBtn;
+  document.getElementById("homeBtn").innerHTML = t.homeBtn;
+
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
+  });
+
+  localStorage.setItem("qentroLang", code);
+}
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
+
 async function login() {
+  const t = texts[currentLang] || texts.en;
   const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("pass").value;
 
   if (!email || !password) {
-    alert("Lütfen email ve şifre girin.");
+    alert(t.emptyAlert);
     return;
   }
 
@@ -134,7 +464,7 @@ async function login() {
   });
 
   if (error) {
-    alert("Giriş hatası: " + error.message);
+    alert(t.loginError + error.message);
     return;
   }
 
@@ -142,31 +472,34 @@ async function login() {
 }
 
 async function forgotPassword() {
+  const t = texts[currentLang] || texts.en;
   const email = document.getElementById("email").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
 
   if (!email) {
-    alert("Lütfen önce email adresinizi yazın.");
+    alert(t.emailFirst);
     return;
   }
 
-  msg.textContent = "Şifre yenileme linki gönderiliyor...";
+  msg.textContent = t.sending;
 
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
     redirectTo: "https://www.qentro.com/reset.html"
   });
 
   if (error) {
-    msg.textContent = "Hata: " + error.message;
+    msg.textContent = t.error + error.message;
     return;
   }
 
-  msg.textContent = "Şifre yenileme linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin.";
+  msg.textContent = t.sent;
 }
 
 function goHome() {
   window.location.href = "index.html";
 }
+
+setLang(currentLang);
 </script>
 
 </body>
