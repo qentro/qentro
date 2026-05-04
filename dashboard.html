@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,16 @@
 <style>
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at center, #151515 0%, #080808 45%, #000 100%);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent 22%),
+    linear-gradient(135deg, #050505, #0b0b0b 45%, #111 100%);
   color: #fff;
   padding: 34px 24px;
 }
@@ -24,6 +27,31 @@ body {
 .container {
   max-width: 980px;
   margin: 0 auto;
+}
+
+.language-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.lang-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: #fff;
+  color: #000;
 }
 
 .header {
@@ -42,7 +70,7 @@ body {
 .logout {
   padding: 12px 18px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   background: linear-gradient(90deg, #333, #222);
   color: #fff;
   font-weight: 700;
@@ -51,7 +79,7 @@ body {
 
 .hero {
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   border-radius: 28px;
   padding: 38px 34px;
   box-shadow: 0 35px 80px rgba(0,0,0,0.55);
@@ -61,10 +89,11 @@ body {
 h1 {
   font-size: 42px;
   margin: 0 0 12px;
+  letter-spacing: -0.04em;
 }
 
 p {
-  color: #aaa;
+  color: rgba(255,255,255,0.68);
   line-height: 1.6;
   margin: 0;
 }
@@ -78,7 +107,7 @@ p {
 
 .card {
   background: rgba(255,255,255,0.045);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 22px;
   padding: 24px;
   text-decoration: none;
@@ -102,13 +131,17 @@ p {
 
 .section {
   background: rgba(22,22,22,0.78);
-  border: 1px solid rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.11);
   border-radius: 28px;
   padding: 34px;
   margin-top: 22px;
 }
 
 @media (max-width: 760px) {
+  .language-bar {
+    justify-content: center;
+  }
+
   .header {
     align-items: flex-start;
     gap: 18px;
@@ -130,41 +163,56 @@ p {
 
 <div class="container">
 
+  <div class="language-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+    <button class="lang-btn" data-lang="bn">BN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="hi">HI</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="ja">JA</button>
+    <button class="lang-btn" data-lang="fa">FA</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+  </div>
+
   <div class="header">
     <div class="logo">QENTRO</div>
-    <button class="logout" onclick="logout()">Çıkış Yap</button>
+    <button id="logoutBtn" class="logout" onclick="logout()">Sign Out</button>
   </div>
 
   <div class="hero">
     <h1 id="welcome">Private Access Granted</h1>
-    <p>
-      Qentro özel erişim alanına hoş geldiniz.  
-      Bu bölüm yalnızca onaylı üyeler için hazırlanmıştır.
+    <p id="heroText">
+      Welcome to the Qentro private access area. This section is prepared exclusively for approved members.
     </p>
 
     <div class="cards">
       <div class="card">
-        <h3>Status</h3>
-        <p>Active Member</p>
+        <h3 id="statusTitle">Status</h3>
+        <p id="statusText">Active Member</p>
       </div>
 
       <div class="card">
-        <h3>Access</h3>
-        <p>Approved</p>
+        <h3 id="accessTitle">Access</h3>
+        <p id="accessText">Approved</p>
       </div>
 
       <a class="card" href="network.html">
-        <h3>Network</h3>
-        <p>Private network alanına geç</p>
+        <h3 id="networkCardTitle">Network</h3>
+        <p id="networkCardText">Enter the private network area</p>
       </a>
     </div>
   </div>
 
   <div class="section">
-    <h1>Qentro Network</h1>
-    <p>
-      Qentro; seçilmiş üyeler, özel bağlantılar ve kapalı fırsatlar için oluşturulan
-      premium bir ağdır. Yeni özellikler yakında aktif edilecektir.
+    <h1 id="networkTitle">Qentro Network</h1>
+    <p id="networkText">
+      Qentro is a premium network created for selected members, private connections and closed opportunities.
+      New features will be activated soon.
     </p>
   </div>
 
@@ -176,6 +224,253 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_mI4trhprac_kQGfb_5kO8A_Lonwh6KX"
 );
 
+const texts = {
+  en: {
+    lang: "en", dir: "ltr",
+    pageTitle: "Qentro | Private Area",
+    logoutBtn: "Sign Out",
+    welcome: "Private Access Granted",
+    welcomeName: "Welcome, ",
+    heroText: "Welcome to the Qentro private access area. This section is prepared exclusively for approved members.",
+    statusTitle: "Status",
+    statusText: "Active Member",
+    accessTitle: "Access",
+    accessText: "Approved",
+    networkCardTitle: "Network",
+    networkCardText: "Enter the private network area",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro is a premium network created for selected members, private connections and closed opportunities. New features will be activated soon."
+  },
+  tr: {
+    lang: "tr", dir: "ltr",
+    pageTitle: "Qentro | Özel Alan",
+    logoutBtn: "Çıkış Yap",
+    welcome: "Özel Erişim Onaylandı",
+    welcomeName: "Hoş geldiniz, ",
+    heroText: "Qentro özel erişim alanına hoş geldiniz. Bu bölüm yalnızca onaylı üyeler için hazırlanmıştır.",
+    statusTitle: "Durum",
+    statusText: "Aktif Üye",
+    accessTitle: "Erişim",
+    accessText: "Onaylandı",
+    networkCardTitle: "Network",
+    networkCardText: "Private network alanına geç",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro; seçilmiş üyeler, özel bağlantılar ve kapalı fırsatlar için oluşturulan premium bir ağdır. Yeni özellikler yakında aktif edilecektir."
+  },
+  es: {
+    lang: "es", dir: "ltr",
+    pageTitle: "Qentro | Área Privada",
+    logoutBtn: "Cerrar sesión",
+    welcome: "Acceso privado aprobado",
+    welcomeName: "Bienvenido, ",
+    heroText: "Bienvenido al área privada de Qentro. Esta sección está preparada exclusivamente para miembros aprobados.",
+    statusTitle: "Estado",
+    statusText: "Miembro activo",
+    accessTitle: "Acceso",
+    accessText: "Aprobado",
+    networkCardTitle: "Red",
+    networkCardText: "Entrar al área de red privada",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro es una red premium creada para miembros seleccionados, conexiones privadas y oportunidades cerradas. Nuevas funciones se activarán pronto."
+  },
+  fr: {
+    lang: "fr", dir: "ltr",
+    pageTitle: "Qentro | Espace privé",
+    logoutBtn: "Se déconnecter",
+    welcome: "Accès privé accordé",
+    welcomeName: "Bienvenue, ",
+    heroText: "Bienvenue dans l’espace privé Qentro. Cette section est réservée exclusivement aux membres approuvés.",
+    statusTitle: "Statut",
+    statusText: "Membre actif",
+    accessTitle: "Accès",
+    accessText: "Approuvé",
+    networkCardTitle: "Réseau",
+    networkCardText: "Entrer dans l’espace réseau privé",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro est un réseau premium créé pour des membres sélectionnés, des connexions privées et des opportunités fermées. De nouvelles fonctionnalités seront bientôt activées."
+  },
+  de: {
+    lang: "de", dir: "ltr",
+    pageTitle: "Qentro | Privater Bereich",
+    logoutBtn: "Abmelden",
+    welcome: "Privater Zugang gewährt",
+    welcomeName: "Willkommen, ",
+    heroText: "Willkommen im privaten Zugangsbereich von Qentro. Dieser Bereich ist ausschließlich für genehmigte Mitglieder vorbereitet.",
+    statusTitle: "Status",
+    statusText: "Aktives Mitglied",
+    accessTitle: "Zugang",
+    accessText: "Genehmigt",
+    networkCardTitle: "Netzwerk",
+    networkCardText: "Privaten Netzwerkbereich betreten",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro ist ein Premium-Netzwerk für ausgewählte Mitglieder, private Verbindungen und geschlossene Möglichkeiten. Neue Funktionen werden bald aktiviert."
+  },
+  it: {
+    lang: "it", dir: "ltr",
+    pageTitle: "Qentro | Area privata",
+    logoutBtn: "Esci",
+    welcome: "Accesso privato approvato",
+    welcomeName: "Benvenuto, ",
+    heroText: "Benvenuto nell’area privata di Qentro. Questa sezione è riservata esclusivamente ai membri approvati.",
+    statusTitle: "Stato",
+    statusText: "Membro attivo",
+    accessTitle: "Accesso",
+    accessText: "Approvato",
+    networkCardTitle: "Network",
+    networkCardText: "Entra nell’area network privata",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro è una rete premium creata per membri selezionati, connessioni private e opportunità riservate. Nuove funzionalità saranno attivate presto."
+  },
+  ru: {
+    lang: "ru", dir: "ltr",
+    pageTitle: "Qentro | Частная зона",
+    logoutBtn: "Выйти",
+    welcome: "Частный доступ предоставлен",
+    welcomeName: "Добро пожаловать, ",
+    heroText: "Добро пожаловать в закрытую зону Qentro. Этот раздел подготовлен исключительно для одобренных участников.",
+    statusTitle: "Статус",
+    statusText: "Активный участник",
+    accessTitle: "Доступ",
+    accessText: "Одобрен",
+    networkCardTitle: "Сеть",
+    networkCardText: "Перейти в закрытую сетевую зону",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro — это премиальная сеть для выбранных участников, частных связей и закрытых возможностей. Новые функции скоро будут активированы."
+  },
+  zh: {
+    lang: "zh", dir: "ltr",
+    pageTitle: "Qentro | 私人区域",
+    logoutBtn: "退出登录",
+    welcome: "私人访问已通过",
+    welcomeName: "欢迎，",
+    heroText: "欢迎进入 Qentro 私人访问区域。此区域仅为已批准的会员准备。",
+    statusTitle: "状态",
+    statusText: "活跃会员",
+    accessTitle: "访问",
+    accessText: "已批准",
+    networkCardTitle: "网络",
+    networkCardText: "进入私人网络区域",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro 是为精选会员、私人连接和封闭机会打造的高级网络。新功能即将开放。"
+  },
+  ar: {
+    lang: "ar", dir: "rtl",
+    pageTitle: "Qentro | المنطقة الخاصة",
+    logoutBtn: "تسجيل الخروج",
+    welcome: "تم منح الوصول الخاص",
+    welcomeName: "مرحباً، ",
+    heroText: "مرحباً بك في منطقة الوصول الخاصة في Qentro. هذا القسم مخصص فقط للأعضاء المعتمدين.",
+    statusTitle: "الحالة",
+    statusText: "عضو نشط",
+    accessTitle: "الوصول",
+    accessText: "معتمد",
+    networkCardTitle: "الشبكة",
+    networkCardText: "الدخول إلى منطقة الشبكة الخاصة",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro شبكة مميزة تم إنشاؤها للأعضاء المختارين والاتصالات الخاصة والفرص المغلقة. سيتم تفعيل ميزات جديدة قريباً."
+  },
+  fa: {
+    lang: "fa", dir: "rtl",
+    pageTitle: "Qentro | فضای خصوصی",
+    logoutBtn: "خروج",
+    welcome: "دسترسی خصوصی تأیید شد",
+    welcomeName: "خوش آمدید، ",
+    heroText: "به فضای دسترسی خصوصی Qentro خوش آمدید. این بخش فقط برای اعضای تأییدشده آماده شده است.",
+    statusTitle: "وضعیت",
+    statusText: "عضو فعال",
+    accessTitle: "دسترسی",
+    accessText: "تأیید شده",
+    networkCardTitle: "شبکه",
+    networkCardText: "ورود به فضای شبکه خصوصی",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro یک شبکه ممتاز برای اعضای منتخب، ارتباطات خصوصی و فرصت‌های بسته است. امکانات جدید به‌زودی فعال می‌شوند."
+  },
+  hi: {
+    lang: "hi", dir: "ltr",
+    pageTitle: "Qentro | निजी क्षेत्र",
+    logoutBtn: "लॉग आउट",
+    welcome: "निजी एक्सेस स्वीकृत",
+    welcomeName: "स्वागत है, ",
+    heroText: "Qentro के निजी एक्सेस क्षेत्र में आपका स्वागत है। यह भाग केवल स्वीकृत सदस्यों के लिए तैयार किया गया है।",
+    statusTitle: "स्थिति",
+    statusText: "सक्रिय सदस्य",
+    accessTitle: "एक्सेस",
+    accessText: "स्वीकृत",
+    networkCardTitle: "नेटवर्क",
+    networkCardText: "निजी नेटवर्क क्षेत्र में जाएँ",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro चयनित सदस्यों, निजी कनेक्शन और बंद अवसरों के लिए बनाया गया एक प्रीमियम नेटवर्क है। नई सुविधाएँ जल्द सक्रिय होंगी."
+  },
+  ja: {
+    lang: "ja", dir: "ltr",
+    pageTitle: "Qentro | プライベートエリア",
+    logoutBtn: "ログアウト",
+    welcome: "プライベートアクセスが承認されました",
+    welcomeName: "ようこそ、",
+    heroText: "Qentroのプライベートアクセスエリアへようこそ。このセクションは承認済みメンバー専用です。",
+    statusTitle: "ステータス",
+    statusText: "アクティブメンバー",
+    accessTitle: "アクセス",
+    accessText: "承認済み",
+    networkCardTitle: "ネットワーク",
+    networkCardText: "プライベートネットワークエリアへ進む",
+    networkTitle: "Qentro Network",
+    networkText: "Qentroは、選ばれたメンバー、プライベートなつながり、限定された機会のために作られたプレミアムネットワークです。新機能はまもなく有効化されます。"
+  },
+  bn: {
+    lang: "bn", dir: "ltr",
+    pageTitle: "Qentro | ব্যক্তিগত এলাকা",
+    logoutBtn: "লগ আউট",
+    welcome: "ব্যক্তিগত অ্যাক্সেস অনুমোদিত",
+    welcomeName: "স্বাগতম, ",
+    heroText: "Qentro ব্যক্তিগত অ্যাক্সেস এলাকায় স্বাগতম। এই অংশটি শুধুমাত্র অনুমোদিত সদস্যদের জন্য তৈরি।",
+    statusTitle: "স্ট্যাটাস",
+    statusText: "সক্রিয় সদস্য",
+    accessTitle: "অ্যাক্সেস",
+    accessText: "অনুমোদিত",
+    networkCardTitle: "নেটওয়ার্ক",
+    networkCardText: "ব্যক্তিগত নেটওয়ার্ক এলাকায় প্রবেশ করুন",
+    networkTitle: "Qentro Network",
+    networkText: "Qentro নির্বাচিত সদস্য, ব্যক্তিগত সংযোগ এবং সীমিত সুযোগের জন্য তৈরি একটি প্রিমিয়াম নেটওয়ার্ক। নতুন ফিচার শীঘ্রই চালু হবে।"
+  }
+};
+
+let currentLang = localStorage.getItem("qentroLang") || "en";
+let currentUserName = "";
+
+function setLang(code) {
+  const t = texts[code] || texts.en;
+  currentLang = code;
+
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+
+  document.getElementById("logoutBtn").innerHTML = t.logoutBtn;
+  document.getElementById("welcome").innerHTML = currentUserName ? t.welcomeName + currentUserName : t.welcome;
+  document.getElementById("heroText").innerHTML = t.heroText;
+  document.getElementById("statusTitle").innerHTML = t.statusTitle;
+  document.getElementById("statusText").innerHTML = t.statusText;
+  document.getElementById("accessTitle").innerHTML = t.accessTitle;
+  document.getElementById("accessText").innerHTML = t.accessText;
+  document.getElementById("networkCardTitle").innerHTML = t.networkCardTitle;
+  document.getElementById("networkCardText").innerHTML = t.networkCardText;
+  document.getElementById("networkTitle").innerHTML = t.networkTitle;
+  document.getElementById("networkText").innerHTML = t.networkText;
+
+  document.querySelectorAll(".lang-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.lang === code);
+  });
+
+  localStorage.setItem("qentroLang", code);
+}
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    setLang(this.dataset.lang);
+  });
+});
+
 async function checkUser() {
   const { data } = await supabaseClient.auth.getUser();
 
@@ -184,11 +479,8 @@ async function checkUser() {
     return;
   }
 
-  const name = data.user.user_metadata?.full_name;
-
-  if (name) {
-    document.getElementById("welcome").textContent = "Hoş geldiniz, " + name;
-  }
+  currentUserName = data.user.user_metadata?.full_name || "";
+  setLang(currentLang);
 }
 
 async function logout() {
@@ -196,6 +488,7 @@ async function logout() {
   window.location.href = "login.html";
 }
 
+setLang(currentLang);
 checkUser();
 </script>
 
